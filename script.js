@@ -5,11 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     duration: 800,
     once: false,
     mirror: true,
-  });
-
-  // Initialize Particles.js
-  particlesJS.load("particles-js", "particles.json", function () {
-    console.log("particles.js loaded");
+    disable: window.innerWidth < 768 ? true : false, // Disable on mobile for better performance
   });
 
   // Variables
@@ -20,14 +16,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const backToTopBtn = document.getElementById("back-to-top");
   const scrollDownBtn = document.querySelector(".scroll-down");
   const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll("nav ul li a");
+  const navLinks = document.querySelectorAll(".nav-link");
   const contactForm = document.getElementById("contactForm");
+  const lastUpdatedElement = document.querySelector(".last-updated");
 
-  // Check for saved theme preference
-  const currentTheme = localStorage.getItem("theme") || "light";
+  // Set last updated date
+  if (lastUpdatedElement) {
+    lastUpdatedElement.textContent = "Last Updated: 2025-03-09 23:02:48";
+  }
+
+  // Check for saved theme preference or use dark by default
+  const currentTheme = localStorage.getItem("theme") || "dark";
+  document.documentElement.setAttribute("data-theme", currentTheme);
   if (currentTheme === "dark") {
-    document.body.setAttribute("data-theme", "dark");
     themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+  } else {
+    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
   }
 
   // Header scroll effect
@@ -80,12 +84,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Theme toggle
   themeToggle.addEventListener("click", function () {
-    if (document.body.getAttribute("data-theme") === "dark") {
-      document.body.removeAttribute("data-theme");
+    if (document.documentElement.getAttribute("data-theme") === "dark") {
+      document.documentElement.setAttribute("data-theme", "light");
       localStorage.setItem("theme", "light");
       this.innerHTML = '<i class="fas fa-moon"></i>';
     } else {
-      document.body.setAttribute("data-theme", "dark");
+      document.documentElement.setAttribute("data-theme", "dark");
       localStorage.setItem("theme", "dark");
       this.innerHTML = '<i class="fas fa-sun"></i>';
     }
@@ -190,9 +194,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (textArray.length) setTimeout(type, newTextDelay + 250);
 
-  // Last updated date
-  const lastUpdated = document.getElementById("last-updated");
-  if (lastUpdated) {
-    lastUpdated.textContent = "2025-03-09";
-  }
+  // Enhance project cards with subtle hover interactions
+  const projectCards = document.querySelectorAll(".project-card");
+
+  projectCards.forEach((card) => {
+    const image = card.querySelector(".project-image img");
+
+    card.addEventListener("mouseenter", function () {
+      image.style.transform = "scale(1.1)";
+    });
+
+    card.addEventListener("mouseleave", function () {
+      image.style.transform = "scale(1)";
+    });
+  });
+
+  // Add subtle animation to skill icons
+  const skillIcons = document.querySelectorAll(".skill-icon");
+
+  skillIcons.forEach((icon) => {
+    icon.addEventListener("mouseenter", function () {
+      this.style.transform = "scale(1.2) rotate(10deg)";
+      this.style.color = getComputedStyle(
+        document.documentElement
+      ).getPropertyValue("--accent-1");
+    });
+
+    icon.addEventListener("mouseleave", function () {
+      this.style.transform = "scale(1) rotate(0deg)";
+      this.style.color = getComputedStyle(
+        document.documentElement
+      ).getPropertyValue("--primary-color");
+    });
+  });
+
+  // Console log for user info
+  console.log(
+    `Portfolio loaded at: 2025-03-09 23:02:48 UTC by user: abeergupta0continue`
+  );
 });
