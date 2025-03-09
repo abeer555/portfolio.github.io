@@ -3,1132 +3,648 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Abeer Gupta | Tech Portfolio</title>
-    <style>
-      * {
-        cursor: none; /* Hide the default cursor */
-      }
-
-      .custom-cursor {
-        width: 20px;
-        height: 20px;
-        border: 2px solid var(--primary);
-        border-radius: 50%;
-        position: fixed;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%); /* Center the cursor */
-        transition: width 0.3s, height 0.3s, border-color 0.3s;
-        mix-blend-mode: difference; /* Makes cursor visible on all backgrounds */
-      }
-
-      .custom-cursor.hover {
-        width: 30px;
-        height: 30px;
-        border-color: #fff;
-      }
-
-      :root {
-        --primary: #0f0;
-        --dark: #0a0a0a;
-        --light: #f0f0f0;
-        --accent: #2c3e50;
-        --transition: all 0.3s ease;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Courier New", monospace;
-      }
-
-      body {
-        background-color: var(--dark);
-        color: var(--light);
-        line-height: 1.6;
-        overflow-x: hidden;
-      }
-
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-      }
-
-      /* Header */
-      header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 100;
-        backdrop-filter: blur(10px);
-        background-color: rgba(10, 10, 10, 0.8);
-        border-bottom: 1px solid rgba(15, 255, 0, 0.2);
-        transition: var(--transition);
-      }
-
-      nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 0;
-      }
-
-      .logo {
-        font-size: 24px;
-        font-weight: bold;
-        color: var(--primary);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .logo::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: var(--primary);
-        transform: translateX(-100%);
-        transition: var(--transition);
-      }
-
-      .logo:hover::after {
-        transform: translateX(0);
-      }
-
-      nav ul {
-        display: flex;
-        list-style: none;
-      }
-
-      nav ul li {
-        margin-left: 30px;
-      }
-
-      nav ul li a {
-        color: var(--light);
-        text-decoration: none;
-        transition: var(--transition);
-        position: relative;
-        padding: 5px 0;
-      }
-
-      nav ul li a::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 1px;
-        background-color: var(--primary);
-        transform: scaleX(0);
-        transition: var(--transition);
-        transform-origin: right;
-      }
-
-      nav ul li a:hover {
-        color: var(--primary);
-      }
-
-      nav ul li a:hover::after {
-        transform: scaleX(1);
-        transform-origin: left;
-      }
-
-      /* Hero Section */
-      .hero {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .hero::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          45deg,
-          rgba(0, 0, 0, 0.7) 0%,
-          rgba(10, 10, 10, 0.9) 100%
-        );
-        z-index: 1;
-      }
-
-      .hero-content {
-        position: relative;
-        z-index: 2;
-        max-width: 800px;
-      }
-
-      .hero h1 {
-        font-size: 64px;
-        margin-bottom: 20px;
-        position: relative;
-        display: inline-block;
-      }
-
-      .hero h1 span {
-        color: var(--primary);
-      }
-
-      .hero-subtitle {
-        font-size: 24px;
-        margin-bottom: 30px;
-        opacity: 0;
-        animation: fadeIn 1s ease forwards;
-        animation-delay: 0.5s;
-      }
-
-      .hero-text {
-        margin-bottom: 30px;
-        opacity: 0;
-        animation: fadeIn 1s ease forwards;
-        animation-delay: 0.7s;
-      }
-
-      .btn {
-        display: inline-block;
-        padding: 12px 30px;
-        background-color: transparent;
-        border: 1px solid var(--primary);
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: bold;
-        transition: var(--transition);
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
-        opacity: 0;
-        animation: fadeIn 1s ease forwards;
-        animation-delay: 0.9s;
-      }
-
-      .btn::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background-color: var(--primary);
-        transition: var(--transition);
-        z-index: -1;
-      }
-
-      .btn:hover {
-        color: var(--dark);
-      }
-
-      .btn:hover::before {
-        left: 0;
-      }
-
-      /* Matrix rain effect */
-      .matrix-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        z-index: 0;
-      }
-
-      canvas {
-        display: block;
-      }
-
-      /* About Section */
-      .about {
-        padding: 100px 0;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .about-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-        align-items: center;
-      }
-
-      .about-img {
-        position: relative;
-        border: 2px solid var(--primary);
-        padding: 20px;
-        transition: var(--transition);
-        transform: perspective(1000px) rotateY(10deg);
-        box-shadow: 0 10px 30px rgba(15, 255, 0, 0.1);
-      }
-
-      .about-img:hover {
-        transform: perspective(1000px) rotateY(0deg);
-      }
-
-      .about-img img {
-        width: 100%;
-        height: auto;
-        display: block;
-      }
-
-      .about-content h2 {
-        font-size: 36px;
-        margin-bottom: 20px;
-        color: var(--primary);
-      }
-
-      .about-content p {
-        margin-bottom: 20px;
-      }
-
-      .tech-stack {
-        margin-top: 30px;
-      }
-
-      .tech-stack h3 {
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: var(--primary);
-      }
-
-      .tech-icons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-      }
-
-      .tech-icon {
-        padding: 15px;
-        border: 1px solid rgba(15, 255, 0, 0.3);
-        border-radius: 5px;
-        transition: var(--transition);
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .tech-icon::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: var(--primary);
-        opacity: 0;
-        transition: var(--transition);
-        z-index: -1;
-      }
-
-      .tech-icon:hover {
-        border-color: var(--primary);
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(15, 255, 0, 0.2);
-      }
-
-      .tech-icon:hover::before {
-        opacity: 0.1;
-      }
-
-      /* Contact Section */
-      .contact {
-        padding: 100px 0;
-        background-color: var(--accent);
-        clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
-        margin: 100px 0;
-      }
-
-      .contact h2 {
-        text-align: center;
-        font-size: 36px;
-        margin-bottom: 40px;
-        color: var(--primary);
-      }
-
-      .contact-form {
-        max-width: 600px;
-        margin: 0 auto;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-      }
-
-      .form-control {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid rgba(15, 255, 0, 0.3);
-        background-color: rgba(10, 10, 10, 0.8);
-        color: var(--light);
-        transition: var(--transition);
-      }
-
-      .form-control:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 10px rgba(15, 255, 0, 0.2);
-      }
-
-      textarea.form-control {
-        min-height: 150px;
-        resize: vertical;
-      }
-
-      .form-submit {
-        text-align: center;
-      }
-
-      /* Footer */
-      footer {
-        padding: 40px 0;
-        background-color: var(--dark);
-        border-top: 1px solid rgba(15, 255, 0, 0.2);
-      }
-
-      .footer-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .footer-social a {
-        margin-left: 20px;
-        color: var(--light);
-        transition: var(--transition);
-      }
-
-      .footer-social a:hover {
-        color: var(--primary);
-      }
-
-      /* Animations */
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes typewriter {
-        from {
-          width: 0;
-        }
-        to {
-          width: 100%;
-        }
-      }
-
-      @keyframes blink {
-        50% {
-          border-color: transparent;
-        }
-      }
-
-      .typewriter {
-        overflow: hidden;
-        border-right: 2px solid var(--primary);
-        white-space: nowrap;
-        margin: 0 auto;
-        animation: typewriter 3s steps(40) 0.5s forwards,
-          blink 0.7s step-end infinite;
-      }
-
-      /* Glitch effect */
-      .glitch {
-        position: relative;
-        color: var(--light);
-      }
-
-      .glitch::before,
-      .glitch::after {
-        content: attr(data-text);
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        left: 0;
-      }
-
-      .glitch::before {
-        left: 2px;
-        text-shadow: -2px 0 var(--primary);
-        animation: glitch-1 2s infinite linear alternate-reverse;
-        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-      }
-
-      .glitch::after {
-        left: -2px;
-        text-shadow: 2px 0 var(--primary);
-        animation: glitch-2 2s infinite linear alternate-reverse;
-        clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
-      }
-
-      @keyframes glitch-1 {
-        0% {
-          transform: translateX(0);
-        }
-        80% {
-          transform: translateX(0);
-        }
-        85% {
-          transform: translateX(2px);
-        }
-        90% {
-          transform: translateX(-2px);
-        }
-        95% {
-          transform: translateX(2px);
-        }
-        100% {
-          transform: translateX(0);
-        }
-      }
-
-      @keyframes glitch-2 {
-        0% {
-          transform: translateX(0);
-        }
-        80% {
-          transform: translateX(0);
-        }
-        85% {
-          transform: translateX(-2px);
-        }
-        90% {
-          transform: translateX(2px);
-        }
-        95% {
-          transform: translateX(-2px);
-        }
-        100% {
-          transform: translateX(0);
-        }
-      }
-
-      /* Responsive */
-      @media (max-width: 768px) {
-        .about-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .hero h1 {
-          font-size: 42px;
-        }
-
-        .hero-subtitle {
-          font-size: 18px;
-        }
-
-        nav {
-          padding: 10px 0;
-        }
-
-        nav ul {
-          display: none;
-        }
-      }
-    </style>
+    <title>Abeer Gupta | Developer & Linux Enthusiast</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+    />
   </head>
   <body>
-    <!-- Header -->
+    <div id="particles-js"></div>
+
     <header>
-      <div class="container">
-        <nav>
-          <div class="logo">Hackenkreuz@VITC:~$</div>
+      <div class="header-content">
+        <div class="logo">
+          <span class="logo-text">&lt;AG/&gt;</span>
+        </div>
+        <nav id="navbar">
           <ul>
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
+        <div class="theme-toggle">
+          <i class="fas fa-moon"></i>
+        </div>
+        <div class="menu-btn">
+          <div class="menu-btn__burger"></div>
+        </div>
       </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-      <div class="matrix-container">
-        <canvas id="matrix"></canvas>
-      </div>
-      <div class="container">
-        <div class="hero-content">
-          <h1 class="glitch" data-text="Hi, I'm Abeer Gupta">
-            Hi, I'm <span>Abeer Gupta</span>
-          </h1>
-          <div class="hero-subtitle typewriter">
-            B.Tech CSE Student & Tech Enthusiast
+    <main>
+      <!-- Hero Section -->
+      <section id="home" class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <h1 class="glitch-text" data-text="Abeer Gupta">Abeer Gupta</h1>
+            <div class="dynamic-text">
+              <span class="typed-text"></span><span class="cursor">&nbsp;</span>
+            </div>
+            <p class="hero-description">
+              A passionate programmer with interests in Linux, Docker, and
+              Competitive Programming. Technical Team Member at LUG VITC.
+            </p>
+            <div class="hero-buttons">
+              <a href="#projects" class="btn primary-btn">View Projects</a>
+              <a href="#contact" class="btn secondary-btn">Contact Me</a>
+            </div>
+            <div class="social-links">
+              <a
+                href="https://github.com/abeer555/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                ><i class="fab fa-github"></i
+              ></a>
+              <a
+                href="https://www.linkedin.com/in/abeer-gupta/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                ><i class="fab fa-linkedin"></i
+              ></a>
+              <a href="mailto:abeergupta555@gmail.com" aria-label="Email"
+                ><i class="fas fa-envelope"></i
+              ></a>
+            </div>
           </div>
-          <p class="hero-text">
-            A passionate programmer with interests in Linux, Docker, and
-            Competitive Programming. Technical Team Member at LUG VITC.
-          </p>
-            <a href="#contact" class="btn" style="background: linear-gradient(45deg, rgba(0, 255, 0, 0.1), rgba(0, 255, 0, 0.3)); backdrop-filter: blur(5px);">Get In Touch</a>
         </div>
-      </div>
-    </section>
+        <div class="scroll-down">
+          <span>Scroll Down</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-      <div class="container">
-        <div class="about-grid">
-          <div class="about-img">
-            <img src="/api/placeholder/400/500" alt="Abeer Gupta" />
-          </div>
-          <div class="about-content">
-            <h2>About Me</h2>
-            <p>
-              I'm a B.Tech CSE sophomore at VIT Chennai with a passion for
-              technology and software development. Currently, I'm a Technical
-              Team Member at LUG VITC where I contribute to various open-source
-              projects and promote Linux usage.
-            </p>
-            <p>
-              I'm actively involved in competitive programming on CodeChef and
-              constantly strive to improve my problem-solving skills. My
-              technical journey is driven by curiosity and the desire to create
-              efficient, innovative solutions.
-            </p>
-            <div class="tech-stack">
-              <h3>Tech I Work With</h3>
-              <div class="tech-icons">
-                <div class="tech-icon">Java</div>
-                <div class="tech-icon">C</div>
-                <div class="tech-icon">C++</div>
-                <div class="tech-icon">Linux</div>
-                <div class="tech-icon">Docker</div>
+      <!-- About Section -->
+      <section id="about" class="about">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">About Me</h2>
+          <div class="about-content" data-aos="fade-up" data-aos-delay="200">
+            <div class="about-image">
+              <div class="image-wrapper">
+                <div class="image-outline"></div>
+                <img
+                  src="https://via.placeholder.com/400x500"
+                  alt="Abeer Gupta"
+                />
+              </div>
+            </div>
+            <div class="about-text">
+              <p>
+                I'm a <span class="highlight">B.Tech CSE sophomore</span> at VIT
+                Chennai with a passion for technology and software development.
+                As a
+                <span class="highlight">Technical Team Member at LUG VITC</span
+                >, I contribute to various open-source projects and promote
+                Linux usage.
+              </p>
+              <p>
+                My technical journey is driven by curiosity and the desire to
+                create efficient, innovative solutions. I'm actively involved in
+                <span class="highlight">competitive programming</span> and
+                constantly strive to improve my problem-solving skills.
+              </p>
+
+              <div class="education">
+                <h3>Education</h3>
+                <div class="education-item">
+                  <h4>B.Tech in Computer Science and Engineering</h4>
+                  <p class="institution">
+                    Vellore Institute of Technology, Chennai
+                  </p>
+                  <p class="duration">Expected Graduation: May 2027</p>
+                </div>
+                <div class="education-item">
+                  <h4>
+                    All India Senior School Certificate Examination (AISSCE)
+                  </h4>
+                  <p class="institution">Annie Besant School, Indore</p>
+                  <p class="achievement">2nd Rank Holder, Science Olympiad</p>
+                </div>
+                <div class="education-item">
+                  <h4>
+                    Council for the Indian School Certificate Examinations
+                    (CISCE)
+                  </h4>
+                  <p class="institution">Modern Academy, Ghaziabad</p>
+                  <p class="achievement">
+                    Featured in a newspaper for outstanding academic
+                    achievements
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-      <div class="container">
-        <h2
-          style="
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 40px;
-            color: var(--primary);
-          "
-        >
-          My Skills
-        </h2>
-        <div
-          style="
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-          "
-        >
-          <!-- Skill Card 1 -->
-          <div
-            style="
-              background-color: rgba(10, 10, 10, 0.8);
-              border: 1px solid rgba(15, 255, 0, 0.3);
-              padding: 30px;
-              border-radius: 5px;
-              transition: var(--transition);
-            "
-            onmouseover="this.style.borderColor='#0f0'; this.style.transform='translateY(-10px)'; this.style.boxShadow='0 10px 30px rgba(15, 255, 0, 0.2)';"
-            onmouseout="this.style.borderColor='rgba(15, 255, 0, 0.3)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';"
-          >
-            <h3
-              style="
-                font-size: 24px;
-                margin-bottom: 20px;
-                color: var(--primary);
-              "
-            >
-              Programming Languages
-            </h3>
-            <p style="margin-bottom: 20px">
-              Proficient in Java, C, and C++, with experience in building
-              various applications and solving complex problems.
-            </p>
-            <div
-              style="
-                height: 10px;
-                background-color: rgba(15, 255, 0, 0.1);
-                border-radius: 5px;
-                overflow: hidden;
-              "
-            >
-              <div
-                style="
-                  height: 100%;
-                  width: 90%;
-                  background-color: var(--primary);
-                  border-radius: 5px;
-                  transition: width 1.5s ease-in-out;
-                "
-              ></div>
+      <!-- Experience Section -->
+      <section id="experience" class="experience">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">Experience</h2>
+          <div class="timeline" data-aos="fade-up" data-aos-delay="200">
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fab fa-linux"></i>
+              </div>
+              <div class="timeline-content">
+                <h3>Technical Member</h3>
+                <p class="company">Linux Club, VIT Chennai</p>
+                <p class="duration">Sep 2024 - Present</p>
+                <ul>
+                  <li>
+                    Configured and optimized Linux desktops, demonstrating
+                    technical expertise and creativity
+                  </li>
+                  <li>
+                    Designed and competed in CTF events, enhancing cybersecurity
+                    skills
+                  </li>
+                  <li>
+                    Mentored peers in Linux system operations and security best
+                    practices
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
-
-          <!-- Skill Card 2 -->
-          <div
-            style="
-              background-color: rgba(10, 10, 10, 0.8);
-              border: 1px solid rgba(15, 255, 0, 0.3);
-              padding: 30px;
-              border-radius: 5px;
-              transition: var(--transition);
-            "
-            onmouseover="this.style.borderColor='#0f0'; this.style.transform='translateY(-10px)'; this.style.boxShadow='0 10px 30px rgba(15, 255, 0, 0.2)';"
-            onmouseout="this.style.borderColor='rgba(15, 255, 0, 0.3)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';"
-          >
-            <h3
-              style="
-                font-size: 24px;
-                margin-bottom: 20px;
-                color: var(--primary);
-              "
-            >
-              Linux & Open Source
-            </h3>
-            <p style="margin-bottom: 20px">
-              Passionate about Linux systems and open-source technologies.
-              Active member of LUG VITC promoting open-source.
-            </p>
-            <div
-              style="
-                height: 10px;
-                background-color: rgba(15, 255, 0, 0.1);
-                border-radius: 5px;
-                overflow: hidden;
-              "
-            >
-              <div
-                style="
-                  height: 100%;
-                  width: 85%;
-                  background-color: var(--primary);
-                  border-radius: 5px;
-                  transition: width 1.5s ease-in-out;
-                "
-              ></div>
-            </div>
-          </div>
-
-          <!-- Skill Card 3 -->
-          <div
-            style="
-              background-color: rgba(10, 10, 10, 0.8);
-              border: 1px solid rgba(15, 255, 0, 0.3);
-              padding: 30px;
-              border-radius: 5px;
-              transition: var(--transition);
-            "
-            onmouseover="this.style.borderColor='#0f0'; this.style.transform='translateY(-10px)'; this.style.boxShadow='0 10px 30px rgba(15, 255, 0, 0.2)';"
-            onmouseout="this.style.borderColor='rgba(15, 255, 0, 0.3)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';"
-          >
-            <h3
-              style="
-                font-size: 24px;
-                margin-bottom: 20px;
-                color: var(--primary);
-              "
-            >
-              Competitive Programming
-            </h3>
-            <p style="margin-bottom: 20px">
-              Actively participate in competitive programming challenges on
-              CodeChef, focusing on algorithm design and optimization.
-            </p>
-            <div
-              style="
-                height: 10px;
-                background-color: rgba(15, 255, 0, 0.1);
-                border-radius: 5px;
-                overflow: hidden;
-              "
-            >
-              <div
-                style="
-                  height: 100%;
-                  width: 80%;
-                  background-color: var(--primary);
-                  border-radius: 5px;
-                  transition: width 1.5s ease-in-out;
-                "
-              ></div>
-            </div>
-          </div>
-
-          <!-- Skill Card 4 -->
-          <div
-            style="
-              background-color: rgba(10, 10, 10, 0.8);
-              border: 1px solid rgba(15, 255, 0, 0.3);
-              padding: 30px;
-              border-radius: 5px;
-              transition: var(--transition);
-            "
-            onmouseover="this.style.borderColor='#0f0'; this.style.transform='translateY(-10px)'; this.style.boxShadow='0 10px 30px rgba(15, 255, 0, 0.2)';"
-            onmouseout="this.style.borderColor='rgba(15, 255, 0, 0.3)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';"
-          >
-            <h3
-              style="
-                font-size: 24px;
-                margin-bottom: 20px;
-                color: var(--primary);
-              "
-            >
-              Docker
-            </h3>
-            <p style="margin-bottom: 20px">
-              Experience with containerization technologies, specifically
-              Docker, for creating consistent development environments.
-            </p>
-            <div
-              style="
-                height: 10px;
-                background-color: rgba(15, 255, 0, 0.1);
-                border-radius: 5px;
-                overflow: hidden;
-              "
-            >
-              <div
-                style="
-                  height: 100%;
-                  width: 75%;
-                  background-color: var(--primary);
-                  border-radius: 5px;
-                  transition: width 1.5s ease-in-out;
-                "
-              ></div>
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fas fa-code"></i>
+              </div>
+              <div class="timeline-content">
+                <h3>Competitive Programming Engineer</h3>
+                <p class="company">CodeChef College Chapter, VIT Chennai</p>
+                <p class="duration">Aug 2024 - Present</p>
+                <ul>
+                  <li>
+                    Led and promoted coding competitions and workshops, managing
+                    logistics for participants
+                  </li>
+                  <li>
+                    Mentored students in advanced algorithms, data structures,
+                    and competitive programming strategies
+                  </li>
+                  <li>
+                    Competed in national and international coding contests,
+                    achieving top rankings in multiple events
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact" style="
-      background: linear-gradient(135deg, 
-        rgba(15, 255, 0, 0.1), 
-        rgba(0, 0, 0, 0.9),
-        rgba(15, 255, 0, 0.1)
-      );
-      animation: gradientMove 15s ease infinite;
-      position: relative;
-      overflow: hidden;
-    ">
-      <div class="container" style="
-        position: relative;
-        z-index: 1;
-        backdrop-filter: blur(10px);
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: 20px;
-        padding: 40px;
-        box-shadow: 0 0 30px rgba(15, 255, 0, 0.2);
-      ">
-      <!-- Animated background elements -->
-      <div style="
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(15, 255, 0, 0.1) 0%, transparent 70%);
-        animation: rotate 20s linear infinite;
-        z-index: 0;
-      "></div>
-      
-      <h2>Get In Touch</h2>
-      <form class="contact-form">
-        <div class="form-group">
-        <label for="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          class="form-control"
-          placeholder="Your Name"
-          required
-          style="background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px);"
-        />
+      <!-- Projects Section -->
+      <section id="projects" class="projects">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">Projects</h2>
+          <div class="projects-container">
+            <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+              <div class="project-image">
+                <img
+                  src="https://via.placeholder.com/600x400"
+                  alt="Hyprland-Dots"
+                />
+              </div>
+              <div class="project-content">
+                <h3>Hyprland-Dots: Custom Hyprland Desktop Environment</h3>
+                <p>
+                  Configured Arch Linux with Hyprland for personal systems,
+                  optimizing performance and user experience. Created a
+                  responsive, cohesive minimalist UI for Linux, enhancing
+                  usability and aesthetics.
+                </p>
+                <div class="project-tech">
+                  <span>Arch Linux</span>
+                  <span>Hyprland</span>
+                  <span>Shell</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="#"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><i class="fab fa-github"></i> View Source</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+              <div class="project-image">
+                <img src="https://via.placeholder.com/600x400" alt="MedWE" />
+              </div>
+              <div class="project-content">
+                <h3>MedWE: Apki Health ka Saathi</h3>
+                <p>
+                  Built a medicine delivery and telemedicine platform for users,
+                  improving remote healthcare access. Deployed machine learning
+                  models to forecast medicine demand, boosting inventory
+                  accuracy.
+                </p>
+                <div class="project-tech">
+                  <span>Machine Learning</span>
+                  <span>Healthcare</span>
+                  <span>Full Stack</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="#"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><i class="fab fa-github"></i> View Source</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+              <div class="project-image">
+                <img
+                  src="https://via.placeholder.com/600x400"
+                  alt="Secure File Server"
+                />
+              </div>
+              <div class="project-content">
+                <h3>Secure File Server</h3>
+                <p>
+                  Developed a multi-threaded HTTP server with OpenSSL
+                  AES-256-CBC encryption for secure file storage and transfer.
+                  Implemented automatic encryption, IVs, secure key management,
+                  and HTTP Basic Authentication.
+                </p>
+                <div class="project-tech">
+                  <span>OpenSSL</span>
+                  <span>Multi-threading</span>
+                  <span>Encryption</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="#"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><i class="fab fa-github"></i> View Source</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="project-card" data-aos="fade-up" data-aos-delay="400">
+              <div class="project-image">
+                <img src="https://via.placeholder.com/600x400" alt="Voyageur" />
+              </div>
+              <div class="project-content">
+                <h3>Voyageur: AI Travel Recommendation System</h3>
+                <p>
+                  Built an AI-powered travel planning system that analyzed
+                  customer preferences, improving itinerary accuracy. Integrated
+                  a blockchain-enabled booking platform and designed an
+                  interactive analytics dashboard.
+                </p>
+                <div class="project-tech">
+                  <span>AI</span>
+                  <span>Blockchain</span>
+                  <span>Analytics</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="#"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><i class="fab fa-github"></i> View Source</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          class="form-control"
-          placeholder="Your Email"
-          required
-          style="background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px);"
-        />
-        </div>
-        <div class="form-group">
-        <label for="message">Message</label>
-        <textarea
-          id="message"
-          class="form-control"
-          placeholder="Your Message"
-          required
-          style="background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px);"
-        ></textarea>
-        </div>
-        <div class="form-submit">
-        <button type="submit" class="btn" style="
-          background: linear-gradient(45deg, rgba(15, 255, 0, 0.2), rgba(15, 255, 0, 0.4));
-          backdrop-filter: blur(5px);
-          border: 1px solid rgba(15, 255, 0, 0.3);
-        ">Send Message</button>
-        </div>
-        <input
-        type="hidden"
-        name="recipient"
-        value="abeergupta555@gmail.com"
-        />
-      </form>
-      </div>
-      
-      <style>
-      @keyframes gradientMove {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
-      
-      @keyframes rotate {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-      </style>
-    </section>
+      </section>
 
-    <!-- Footer -->
+      <!-- Skills Section -->
+      <section id="skills" class="skills">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">
+            Skills & Technologies
+          </h2>
+
+          <div class="skills-category" data-aos="fade-up" data-aos-delay="100">
+            <h3>Programming Languages</h3>
+            <div class="skills-grid">
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-python"></i></div>
+                <span>Python</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-code"></i></div>
+                <span>C</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-code"></i></div>
+                <span>C++</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-java"></i></div>
+                <span>Java</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="skills-category" data-aos="fade-up" data-aos-delay="200">
+            <h3>Linux Expertise</h3>
+            <div class="skills-grid">
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-terminal"></i></div>
+                <span>System Administration</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-shield-alt"></i></div>
+                <span>Cybersecurity & CTF</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-laptop-code"></i></div>
+                <span>Customization</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon">
+                  <i class="fas fa-container-storage"></i>
+                </div>
+                <span>DevOps & Containerization</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="skills-category" data-aos="fade-up" data-aos-delay="300">
+            <h3>Web Technologies</h3>
+            <div class="skills-grid">
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-js"></i></div>
+                <span>JavaScript</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                <span>HTML</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+                <span>CSS</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-react"></i></div>
+                <span>React.js</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-css3"></i></div>
+                <span>TailwindCSS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="skills-category" data-aos="fade-up" data-aos-delay="400">
+            <h3>Tools & Platforms</h3>
+            <div class="skills-grid">
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
+                <span>Git</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-docker"></i></div>
+                <span>Docker</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-aws"></i></div>
+                <span>AWS</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-microsoft"></i></div>
+                <span>Azure</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-figma"></i></div>
+                <span>Figma</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="skills-category" data-aos="fade-up" data-aos-delay="500">
+            <h3>Languages</h3>
+            <div class="language-skills">
+              <div class="language">
+                <span class="language-name">English</span>
+                <span class="language-level">Fluent</span>
+              </div>
+              <div class="language">
+                <span class="language-name">Hindi</span>
+                <span class="language-level">Fluent</span>
+              </div>
+              <div class="language">
+                <span class="language-name">Japanese</span>
+                <span class="language-level">N5 – Beginner</span>
+              </div>
+              <div class="language">
+                <span class="language-name">Bengali</span>
+                <span class="language-level">Conversational</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Leadership & Activities -->
+      <section id="activities" class="activities">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">
+            Leadership & Activities
+          </h2>
+          <div class="activities-grid">
+            <div class="activity-card" data-aos="fade-up" data-aos-delay="100">
+              <div class="activity-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <h3>Password x CTF Hackathon</h3>
+              <p class="activity-date">February 2024</p>
+              <p>
+                Evaluated system vulnerabilities and executed penetration
+                testing methods for cybersecurity challenges. Explored Linux
+                security, ethical hacking, and secure coding practices.
+              </p>
+            </div>
+            <div class="activity-card" data-aos="fade-up" data-aos-delay="200">
+              <div class="activity-icon">
+                <i class="fas fa-laptop-code"></i>
+              </div>
+              <h3>Cyber-0-day-3.0</h3>
+              <p class="activity-date">November 2024</p>
+              <p>
+                Conceived cybersecurity challenges and orchestrated Capture the
+                Flag (CTF) events for the campus cybersecurity club. Volunteered
+                in workshops and facilitated hands-on learning for aspiring
+                cybersecurity professionals.
+              </p>
+            </div>
+            <div class="activity-card" data-aos="fade-up" data-aos-delay="300">
+              <div class="activity-icon">
+                <i class="fas fa-code"></i>
+              </div>
+              <h3>VITISH Internal Hackathon for SIH 2024</h3>
+              <p class="activity-date">September 2024</p>
+              <p>
+                Engineered an ML-based healthcare project, ranking among the top
+                teams out of hundreds of participants.
+              </p>
+            </div>
+            <div class="activity-card" data-aos="fade-up" data-aos-delay="400">
+              <div class="activity-icon">
+                <i class="fas fa-mobile-alt"></i>
+              </div>
+              <h3>Hack-n-Droid Hackathon 2025 – Finalist</h3>
+              <p class="activity-date">February 2025</p>
+              <p>
+                Developed a full-stack AI solution, securing a competitive
+                position among hundreds of teams.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="contact">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">Get In Touch</h2>
+          <div class="contact-content" data-aos="fade-up" data-aos-delay="200">
+            <div class="contact-info">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-text">
+                  <h3>Email</h3>
+                  <a href="mailto:abeergupta555@gmail.com"
+                    >abeergupta555@gmail.com</a
+                  >
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="fab fa-github"></i>
+                </div>
+                <div class="contact-text">
+                  <h3>GitHub</h3>
+                  <a
+                    href="https://github.com/abeer555/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >github.com/abeer555</a
+                  >
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="fab fa-linkedin"></i>
+                </div>
+                <div class="contact-text">
+                  <h3>LinkedIn</h3>
+                  <a
+                    href="https://www.linkedin.com/in/abeer-gupta/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >linkedin.com/in/abeer-gupta</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="contact-form">
+              <form id="contactForm">
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" id="name" name="name" required />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" required />
+                </div>
+                <div class="form-group">
+                  <label for="message">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn primary-btn">
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
     <footer>
       <div class="container">
         <div class="footer-content">
-          <div class="copyright">
-            &copy; 2025 Abeer Gupta. All Rights Reserved.
+          <div class="footer-logo">
+            <span class="logo-text">&lt;AG/&gt;</span>
+          </div>
+          <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
           </div>
           <div class="footer-social">
-            <a href="https://github.com/abeer555">GitHub</a>
-            <a href="https://www.linkedin.com/in/abeer-gupta-613076278/"
-              >LinkedIn</a
-            >
-            <!-- <a href="#">CodeChef</a> -->
+            <a
+              href="https://github.com/abeer555/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              ><i class="fab fa-github"></i
+            ></a>
+            <a
+              href="https://www.linkedin.com/in/abeer-gupta/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+            <a href="mailto:abeergupta555@gmail.com" aria-label="Email"
+              ><i class="fas fa-envelope"></i
+            ></a>
           </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Abeer Gupta. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
 
-    <!-- Matrix rain effect script -->
-    <script>
-      //Mail section
-      document.addEventListener("DOMContentLoaded", function () {
-        const form = document.querySelector(".contact-form");
-        const submitButton = document.querySelector(".form-submit .btn");
+    <!-- Back to top button -->
+    <button id="back-to-top" aria-label="Back to top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
 
-        submitButton.addEventListener("click", function (e) {
-          e.preventDefault();
-
-          // Get form values
-          const name = document.getElementById("name").value.trim();
-          const email = document.getElementById("email").value.trim();
-          const message = document.getElementById("message").value.trim();
-
-          // Basic validation
-          if (!name || !email || !message) {
-            alert("Please fill in all fields");
-            return;
-          }
-
-          if (!isValidEmail(email)) {
-            alert("Please enter a valid email address");
-            return;
-          }
-
-          // Prepare form data to send
-          const formData = {
-            name: name,
-            email: email,
-            message: message,
-            recipient: "abeergupta555@gmail.com",
-          };
-
-          // You'll need a server-side endpoint to process this
-          // This is just a frontend example - the actual email sending needs to happen server-side
-          sendFormData(formData);
-        });
-
-        function isValidEmail(email) {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return emailRegex.test(email);
-        }
-
-        function sendFormData(data) {
-          // In a real implementation, you would send this data to your server
-          // Example with fetch:
-
-          fetch("your-server-endpoint", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.success) {
-                alert("Message sent successfully!");
-                form.reset();
-              } else {
-                alert("Failed to send message. Please try again later.");
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("An error occurred. Please try again later.");
-            });
-
-          // If you don't have a server endpoint yet, you can use a service like EmailJS, FormSubmit, or Netlify Forms
-          alert("Form would send to: " + data.recipient);
-        }
-      });
-
-      //cursor section
-      const cursor = document.createElement("div");
-      cursor.classList.add("custom-cursor");
-      document.body.appendChild(cursor);
-
-      document.addEventListener("mousemove", (e) => {
-        cursor.style.left = e.clientX + "px";
-        cursor.style.top = e.clientY + "px";
-      });
-
-      document.addEventListener("mousedown", () => {
-        cursor.classList.add("hover");
-      });
-
-      document.addEventListener("mouseup", () => {
-        cursor.classList.remove("hover");
-      });
-
-      // Add hover effect when over clickable elements
-      const clickables = document.querySelectorAll(
-        "a, button, input, textarea, select"
-      );
-      clickables.forEach((item) => {
-        item.addEventListener("mouseenter", () => {
-          cursor.classList.add("hover");
-        });
-        item.addEventListener("mouseleave", () => {
-          cursor.classList.remove("hover");
-        });
-      });
-      // Matrix Canvas Setup
-      const canvas = document.getElementById("matrix");
-      const ctx = canvas.getContext("2d");
-
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      // Characters to display
-      const chars =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
-      const charArray = chars.split("");
-
-      const fontSize = 16;
-      const columns = canvas.width / fontSize;
-
-      // Array to keep track of current y position for each column
-      const drops = [];
-      for (let i = 0; i < columns; i++) {
-        drops[i] = Math.random() * -100;
-      }
-
-      // Drawing the characters
-      function draw() {
-        // Set a semi-transparent black fill for fade effect
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Green text
-        ctx.fillStyle = "#0f0";
-        ctx.font = fontSize + "px monospace";
-
-        // For each column
-        for (let i = 0; i < drops.length; i++) {
-          // Get random character
-          const text = charArray[Math.floor(Math.random() * charArray.length)];
-
-          // Draw character
-          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-          // Reset if it's at the bottom or randomly
-          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-            drops[i] = 0;
-          }
-
-          // Move it down
-          drops[i]++;
-        }
-      }
-
-      // Animation loop
-      setInterval(draw, 35);
-
-      // Resize canvas on window resize
-      window.addEventListener("resize", () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        // Reset the drops array based on new width
-        const newColumns = canvas.width / fontSize;
-        for (let i = 0; i < newColumns; i++) {
-          if (!drops[i]) {
-            drops[i] = Math.random() * -100;
-          }
-        }
-      });
-
-      // Activate skill progress bars on scroll
-      document.addEventListener("DOMContentLoaded", () => {
-        const skillSection = document.querySelector(".skills");
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const progressBars = entry.target.querySelectorAll(
-                  ".skills div div div"
-                );
-                progressBars.forEach((bar) => {
-                  bar.style.width = bar.style.width;
-                });
-              }
-            });
-          },
-          { threshold: 0.5 }
-        );
-
-        observer.observe(skillSection);
-      });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
