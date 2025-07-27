@@ -1135,6 +1135,69 @@ nav ul li {
   font-size: 0.8rem;
   color: var(--primary-color);
 }
+/* Certifications Section */
+.certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.certification-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  border: 1px solid var(--border-color);
+}
+
+.certification-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-xl);
+}
+
+.certification-icon {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  transition: color var(--transition-normal);
+}
+
+.certification-card:hover .certification-icon {
+  color: var(--accent-1);
+}
+
+.certification-content h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.certification-content p {
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+
+.btn-view-cert {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color var(--transition-normal), transform var(--transition-normal);
+}
+
+.btn-view-cert:hover {
+  background-color: var(--accent-1);
+  transform: scale(1.05);
+  color: var(--light-color);
+}
 
 /* Activities Section with hover effects */
 .activities-grid {

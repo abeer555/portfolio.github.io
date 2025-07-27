@@ -155,8 +155,8 @@ document.addEventListener("DOMContentLoaded", function () {
     "Technical Team Member @ LUG VITC",
   ];
   const typingDelay = 100;
-  const erasingDelay = 50;
-  const newTextDelay = 2000; // Delay between current and next text
+  const erasingDelay = 20;
+  const newTextDelay = 200; // Delay between current and next text
   let textArrayIndex = 0;
   let charIndex = 0;
 
