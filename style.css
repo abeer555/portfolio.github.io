@@ -458,9 +458,38 @@ nav ul li {
 }
 
 .hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: relative;
   z-index: 2;
   margin-top: var(--header-height);
+  gap: 2rem;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-image {
+  flex-basis: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-profile-img {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--primary-color);
+  box-shadow: 0 0 30px rgba(79, 70, 229, 0.5);
+  transition: transform var(--transition-normal);
+}
+
+.hero-profile-img:hover {
+  transform: scale(1.05);
 }
 
 .hero-description {
@@ -661,18 +690,18 @@ nav ul li {
 }
 
 .about-profile-img {
-    width: 400px !important;
-    height: 400px !important;
-    border-radius: 48px;
+    width: 350px !important;
+    height: 350px !important;
+    border-radius: 24px;
     object-fit: cover;
-    box-shadow: 0 8px 48px rgba(0, 0, 0, 0.5);
-    border: 3.5px solid var(--primary-color);
-    transition: all 0.3s ease;
+    box-shadow: var(--shadow-lg);
+    border: 3px solid var(--primary-color);
+    transition: all var(--transition-normal);
 }
 
 .about-profile-img:hover {
-    box-shadow: 0 12px 60px rgba(99, 102, 241, 0.3);
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
 }
 
 .about-text {
@@ -682,50 +711,55 @@ nav ul li {
 
 .about-description {
     font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-    color: #cbd5e1;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
 }
 
 .education-section {
-    margin-top: 3rem;
+    margin-top: 2.5rem;
 }
 
 .education-title {
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
-    color: #fff;
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
 }
 
 .education-item {
-    background: rgba(30, 41, 59, 0.8);
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    border-radius: 12px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
     padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--primary-color);
 }
 
 .education-item:hover {
-    border-color: var(--primary-color);
-    transform: translateX(10px);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-1);
 }
 
 .degree {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    color: #fff;
-    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
 }
 
 .institution {
-    color: #94a3b8;
+    color: var(--text-light);
     margin-bottom: 0.5rem;
+    font-size: 0.9rem;
 }
 
 .duration {
     color: var(--primary-color);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 500;
 }
 
 /* Experience Section with enhanced timeline */
@@ -1429,6 +1463,15 @@ footer::before {
 }
 
 @media screen and (max-width: 768px) {
+  .hero-content {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  .hero-image {
+    margin-bottom: 2rem;
+  }
+
   nav ul {
     display: none;
     position: fixed;
