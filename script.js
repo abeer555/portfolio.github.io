@@ -150,9 +150,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const cursorSpan = document.querySelector(".cursor");
 
   const textArray = [
-    "Linux Enthusiast",
-    "Competitive Programmer",
-    "Docker Expert",
+    "Intern @ C9Labs",
+    "Competitive Programmer @ CodeChef",
     "Technical Team Member @ LUG VITC",
   ];
   const typingDelay = 100;
