@@ -2,9 +2,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Initialize AOS (Animate On Scroll)
   AOS.init({
-    duration: 800,
+    duration: 1000,
     once: false,
     mirror: true,
+    offset: 100,
+    easing: 'ease-in-out-cubic',
     disable: window.innerWidth < 768 ? true : false, // Disable on mobile for better performance
   });
 
@@ -20,6 +22,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const contactForm = document.getElementById("contactForm");
   const lastUpdatedElement = document.querySelector(".last-updated");
 
+  // Create scroll progress indicator
+  const scrollProgress = document.createElement('div');
+  scrollProgress.className = 'scroll-progress';
+  document.body.appendChild(scrollProgress);
+
   // Set last updated date
   if (lastUpdatedElement) {
     lastUpdatedElement.textContent = "Last Updated: 2025-03-09 23:02:48";
@@ -34,9 +41,19 @@ document.addEventListener("DOMContentLoaded", function () {
     themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
   }
 
-  // Header scroll effect
-  window.addEventListener("scroll", function () {
-    if (window.scrollY > 50) {
+  // Enhanced scroll effects
+  let ticking = false;
+  
+  function updateScrollEffects() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollProgress = (scrollTop / scrollHeight) * 100;
+    
+    // Update progress bar
+    document.querySelector('.scroll-progress').style.width = scrollProgress + '%';
+    
+    // Header scroll effect
+    if (scrollTop > 50) {
       header.classList.add("scrolled");
       backToTopBtn.classList.add("show");
     } else {
@@ -44,25 +61,107 @@ document.addEventListener("DOMContentLoaded", function () {
       backToTopBtn.classList.remove("show");
     }
 
-    // Update active navigation link based on scroll position
-    let current = "";
-
-    sections.forEach((section) => {
-      const sectionTop = section.offsetTop - 100;
-      const sectionHeight = section.clientHeight;
-      if (
-        window.scrollY >= sectionTop &&
-        window.scrollY < sectionTop + sectionHeight
-      ) {
-        current = section.getAttribute("id");
-      }
+    // Parallax effects
+    const parallaxElements = document.querySelectorAll('.parallax-element');
+    parallaxElements.forEach(element => {
+      const speed = element.dataset.speed || 0.5;
+      const yPos = -(scrollTop * speed);
+      element.style.transform = `translateY(${yPos}px)`;
     });
 
-    navLinks.forEach((link) => {
-      link.classList.remove("active");
-      if (link.getAttribute("href").substring(1) === current) {
-        link.classList.add("active");
+    ticking = false;
+  }
+
+  // Optimized scroll event with requestAnimationFrame
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(updateScrollEffects);
+      ticking = true;
+    }
+  }
+
+  // Add scroll event listener
+  window.addEventListener("scroll", onScroll);
+
+  // Intersection Observer for scroll animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        
+        // Add stagger effect for skill items
+        if (entry.target.classList.contains('skills-grid')) {
+          const skillItems = entry.target.querySelectorAll('.skill-item');
+          skillItems.forEach((item, index) => {
+            setTimeout(() => {
+              item.style.opacity = '1';
+              item.style.transform = 'translateY(0)';
+            }, index * 100);
+          });
+        }
       }
+    });
+  }, observerOptions);
+
+  // Observe elements for scroll animations
+  const fadeElements = document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right, .skills-grid');
+  fadeElements.forEach(el => observer.observe(el));
+
+  // Smooth scroll for navigation links
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href');
+      const targetSection = document.querySelector(targetId);
+      
+      if (targetSection) {
+        const headerHeight = header.offsetHeight;
+        const targetPosition = targetSection.offsetTop - headerHeight;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // Interactive cursor follow effect
+  const cursor = document.createElement('div');
+  cursor.className = 'cursor-follower';
+  cursor.style.cssText = `
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: rgba(99, 102, 241, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: all 0.1s ease;
+    opacity: 0;
+  `;
+  document.body.appendChild(cursor);
+
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX - 10 + 'px';
+    cursor.style.top = e.clientY - 10 + 'px';
+    cursor.style.opacity = '1';
+  });
+
+  document.addEventListener('mouseleave', () => {
+    cursor.style.opacity = '0';
+  });
+
+  // Enhanced back to top with smooth scroll
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
     });
   });
 
