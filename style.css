@@ -1,3 +1,18 @@
+/* Hide scrollbar for all browsers */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+  width: 0;
+  background: transparent; /* Chrome, Safari, Opera */
+}
+
+html {
+  overflow: -moz-scrollbars-none; /* Older Firefox */
+}
+
 :root {
   /* Modern Color Palette - Dark Theme */
   --primary-color: #6366f1;
@@ -226,7 +241,12 @@ section {
   margin-bottom: var(--space-4);
   position: relative;
   font-weight: 800;
-  background: linear-gradient(to right, var(--primary-light), var(--primary-color), var(--accent-color));
+  background: linear-gradient(
+    to right,
+    var(--primary-light),
+    var(--primary-color),
+    var(--accent-color)
+  );
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -1870,5 +1890,3 @@ footer::before {
     color: #4338ca !important;
   }
 }
-
-
