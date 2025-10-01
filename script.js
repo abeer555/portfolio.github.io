@@ -1,8 +1,8 @@
 // Wait for the DOM to load
 document.addEventListener("DOMContentLoaded", function () {
-  // Initialize AOS (Animate On Scroll)
+  // Initialize AOS (Animate On Scroll) - Fast for skimming
   AOS.init({
-    duration: 1000,
+    duration: 400,
     once: false,
     mirror: true,
     offset: 100,
