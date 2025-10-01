@@ -1,0 +1,15 @@
+# robots.txt for Abeer Gupta's Portfolio
+# Website: https://abeer.is-a.dev
+# Owner: Abeer Gupta - Developer & Linux Enthusiast
+# Description: Personal portfolio showcasing web development projects,cybersecurity skills, and Linux system administration expertise
+# Contact: Available through the website contact form
+# Last updated: October 2025
+
+User-agent: *
+Allow: /
+
+# Welcome search engines! This portfolio showcases:
+# - Full-stack web development projects
+# - Cybersecurity and penetration testing work
+# - Linux system administration skills
+# - Open source contributions
