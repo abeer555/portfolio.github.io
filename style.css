@@ -2174,8 +2174,8 @@ footer::after {
 }
 
 .bubble-1 {
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 120px;
   border-color: var(--lime-chaos);
   top: 10%;
   left: 5%;
@@ -2183,8 +2183,8 @@ footer::after {
 }
 
 .bubble-2 {
-  width: 300px;
-  height: 150px;
+  width: 250px;
+  height: 140px;
   border-color: var(--pink-chaos);
   top: 40%;
   right: 10%;
@@ -2192,12 +2192,39 @@ footer::after {
 }
 
 .bubble-3 {
-  width: 180px;
-  height: 250px;
+  width: 160px;
+  height: 100px;
   border-color: var(--cyan-chaos);
   bottom: 15%;
   left: 15%;
   animation-delay: 2s;
+}
+
+.bubble-4 {
+  width: 200px;
+  height: 130px;
+  border-color: var(--yellow-chaos);
+  top: 60%;
+  left: 40%;
+  animation-delay: 0.5s;
+}
+
+.bubble-5 {
+  width: 140px;
+  height: 90px;
+  border-color: var(--purple-chaos);
+  bottom: 30%;
+  right: 25%;
+  animation-delay: 1.5s;
+}
+
+.bubble-6 {
+  width: 220px;
+  height: 110px;
+  border-color: var(--red-chaos);
+  top: 25%;
+  right: 35%;
+  animation-delay: 2.5s;
 }
 
 @keyframes chaos-float {
@@ -2244,6 +2271,15 @@ footer::after {
   bottom: 25%;
   left: 25%;
   animation-delay: 1.5s;
+}
+
+.explode-3 {
+  width: 120px;
+  height: 120px;
+  border-color: var(--lime-chaos);
+  top: 50%;
+  left: 50%;
+  animation-delay: 0.8s;
 }
 
 @keyframes explode {
