@@ -130,11 +130,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const textArray = [
     "LINUX DESTROYER",
-    "CODE DEMON",
+    // "CODE DEMON",
     "CYBER WARRIOR",
     "FULL-STACK CHAOS",
     "DOCKER MASTER",
     "CTF CHAMPION",
+    "FLAG HUNTER",
   ];
 
   const typingDelay = 100;
@@ -473,135 +474,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.style.animation = "";
         chaosBadge.textContent = "⚡ CHAOS MODE ⚡";
         chaosBadge.style.background = "var(--black-chaos)";
-      }
-    });
-  }
-
-  // ============================================
-  // CHAOS TRIGGER BUTTON - NEOBRUTALISM EXPLOSION
-  // ============================================
-  const chaosBtn = document.getElementById("chaos-trigger");
-  if (chaosBtn) {
-    let clickCount = 0;
-
-    chaosBtn.addEventListener("click", function () {
-      clickCount++;
-
-      // Add explosion animation
-      this.classList.add("exploding");
-      setTimeout(() => this.classList.remove("exploding"), 500);
-
-      // Screen flash effect
-      const flashColors = [
-        "#ff00ff",
-        "#00ffff",
-        "#ffff00",
-        "#ff0000",
-        "#00ff00",
-        "#9900ff",
-      ];
-      let flashes = 0;
-      const flashInterval = setInterval(() => {
-        document.body.style.backgroundColor =
-          flashColors[Math.floor(Math.random() * flashColors.length)];
-        flashes++;
-        if (flashes > 8) {
-          clearInterval(flashInterval);
-          document.body.style.backgroundColor = "";
-        }
-      }, 60);
-
-      // Create explosion particles
-      for (let i = 0; i < 20; i++) {
-        const particle = document.createElement("div");
-        particle.style.position = "fixed";
-        particle.style.width = "20px";
-        particle.style.height = "20px";
-        particle.style.background =
-          flashColors[Math.floor(Math.random() * flashColors.length)];
-        particle.style.border = "4px solid #000";
-        particle.style.left = this.offsetLeft + this.offsetWidth / 2 + "px";
-        particle.style.top =
-          window.scrollY +
-          this.getBoundingClientRect().top +
-          this.offsetHeight / 2 +
-          "px";
-        particle.style.pointerEvents = "none";
-        particle.style.zIndex = "9999";
-
-        const angle = (Math.PI * 2 * i) / 20;
-        const velocity = 5 + Math.random() * 5;
-        const vx = Math.cos(angle) * velocity;
-        const vy = Math.sin(angle) * velocity;
-
-        document.body.appendChild(particle);
-
-        let posX = parseFloat(particle.style.left);
-        let posY = parseFloat(particle.style.top);
-        let alpha = 1;
-
-        const animateParticle = () => {
-          posX += vx;
-          posY += vy;
-          alpha -= 0.02;
-
-          particle.style.left = posX + "px";
-          particle.style.top = posY + "px";
-          particle.style.opacity = alpha;
-          particle.style.transform = `rotate(${
-            alpha * 360
-          }deg) scale(${alpha})`;
-
-          if (alpha > 0) {
-            requestAnimationFrame(animateParticle);
-          } else {
-            particle.remove();
-          }
-        };
-
-        requestAnimationFrame(animateParticle);
-      }
-
-      // Shake the entire page
-      document.body.style.animation = "shake 0.5s";
-      setTimeout(() => (document.body.style.animation = ""), 500);
-
-      // Change button text based on clicks
-      const messages = [
-        "AGAIN! ⚡",
-        "MORE CHAOS! 💥",
-        "UNSTOPPABLE! 🔥",
-        "MAXIMUM CHAOS! ⚡",
-        "INSANITY! 🌪️",
-      ];
-
-      if (clickCount <= 5) {
-        this.querySelector(".btn-text").textContent =
-          messages[Math.min(clickCount - 1, messages.length - 1)];
-      } else {
-        this.querySelector(".btn-text").textContent =
-          "CHAOS LEVEL " + clickCount + "!";
-      }
-
-      // Add temporary CSS animation for page shake
-      if (!document.querySelector("#shake-keyframes")) {
-        const style = document.createElement("style");
-        style.id = "shake-keyframes";
-        style.textContent = `
-          @keyframes shake {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            10% { transform: translate(-10px, -10px) rotate(-2deg); }
-            20% { transform: translate(10px, 10px) rotate(2deg); }
-            30% { transform: translate(-10px, 10px) rotate(-2deg); }
-            40% { transform: translate(10px, -10px) rotate(2deg); }
-            50% { transform: translate(-10px, -10px) rotate(-2deg); }
-            60% { transform: translate(10px, 10px) rotate(2deg); }
-            70% { transform: translate(-10px, 10px) rotate(-2deg); }
-            80% { transform: translate(10px, -10px) rotate(2deg); }
-            90% { transform: translate(-10px, -10px) rotate(-2deg); }
-          }
-        `;
-        document.head.appendChild(style);
       }
     });
   }
