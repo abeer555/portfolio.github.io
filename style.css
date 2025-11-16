@@ -1272,11 +1272,12 @@ nav ul {
   transform: translateY(-50%) rotate(90deg);
   font-family: var(--font-mega);
   font-size: 8rem;
-  color: var(--black-chaos);
+  color: var(--white-chaos);
   text-shadow: 4px 4px 0 var(--pink-chaos);
   z-index: 5;
   pointer-events: none;
   opacity: 0.3;
+  mix-blend-mode: difference;
 }
 
 .projects::after {
