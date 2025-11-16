@@ -1267,6 +1267,23 @@ nav ul {
   opacity: 0.3;
 }
 
+.projects::after {
+  content: "";
+  position: fixed;
+  right: 2rem;
+  top: 75%;
+  transform: translateY(-50%) rotate(90deg);
+  width: 150px;
+  height: 150px;
+  background-image: url("beer.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 /* ============================================
    CERTIFICATIONS - GRID CHAOS
    ============================================ */
