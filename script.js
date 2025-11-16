@@ -1,285 +1,160 @@
-// Wait for the DOM to load
+/* ============================================
+   DORKSENSE CHAOS - INTERACTIVE MADNESS
+   ============================================ */
+
 document.addEventListener("DOMContentLoaded", function () {
-  // Initialize AOS (Animate On Scroll) - Fast for skimming
-  AOS.init({
-    duration: 400,
-    once: false,
-    mirror: true,
-    offset: 100,
-    easing: "ease-in-out-cubic",
-    disable: window.innerWidth < 768 ? true : false, // Disable on mobile for better performance
+  // ============================================
+  // MOUSE TRAIL - Colored Circles on Move
+  // ============================================
+  const colors = [
+    "#ff00ff",
+    "#00ffff",
+    "#ccff00",
+    "#ffff00",
+    "#ff0000",
+    "#9900ff",
+  ];
+  let lastTrailTime = 0;
+  const trailThrottle = 50; // 50ms throttle
+
+  document.addEventListener("mousemove", function (e) {
+    const now = Date.now();
+    if (now - lastTrailTime < trailThrottle) return;
+    lastTrailTime = now;
+
+    const trail = document.createElement("div");
+    trail.className = "mouse-trail";
+    trail.style.left = e.pageX + "px";
+    trail.style.top = e.pageY + "px";
+    trail.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+    document.body.appendChild(trail);
+
+    setTimeout(() => {
+      trail.remove();
+    }, 800);
   });
 
-  // Variables
-  const header = document.querySelector("header");
-  const menuBtn = document.querySelector(".menu-btn");
-  const navbar = document.querySelector("#navbar ul");
-  const themeToggle = document.querySelector(".theme-toggle");
-  const backToTopBtn = document.getElementById("back-to-top");
-  const scrollDownBtn = document.querySelector(".scroll-down");
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll(".nav-link");
-  const contactForm = document.getElementById("contactForm");
-  const lastUpdatedElement = document.querySelector(".last-updated");
-
-  // Create scroll progress indicator
-  const scrollProgress = document.createElement("div");
-  scrollProgress.className = "scroll-progress";
-  document.body.appendChild(scrollProgress);
-
-  // Set last updated date
-  if (lastUpdatedElement) {
-    lastUpdatedElement.textContent = "Last Updated: 2025-03-09 23:02:48";
-  }
-
-  // Check for saved theme preference or use dark by default
-  const currentTheme = localStorage.getItem("theme") || "dark";
-  document.documentElement.setAttribute("data-theme", currentTheme);
-  if (currentTheme === "dark") {
-    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-  } else {
-    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-  }
-
-  // Enhanced scroll effects
-  let ticking = false;
-
-  function updateScrollEffects() {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollHeight =
-      document.documentElement.scrollHeight - window.innerHeight;
-    const scrollProgress = (scrollTop / scrollHeight) * 100;
-
-    // Update progress bar
-    document.querySelector(".scroll-progress").style.width =
-      scrollProgress + "%";
-
-    // Header scroll effect
-    if (scrollTop > 50) {
-      header.classList.add("scrolled");
-      backToTopBtn.classList.add("show");
-    } else {
-      header.classList.remove("scrolled");
-      backToTopBtn.classList.remove("show");
-    }
-
-    // Parallax effects
-    const parallaxElements = document.querySelectorAll(".parallax-element");
-    parallaxElements.forEach((element) => {
-      const speed = element.dataset.speed || 0.5;
-      const yPos = -(scrollTop * speed);
-      element.style.transform = `translateY(${yPos}px)`;
-    });
-
-    ticking = false;
-  }
-
-  // Optimized scroll event with requestAnimationFrame
-  function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(updateScrollEffects);
-      ticking = true;
-    }
-  }
-
-  // Add scroll event listener
-  window.addEventListener("scroll", onScroll);
-
-  // Intersection Observer for scroll animations
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px",
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-
-        // Add stagger effect for skill items
-        if (entry.target.classList.contains("skills-grid")) {
-          const skillItems = entry.target.querySelectorAll(".skill-item");
-          skillItems.forEach((item, index) => {
-            setTimeout(() => {
-              item.style.opacity = "1";
-              item.style.transform = "translateY(0)";
-            }, index * 100);
-          });
-        }
-      }
-    });
-  }, observerOptions);
-
-  // Observe elements for scroll animations
-  const fadeElements = document.querySelectorAll(
-    ".fade-in-up, .fade-in-left, .fade-in-right, .skills-grid"
+  // ============================================
+  // SCROLL REVEAL - Fade in with Rotation
+  // ============================================
+  const revealElements = document.querySelectorAll(
+    ".about-description, .education-card, .timeline-item, .project-card, .certification-card, .skill-item, .activity-card, .contact-item"
   );
-  fadeElements.forEach((el) => observer.observe(el));
 
-  // Smooth scroll for navigation links
-  navLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute("href");
-      const targetSection = document.querySelector(targetId);
+  revealElements.forEach((el) => {
+    el.classList.add("scroll-reveal");
+  });
 
-      if (targetSection) {
-        const headerHeight = header.offsetHeight;
-        const targetPosition = targetSection.offsetTop - headerHeight;
+  function checkScroll() {
+    revealElements.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
 
-        window.scrollTo({
-          top: targetPosition,
-          behavior: "smooth",
-        });
+      if (rect.top < windowHeight * 0.85) {
+        el.classList.add("active");
       }
-    });
-  });
-
-  // Interactive cursor follow effect
-  const cursor = document.createElement("div");
-  cursor.className = "cursor-follower";
-  cursor.style.cssText = `
-    position: fixed;
-    width: 20px;
-    height: 20px;
-    background: rgba(99, 102, 241, 0.5);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transition: all 0.1s ease;
-    opacity: 0;
-  `;
-  document.body.appendChild(cursor);
-
-  document.addEventListener("mousemove", (e) => {
-    cursor.style.left = e.clientX - 10 + "px";
-    cursor.style.top = e.clientY - 10 + "px";
-    cursor.style.opacity = "1";
-  });
-
-  document.addEventListener("mouseleave", () => {
-    cursor.style.opacity = "0";
-  });
-
-  // Enhanced back to top with smooth scroll
-  backToTopBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  });
-
-  // Mobile menu toggle
-  menuBtn.addEventListener("click", function () {
-    this.classList.toggle("open");
-    navbar.classList.toggle("show");
-    document.body.classList.toggle("no-scroll");
-  });
-
-  // Close mobile menu when clicking a link
-  navLinks.forEach((link) => {
-    link.addEventListener("click", function () {
-      menuBtn.classList.remove("open");
-      navbar.classList.remove("show");
-      document.body.classList.remove("no-scroll");
-    });
-  });
-
-  // Theme toggle
-  themeToggle.addEventListener("click", function () {
-    if (document.documentElement.getAttribute("data-theme") === "dark") {
-      document.documentElement.setAttribute("data-theme", "light");
-      localStorage.setItem("theme", "light");
-      this.innerHTML = '<i class="fas fa-moon"></i>';
-    } else {
-      document.documentElement.setAttribute("data-theme", "dark");
-      localStorage.setItem("theme", "dark");
-      this.innerHTML = '<i class="fas fa-sun"></i>';
-    }
-  });
-
-  // Back to top button
-  backToTopBtn.addEventListener("click", function () {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  });
-
-  // Scroll down button
-  scrollDownBtn.addEventListener("click", function () {
-    const aboutSection = document.getElementById("about");
-    aboutSection.scrollIntoView({ behavior: "smooth" });
-  });
-
-  // Contact form submission
-  if (contactForm) {
-    contactForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      // Get form values
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      const message = document.getElementById("message").value;
-
-      // Basic validation
-      if (!name || !email || !message) {
-        alert("Please fill in all fields.");
-        return;
-      }
-
-      // Here you would typically send the form data to a server
-      // For now, we'll just simulate a successful submission
-      const submitBtn = this.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
-
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-
-      setTimeout(() => {
-        submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-        this.reset();
-
-        setTimeout(() => {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
-        }, 3000);
-      }, 2000);
     });
   }
 
-  // Typing animation
+  window.addEventListener("scroll", checkScroll);
+  checkScroll(); // Initial check
+
+  // ============================================
+  // 3D TILT EFFECT on Cards
+  // ============================================
+  const tiltCards = document.querySelectorAll(
+    ".project-card, .education-card, .certification-card"
+  );
+
+  tiltCards.forEach((card) => {
+    card.addEventListener("mousemove", function (e) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = (y - centerY) / 10;
+      const rotateY = (centerX - x) / 10;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+    });
+
+    card.addEventListener("mouseleave", function () {
+      card.style.transform = "";
+    });
+  });
+
+  // ============================================
+  // BUTTON EXPLOSION - Color Flash on Click
+  // ============================================
+  const buttons = document.querySelectorAll(
+    ".btn, .primary-btn, .secondary-btn"
+  );
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      const explosionColors = [
+        "#ff0000",
+        "#ffff00",
+        "#ccff00",
+        "#00ffff",
+        "#ff00ff",
+        "#9900ff",
+        "#ff0000",
+        "#ffff00",
+        "#ccff00",
+        "#00ffff",
+      ];
+      let colorIndex = 0;
+
+      const explosion = setInterval(() => {
+        btn.style.backgroundColor = explosionColors[colorIndex];
+        colorIndex++;
+
+        if (colorIndex >= explosionColors.length) {
+          clearInterval(explosion);
+          btn.style.backgroundColor = "";
+        }
+      }, 50);
+    });
+  });
+
+  // ============================================
+  // TYPED TEXT EFFECT - Dynamic Header
+  // ============================================
   const typedTextSpan = document.querySelector(".typed-text");
-  const cursorSpan = document.querySelector(".cursor");
+  const cursor = document.querySelector(".cursor");
 
   const textArray = [
-    "Intern @ C9Labs",
-    "Competitive Programmer @ CodeChef",
-    "Technical Team Member @ LUG VITC",
+    "LINUX DESTROYER",
+    "CODE DEMON",
+    "CYBER WARRIOR",
+    "FULL-STACK CHAOS",
+    "DOCKER MASTER",
+    "CTF CHAMPION",
   ];
+
   const typingDelay = 100;
-  const erasingDelay = 20;
-  const newTextDelay = 200; // Delay between current and next text
+  const erasingDelay = 50;
+  const newTextDelay = 2000;
   let textArrayIndex = 0;
   let charIndex = 0;
 
   function type() {
     if (charIndex < textArray[textArrayIndex].length) {
-      if (!cursorSpan.classList.contains("typing"))
-        cursorSpan.classList.add("typing");
       typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
       charIndex++;
       setTimeout(type, typingDelay);
     } else {
-      cursorSpan.classList.remove("typing");
       setTimeout(erase, newTextDelay);
     }
   }
 
   function erase() {
     if (charIndex > 0) {
-      if (!cursorSpan.classList.contains("typing"))
-        cursorSpan.classList.add("typing");
       typedTextSpan.textContent = textArray[textArrayIndex].substring(
         0,
         charIndex - 1
@@ -287,51 +162,339 @@ document.addEventListener("DOMContentLoaded", function () {
       charIndex--;
       setTimeout(erase, erasingDelay);
     } else {
-      cursorSpan.classList.remove("typing");
       textArrayIndex++;
       if (textArrayIndex >= textArray.length) textArrayIndex = 0;
       setTimeout(type, typingDelay + 1100);
     }
   }
 
-  if (textArray.length) setTimeout(type, newTextDelay + 250);
+  if (typedTextSpan) {
+    setTimeout(type, newTextDelay + 250);
+  }
 
-  // Enhance project cards with subtle hover interactions
-  const projectCards = document.querySelectorAll(".project-card");
+  // ============================================
+  // EXPLODING CIRCLES Animation (Hero Section)
+  // ============================================
+  function createExplodingCircle() {
+    const hero = document.querySelector(".hero");
+    if (!hero) return;
 
-  projectCards.forEach((card) => {
-    const image = card.querySelector(".project-image img");
+    const circle = document.createElement("div");
+    circle.className = "explode-circle";
+    circle.style.left = Math.random() * 100 + "%";
+    circle.style.top = Math.random() * 100 + "%";
+    circle.style.borderColor =
+      colors[Math.floor(Math.random() * colors.length)];
 
-    card.addEventListener("mouseenter", function () {
-      image.style.transform = "scale(1.1)";
+    hero.appendChild(circle);
+
+    setTimeout(() => {
+      circle.remove();
+    }, 2000);
+  }
+
+  // Create exploding circles every 800ms
+  setInterval(createExplodingCircle, 800);
+
+  // ============================================
+  // BACK TO TOP BUTTON
+  // ============================================
+  const backToTopBtn = document.getElementById("back-to-top");
+
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 500) {
+      backToTopBtn.classList.add("show");
+    } else {
+      backToTopBtn.classList.remove("show");
+    }
+  });
+
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener("click", function () {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     });
+  }
 
-    card.addEventListener("mouseleave", function () {
-      image.style.transform = "scale(1)";
+  // ============================================
+  // SCROLL DOWN BUTTON
+  // ============================================
+  const scrollDownBtn = document.querySelector(".scroll-down");
+
+  if (scrollDownBtn) {
+    scrollDownBtn.addEventListener("click", function () {
+      const aboutSection = document.getElementById("about");
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  }
+
+  // ============================================
+  // SMOOTH SCROLL for Navigation Links
+  // ============================================
+  const navLinks = document.querySelectorAll(".nav-link, .footer-links a");
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", function (e) {
+      const href = this.getAttribute("href");
+
+      if (href && href.startsWith("#")) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+
+        if (target) {
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      }
     });
   });
 
-  // Add subtle animation to skill icons
-  const skillIcons = document.querySelectorAll(".skill-icon");
+  // ============================================
+  // GLITCH EFFECT on Hero Title
+  // ============================================
+  const heroTitle = document.querySelector(".hero-title");
 
-  skillIcons.forEach((icon) => {
-    icon.addEventListener("mouseenter", function () {
-      this.style.transform = "scale(1.2) rotate(10deg)";
-      this.style.color = getComputedStyle(
-        document.documentElement
-      ).getPropertyValue("--accent-1");
-    });
+  if (heroTitle) {
+    setInterval(() => {
+      heroTitle.style.animation = "none";
+      setTimeout(() => {
+        heroTitle.style.animation = "";
+      }, 10);
+    }, 3000);
+  }
 
-    icon.addEventListener("mouseleave", function () {
-      this.style.transform = "scale(1) rotate(0deg)";
-      this.style.color = getComputedStyle(
-        document.documentElement
-      ).getPropertyValue("--primary-color");
+  // ============================================
+  // RANDOM ROTATION on Skill Items on Hover
+  // ============================================
+  const skillItems = document.querySelectorAll(".skill-item");
+
+  skillItems.forEach((item) => {
+    item.addEventListener("mouseenter", function () {
+      const randomRotation = Math.random() * 20 - 10;
+      const randomScale = 1.1 + Math.random() * 0.2;
+      this.style.transform = `rotate(${randomRotation}deg) scale(${randomScale})`;
     });
   });
 
-  // Console log for user info
-  console.log(
-    `Portfolio loaded at: 2025-03-09 23:02:48 UTC by user: abeergupta0continue`
+  // ============================================
+  // THEME TOGGLE (Disabled in Chaos Mode)
+  // ============================================
+  const themeToggle = document.querySelector(".theme-toggle");
+  if (themeToggle) {
+    themeToggle.style.display = "none";
+  }
+
+  // ============================================
+  // MOBILE MENU (Hide in Chaos Mode)
+  // ============================================
+  const menuBtn = document.querySelector(".menu-btn");
+  if (menuBtn) {
+    menuBtn.style.display = "none";
+  }
+
+  // ============================================
+  // CONTACT FORM Enhancement
+  // ============================================
+  const contactForm = document.querySelector(".contact-form form");
+
+  if (contactForm) {
+    const inputs = contactForm.querySelectorAll("input, textarea");
+
+    inputs.forEach((input) => {
+      input.addEventListener("focus", function () {
+        this.style.transform = "scale(1.02) rotate(-1deg)";
+      });
+
+      input.addEventListener("blur", function () {
+        this.style.transform = "";
+      });
+    });
+  }
+
+  // ============================================
+  // FLOATING ANIMATION for Social Links
+  // ============================================
+  const socialLinks = document.querySelectorAll(
+    ".social-links a, .footer-social a"
   );
+
+  socialLinks.forEach((link, index) => {
+    link.style.animation = `float ${2 + index * 0.3}s ease-in-out infinite`;
+    link.style.animationDelay = `${index * 0.2}s`;
+  });
+
+  // ============================================
+  // Add Floating Animation Keyframes
+  // ============================================
+  const style = document.createElement("style");
+  style.textContent = `
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // ============================================
+  // CHAOS METER (Easter Egg)
+  // ============================================
+  let chaosLevel = 0;
+  let chaosClicks = 0;
+
+  document.addEventListener("click", function () {
+    chaosClicks++;
+    chaosLevel = Math.min(100, chaosClicks);
+
+    if (chaosLevel === 100) {
+      document.body.style.animation = "hue-rotate 2s linear infinite";
+      setTimeout(() => {
+        document.body.style.animation = "";
+        chaosClicks = 0;
+        chaosLevel = 0;
+      }, 5000);
+    }
+  });
+
+  // ============================================
+  // STROBE MODE (Secret: Press 'S' key)
+  // ============================================
+  let strobeActive = false;
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "s" || e.key === "S") {
+      strobeActive = !strobeActive;
+
+      if (strobeActive) {
+        document.body.classList.add("strobe");
+      } else {
+        document.body.classList.remove("strobe");
+      }
+    }
+  });
+
+  // ============================================
+  // SCREEN SHAKE on Certain Interactions
+  // ============================================
+  function shakeScreen() {
+    document.body.style.animation = "shake 0.5s ease";
+    setTimeout(() => {
+      document.body.style.animation = "";
+    }, 500);
+  }
+
+  // Add shake keyframes
+  const shakeStyle = document.createElement("style");
+  shakeStyle.textContent = `
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+  `;
+  document.head.appendChild(shakeStyle);
+
+  // Shake on footer click
+  const footer = document.querySelector("footer");
+  if (footer) {
+    footer.addEventListener("click", shakeScreen);
+  }
+
+  // ============================================
+  // KONAMI CODE Easter Egg (↑↑↓↓←→←→BA)
+  // ============================================
+  let konamiCode = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "b",
+    "a",
+  ];
+  let konamiIndex = 0;
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === konamiCode[konamiIndex]) {
+      konamiIndex++;
+
+      if (konamiIndex === konamiCode.length) {
+        // ULTRA CHAOS MODE
+        document.body.style.animation =
+          "hue-rotate 1s linear infinite, shake 0.2s ease infinite";
+
+        // Create massive explosions
+        for (let i = 0; i < 50; i++) {
+          setTimeout(() => {
+            createExplodingCircle();
+          }, i * 100);
+        }
+
+        setTimeout(() => {
+          document.body.style.animation = "";
+          konamiIndex = 0;
+        }, 10000);
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  });
+
+  // ============================================
+  // CHAOS BADGE - Click to Toggle Ultra Chaos
+  // ============================================
+  const chaosBadge = document.querySelector(".chaos-badge");
+  let ultraChaosActive = false;
+
+  if (chaosBadge) {
+    chaosBadge.addEventListener("click", function () {
+      ultraChaosActive = !ultraChaosActive;
+
+      if (ultraChaosActive) {
+        // Activate ultra chaos
+        document.body.style.animation = "hue-rotate 3s linear infinite";
+        chaosBadge.textContent = "💀 ULTRA CHAOS 💀";
+        chaosBadge.style.background = "var(--red-chaos)";
+
+        // Spawn many circles
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => createExplodingCircle(), i * 100);
+        }
+      } else {
+        // Deactivate
+        document.body.style.animation = "";
+        chaosBadge.textContent = "⚡ CHAOS MODE ⚡";
+        chaosBadge.style.background = "var(--black-chaos)";
+      }
+    });
+  }
+
+  // ============================================
+  // INITIALIZE - Log Chaos Message
+  // ============================================
+  console.log(`
+  ██████╗  ██████╗ ██████╗ ██╗  ██╗███████╗███████╗███╗   ██╗███████╗███████╗
+  ██╔══██╗██╔═══██╗██╔══██╗██║ ██╔╝██╔════╝██╔════╝████╗  ██║██╔════╝██╔════╝
+  ██║  ██║██║   ██║██████╔╝█████╔╝ ███████╗█████╗  ██╔██╗ ██║███████╗█████╗  
+  ██║  ██║██║   ██║██╔══██╗██╔═██╗ ╚════██║██╔══╝  ██║╚██╗██║╚════██║██╔══╝  
+  ██████╔╝╚██████╔╝██║  ██║██║  ██╗███████║███████╗██║ ╚████║███████║███████╗
+  ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝╚══════╝╚══════╝
+  
+  CHAOS MODE ACTIVATED - WELCOME TO THE MADNESS
+  
+  SECRET COMMANDS:
+  - Press 'S' for STROBE MODE
+  - Try the Konami Code for ULTRA CHAOS
+  - Click 100 times for HUE ROTATION
+  
+  Professional content in chaotic presentation. That's DORKSENSE.
+  `);
 });

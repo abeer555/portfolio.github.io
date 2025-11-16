@@ -29,13 +29,12 @@
     
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <!-- DORKSENSE CHAOS FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <!-- Modern gradient background -->
-    <div class="bg-gradient"></div>
-
+    <!-- NO GRADIENT BG - PURE BLACK CHAOS -->
+    
     <header>
       <div class="header-content">
         <div class="logo">
@@ -65,13 +64,13 @@
     </header>
 
     <main class="scroll-snap-container">
-      <!-- Hero Section with clean design -->
-      <section id="home" class="hero scroll-snap-item">
+      <!-- Hero Section - CHAOS MODE -->
+      <section id="home" class="hero scanlines">
         <div class="container">
           <div class="hero-content">
-            <div class="hero-text fade-in-left">
-              <span class="hero-greeting parallax-element" data-speed="0.3">Hello, I'm</span>
-              <h1 class="hero-title">Abeer Gupta</h1>
+            <div class="hero-text">
+              <span class="hero-greeting neon-chaos">INCOMING TRANSMISSION...</span>
+              <h1 class="hero-title mega-glitch" data-text="ABEER GUPTA">ABEER GUPTA</h1>
               <div class="dynamic-text">
                 <span class="typed-text"></span><span class="cursor">&nbsp;</span>
               </div>
@@ -113,10 +112,10 @@
       <!-- About Section -->
       <section id="about" class="about">
         <div class="container">
-          <h2 class="section-title" data-aos="fade-up">About Me</h2>
-          <div class="section-subtitle" data-aos="fade-up" data-aos-delay="100">My Background & Education</div>
+          <h2 class="section-title">About Me</h2>
+          <div class="section-subtitle">My Background & Education</div>
           
-          <div class="about-content" data-aos="fade-up" data-aos-delay="200">
+          <div class="about-content">
             <div class="about-text">
               <div class="about-description">
                 I am a dual-degree student pursuing a <span class="highlight">B.Tech in Computer Science and Engineering</span> at VIT Chennai and a <span class="highlight">B.S. in Data Science and Applications</span> at IIT Madras. My academic journey is defined by a strong foundation in data science, software engineering, and cybersecurity, with a proven record of excellence and leadership.
@@ -161,16 +160,28 @@
             </div>
           </div>
         </div>
+        
+        <!-- Floating Bubble Effects -->
+        <div class="bubble-container">
+          <div class="chaos-bubble bubble-1"></div>
+          <div class="chaos-bubble bubble-2"></div>
+          <div class="chaos-bubble bubble-3"></div>
+          <div class="explode-circle explode-1"></div>
+          <div class="explode-circle explode-2"></div>
+        </div>
       </section>
 
       <!-- Experience Section -->
       <section id="experience" class="experience">
         <div class="container">
-          <h2 class="section-title" data-aos="fade-up">Experience</h2>
-          <div class="section-subtitle" data-aos="fade-up" data-aos-delay="100">My Professional Journey</div>
-          
-          <div class="timeline" data-aos="fade-up" data-aos-delay="200">
-            <div class="timeline-item">
+          <div class="experience-grid">
+            <div class="experience-sticky">
+              <h2 class="section-title">Experience</h2>
+              <div class="section-subtitle" data-aos-delay="100">My Professional Journey</div>
+            </div>
+            
+            <div class="timeline" data-aos-delay="200">
+              <div class="timeline-item">
               <div class="timeline-icon">
                 <i class="fas fa-user-shield"></i>
               </div>
@@ -245,16 +256,25 @@
             </div>
           </div>
         </div>
+        
+        <!-- Floating Bubble Effects -->
+        <div class="bubble-container">
+          <div class="chaos-bubble bubble-1"></div>
+          <div class="chaos-bubble bubble-2"></div>
+          <div class="chaos-bubble bubble-3"></div>
+          <div class="explode-circle explode-1"></div>
+          <div class="explode-circle explode-2"></div>
+        </div>
       </section>
 
       <!-- Projects Section -->
       <section id="projects" class="projects">
         <div class="container">
-          <h2 class="section-title" data-aos="fade-up">Projects</h2>
-          <div class="section-subtitle" data-aos="fade-up" data-aos-delay="100">My Recent Work</div>
+          <h2 class="section-title">Projects</h2>
+          <div class="section-subtitle" data-aos-delay="100">My Recent Work</div>
           
           <div class="projects-container">
-            <!-- <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+            <!-- <div class="project-card" data-aos-delay="100">
               <div class="project-image">
                 
                 <div class="project-overlay">
@@ -275,7 +295,7 @@
                 </div>
               </div>
             </div> -->
-            <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="project-card" data-aos-delay="200">
               <div class="project-image">
                 <img src="Hackrx.png" alt="Bajaj HackRx" />
                 <div class="project-overlay">
@@ -299,7 +319,7 @@
                 </div>
               </div>
             </div>
-            <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="project-card" data-aos-delay="200">
               <div class="project-image">
                 <img src="hyprland_image.png" alt="Hyprland-Dots" />
                 <div class="project-overlay">
@@ -322,7 +342,7 @@
                 </div>
               </div>
             </div>
-            <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="project-card" data-aos-delay="300">
               <div class="project-image">
                 <img src="server.png" alt="Secure File Server" />
                 <div class="project-overlay">
@@ -345,7 +365,7 @@
                 </div>
               </div>
             </div>
-            <div class="project-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="project-card" data-aos-delay="400">
               <div class="project-image">
                 <img src="pentest.png" alt="Web Penetration Testing Toolkit" />
                 <div class="project-overlay">
@@ -376,10 +396,10 @@
       <!-- Certifications Section -->
       <section id="certifications" class="certifications">
         <div class="container">
-          <h2 class="section-title" data-aos="fade-up">Certifications</h2>
-          <div class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Professional Development</div>
+          <h2 class="section-title">Certifications</h2>
+          <div class="section-subtitle" data-aos-delay="100">Professional Development</div>
           
-          <div class="certifications-grid" data-aos="fade-up" data-aos-delay="200">
+          <div class="certifications-grid" data-aos-delay="200">
             <div class="certification-card">
               <div class="certification-icon"><i class="fas fa-shield-alt"></i></div>
               <div class="certification-content">
@@ -414,16 +434,25 @@
             </div>
           </div>
         </div>
+        
+        <!-- Floating Bubble Effects -->
+        <div class="bubble-container">
+          <div class="chaos-bubble bubble-1"></div>
+          <div class="chaos-bubble bubble-2"></div>
+          <div class="chaos-bubble bubble-3"></div>
+          <div class="explode-circle explode-1"></div>
+          <div class="explode-circle explode-2"></div>
+        </div>
       </section>
 
       <!-- Skills Section -->
       <section id="skills" class="skills scroll-snap-item">
         <div class="container">
-          <h2 class="section-title fade-in-up" data-aos="fade-up">Skills & Technologies</h2>
-          <div class="section-subtitle fade-in-up" data-aos="fade-up" data-aos-delay="100">What I Bring to the Table</div>
+          <h2 class="section-title fade-in-up">Skills & Technologies</h2>
+          <div class="section-subtitle fade-in-up" data-aos-delay="100">What I Bring to the Table</div>
 
           <div class="skills-wrapper">
-            <div class="skills-category" data-aos="fade-up" data-aos-delay="200">
+            <div class="skills-category" data-aos-delay="200">
               <h3>Cybersecurity</h3>
               <div class="skills-grid">
                 <div class="skill-item">
@@ -445,7 +474,7 @@
               </div>
             </div>
 
-            <div class="skills-category" data-aos="fade-up" data-aos-delay="300">
+            <div class="skills-category" data-aos-delay="300">
               <h3>Programming Languages</h3>
               <div class="skills-grid">
                 <div class="skill-item">
@@ -467,7 +496,7 @@
               </div>
             </div>
 
-            <div class="skills-category" data-aos="fade-up" data-aos-delay="350">
+            <div class="skills-category" data-aos-delay="350">
               <h3>DevOps & Cloud</h3>
               <div class="skills-grid">
                 <div class="skill-item">
@@ -497,7 +526,7 @@
               </div>
             </div>
 
-            <div class="skills-category" data-aos="fade-up" data-aos-delay="400">
+            <div class="skills-category" data-aos-delay="400">
               <h3>Web Technologies</h3>
               <div class="skills-grid">
                 <div class="skill-item">
@@ -527,7 +556,7 @@
               </div>
             </div>
 
-            <div class="skills-category" data-aos="fade-up" data-aos-delay="450">
+            <div class="skills-category" data-aos-delay="450">
               <h3>AI & Data Science</h3>
               <div class="skills-grid">
                 <div class="skill-item">
@@ -553,7 +582,7 @@
               </div>
             </div>
 
-            <div class="skills-category" data-aos="fade-up" data-aos-delay="500">
+            <div class="skills-category" data-aos-delay="500">
               <h3>Databases</h3>
               <div class="skills-grid">
                 <div class="skill-item">
@@ -576,7 +605,7 @@
             </div>
           </div>
 
-          <div class="languages-section" data-aos="fade-up" data-aos-delay="550">
+          <div class="languages-section" data-aos-delay="550">
             <h3>Languages</h3>
             <div class="language-skills">
               <div class="language">
@@ -619,10 +648,10 @@
       <!-- Leadership & Activities -->
       <section id="activities" class="activities">
         <div class="container">
-          <h2 class="section-title" data-aos="fade-up">Leadership & Activities</h2>
-          <div class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Extra-Curricular Involvement</div>
+          <h2 class="section-title">Leadership & Activities</h2>
+          <div class="section-subtitle" data-aos-delay="100">Extra-Curricular Involvement</div>
           
-          <div class="activities-grid" data-aos="fade-up" data-aos-delay="200">
+          <div class="activities-grid" data-aos-delay="200">
             <div class="activity-card">
               <div class="activity-icon"><i class="fas fa-shield-alt"></i></div>
               <h3>Password x CTF Hackathon</h3>
@@ -662,15 +691,24 @@
             </div>
           </div>
         </div>
+        
+        <!-- Floating Bubble Effects -->
+        <div class="bubble-container">
+          <div class="chaos-bubble bubble-1"></div>
+          <div class="chaos-bubble bubble-2"></div>
+          <div class="chaos-bubble bubble-3"></div>
+          <div class="explode-circle explode-1"></div>
+          <div class="explode-circle explode-2"></div>
+        </div>
       </section>
 
       <!-- Contact Section -->
       <section id="contact" class="contact">
         <div class="container">
-          <h2 class="section-title" data-aos="fade-up">Get In Touch</h2>
-          <div class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Let's Connect</div>
+          <h2 class="section-title">Get In Touch</h2>
+          <div class="section-subtitle" data-aos-delay="100">Let's Connect</div>
           
-          <div class="contact-content" data-aos="fade-up" data-aos-delay="200">
+          <div class="contact-content" data-aos-delay="200">
             <div class="contact-info">
               <div class="contact-item">
                 <div class="contact-icon">
@@ -759,8 +797,7 @@
     <button id="back-to-top" aria-label="Back to top">
       <i class="fas fa-arrow-up"></i>
     </button>
-
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <!-- DORKSENSE CHAOS SCRIPTS -->
     <script src="script.js"></script>
   </body>
 </html>

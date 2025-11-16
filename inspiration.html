@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DORKSENSE - VISUAL VIOLENCE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@700;900&family=Courier+Prime:wght@700&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Courier Prime', monospace;
+      background: #000;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+    
+    .bebas { font-family: 'Bebas Neue', sans-serif; }
+    .grotesk { font-family: 'Space Grotesk', sans-serif; }
+    
+    /* ULTRA GLITCH */
+    .mega-glitch {
+      animation: mega-glitch 0.3s infinite;
+      text-shadow: 
+        -5px -5px 0 #ff0000,
+        5px 5px 0 #00ff00,
+        -5px 5px 0 #0000ff,
+        5px -5px 0 #ff00ff;
+    }
+    
+    @keyframes mega-glitch {
+      0% { transform: translate(0) skew(0deg); filter: hue-rotate(0deg); }
+      20% { transform: translate(-5px, 5px) skew(-5deg); filter: hue-rotate(90deg); }
+      40% { transform: translate(5px, -5px) skew(5deg); filter: hue-rotate(180deg); }
+      60% { transform: translate(-5px, -5px) skew(-3deg); filter: hue-rotate(270deg); }
+      80% { transform: translate(5px, 5px) skew(3deg); filter: hue-rotate(360deg); }
+      100% { transform: translate(0) skew(0deg); filter: hue-rotate(0deg); }
+    }
+    
+    /* INSANE SHAPES */
+    .chaos-box {
+      position: absolute;
+      border: 8px solid;
+      animation: chaos-float 4s ease-in-out infinite;
+      mix-blend-mode: difference;
+      pointer-events: none;
+    }
+    
+    @keyframes chaos-float {
+      0%, 100% { 
+        transform: translate(0, 0) rotate(0deg) scale(1); 
+        opacity: 0.3;
+      }
+      25% { 
+        transform: translate(40px, -60px) rotate(45deg) scale(1.2); 
+        opacity: 0.7;
+      }
+      50% { 
+        transform: translate(-30px, 40px) rotate(-30deg) scale(0.9); 
+        opacity: 0.4;
+      }
+      75% { 
+        transform: translate(50px, 30px) rotate(60deg) scale(1.1); 
+        opacity: 0.6;
+      }
+    }
+    
+    /* BRUTAL BORDERS */
+    .brutal {
+      border: 10px solid #000;
+      box-shadow: 
+        12px 12px 0 #000,
+        12px 12px 0 4px #fff;
+    }
+    
+    /* SEIZURE WARNING */
+    .strobe {
+      animation: strobe 0.1s infinite;
+    }
+    
+    @keyframes strobe {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    /* 3D TILT */
+    .tilt-card {
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+    }
+    
+    /* EXPLOSION CIRCLES */
+    .explode-circle {
+      position: absolute;
+      border-radius: 50%;
+      border: 6px solid;
+      animation: explode 2s ease-out infinite;
+    }
+    
+    @keyframes explode {
+      0% {
+        transform: scale(0.5);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+    
+    /* AGGRESSIVE HOVER */
+    .morph-hover {
+      transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    .morph-hover:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 0 40px currentColor;
+    }
+    
+    /* PIXEL CORRUPTION */
+    .corrupt {
+      animation: corrupt 0.5s infinite;
+      image-rendering: pixelated;
+    }
+    
+    @keyframes corrupt {
+      0%, 100% { filter: contrast(100%) brightness(100%); }
+      25% { filter: contrast(200%) brightness(150%); }
+      50% { filter: contrast(50%) brightness(80%); }
+      75% { filter: contrast(150%) brightness(120%); }
+    }
+    
+    /* TEXT CHAOS */
+    .text-chaos {
+      animation: text-chaos 0.2s infinite;
+    }
+    
+    @keyframes text-chaos {
+      0% { letter-spacing: 0; }
+      25% { letter-spacing: 0.1em; }
+      50% { letter-spacing: -0.05em; }
+      75% { letter-spacing: 0.15em; }
+      100% { letter-spacing: 0; }
+    }
+    
+    /* WILD MARQUEE */
+    .wild-marquee {
+      animation: wild-marquee 15s linear infinite;
+    }
+    
+    @keyframes wild-marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    /* NEON MADNESS */
+    .neon-chaos {
+      animation: neon-chaos 1s ease-in-out infinite;
+      text-shadow: 
+        0 0 10px currentColor,
+        0 0 20px currentColor,
+        0 0 40px currentColor,
+        0 0 80px currentColor;
+    }
+    
+    @keyframes neon-chaos {
+      0%, 100% { 
+        filter: hue-rotate(0deg) saturate(100%); 
+        text-shadow: 
+          0 0 10px currentColor,
+          0 0 20px currentColor,
+          0 0 40px currentColor;
+      }
+      50% { 
+        filter: hue-rotate(180deg) saturate(200%); 
+        text-shadow: 
+          0 0 20px currentColor,
+          0 0 40px currentColor,
+          0 0 80px currentColor;
+      }
+    }
+    
+    /* FADE IN VISIBLE */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(60px) rotate(-5deg);
+      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+    
+    /* SCAN LINES */
+    .scanlines::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+    
+    /* MOUSE TRAIL */
+    .trail {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border: 3px solid;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      animation: trail-fade 0.5s ease-out forwards;
+    }
+    
+    @keyframes trail-fade {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body class="scanlines bg-black text-white">
+
+  <!-- ABSOLUTE CHAOS HERO -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+    <!-- EXPLOSIVE BACKGROUND -->
+    <div class="absolute inset-0">
+      <div class="chaos-box w-64 h-64 border-lime-400 top-10 left-10" style="animation-delay: 0s;"></div>
+      <div class="chaos-box w-96 h-48 border-pink-500 top-40 right-20" style="animation-delay: 0.5s;"></div>
+      <div class="chaos-box w-48 h-96 border-cyan-400 bottom-20 left-1/4" style="animation-delay: 1s;"></div>
+      <div class="chaos-box w-80 h-80 border-yellow-300 bottom-40 right-10" style="animation-delay: 1.5s;"></div>
+      <div class="chaos-box w-56 h-56 border-red-500 top-1/2 left-1/2" style="animation-delay: 0.7s;"></div>
+      
+      <!-- EXPLODING CIRCLES -->
+      <div class="explode-circle w-32 h-32 border-pink-500 top-20 right-1/3" style="animation-delay: 0s;"></div>
+      <div class="explode-circle w-48 h-48 border-cyan-400 bottom-32 left-1/4" style="animation-delay: 0.8s;"></div>
+      <div class="explode-circle w-40 h-40 border-lime-400 top-1/3 right-1/4" style="animation-delay: 1.2s;"></div>
+    </div>
+    
+    <!-- MAIN CONTENT -->
+    <div class="relative z-10 text-center px-4">
+      <div class="mb-8">
+        <h1 class="mega-glitch bebas text-[12rem] sm:text-[16rem] md:text-[20rem] leading-none font-black text-white select-none">
+          DORK<br/>SENSE
+        </h1>
+      </div>
+      
+      <div class="relative inline-block mb-16">
+        <div class="brutal bg-gradient-to-r from-lime-400 via-pink-500 to-cyan-400 px-12 py-6 transform rotate-3 strobe">
+          <p class="grotesk text-3xl sm:text-5xl md:text-6xl font-black text-black text-chaos">
+            UI THAT BREAKS YOUR BRAIN
+          </p>
+        </div>
+      </div>
+      
+      <button class="morph-hover brutal bg-pink-500 border-pink-500 text-black bebas text-4xl sm:text-5xl px-16 py-8 font-black hover:bg-lime-400 hover:border-lime-400 cursor-pointer transform hover:rotate-0 rotate-2">
+        ASSAULT MY EYEBALLS →
+      </button>
+    </div>
+  </section>
+
+  <!-- STATS SECTION - OVERLAPPING CHAOS -->
+  <section class="relative py-32 px-4 bg-gradient-to-br from-pink-500 via-purple-600 to-cyan-500 overflow-hidden">
+    <div class="max-w-7xl mx-auto relative">
+      <div class="brutal bg-black inline-block px-12 py-6 mb-20 transform -rotate-3">
+        <h2 class="neon-chaos bebas text-7xl sm:text-8xl md:text-9xl font-black text-lime-400">
+          RAW NUMBERS
+        </h2>
+      </div>
+      
+      <div class="relative" style="min-height: 800px;">
+        <!-- ABSOLUTELY POSITIONED CHAOS -->
+        <div class="fade-in absolute top-0 left-0 w-full sm:w-80 brutal bg-lime-400 p-10 transform -rotate-6 hover:rotate-0 transition-all hover:z-50 cursor-pointer">
+          <div class="corrupt bebas text-9xl font-black text-black mb-4">999K</div>
+          <div class="grotesk text-2xl font-black text-black uppercase">Rules Obliterated</div>
+        </div>
+        
+        <div class="fade-in absolute top-20 right-0 w-full sm:w-96 brutal bg-pink-500 p-10 transform rotate-12 hover:rotate-0 transition-all hover:z-50 cursor-pointer" style="transition-delay: 0.1s;">
+          <div class="corrupt bebas text-9xl font-black text-white mb-4">0%</div>
+          <div class="grotesk text-2xl font-black text-white uppercase">Boring Energy</div>
+        </div>
+        
+        <div class="fade-in absolute top-64 left-1/4 w-full sm:w-72 brutal bg-cyan-400 p-10 transform -rotate-3 hover:rotate-0 transition-all hover:z-50 cursor-pointer" style="transition-delay: 0.2s;">
+          <div class="corrupt bebas text-9xl font-black text-black mb-4">∞²</div>
+          <div class="grotesk text-2xl font-black text-black uppercase">Chaos Level</div>
+        </div>
+        
+        <div class="fade-in absolute bottom-40 right-1/4 w-full sm:w-80 brutal bg-yellow-300 p-10 transform rotate-6 hover:rotate-0 transition-all hover:z-50 cursor-pointer" style="transition-delay: 0.3s;">
+          <div class="corrupt bebas text-9xl font-black text-black mb-4">777</div>
+          <div class="grotesk text-2xl font-black text-black uppercase">Pure Insanity</div>
+        </div>
+        
+        <div class="fade-in absolute bottom-0 left-0 w-full sm:w-96 brutal bg-red-500 p-10 transform -rotate-12 hover:rotate-0 transition-all hover:z-50 cursor-pointer" style="transition-delay: 0.4s;">
+          <div class="corrupt bebas text-9xl font-black text-white mb-4">666</div>
+          <div class="grotesk text-2xl font-black text-white uppercase">Evil Designs</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARALLAX MADNESS -->
+  <section class="relative h-screen overflow-hidden bg-black">
+    <div id="parallax" class="relative h-full">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div id="rotate-text" class="text-center">
+          <div class="neon-chaos bebas text-[8rem] sm:text-[12rem] md:text-[16rem] font-black leading-none">
+            <span class="text-pink-500">CHAOS</span><br/>
+            <span class="text-cyan-400">×</span><br/>
+            <span class="text-lime-400">ORDER</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOWCASE - BROKEN GRID -->
+  <section class="relative py-32 px-4 bg-lime-400">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+        <div class="lg:col-span-2 sticky top-8">
+          <div class="brutal bg-black px-8 py-16 transform -rotate-6">
+            <h2 class="bebas text-[8rem] leading-none font-black text-pink-500 mb-4">
+              WHY<br/>DORK<br/>SENSE<br/>?
+            </h2>
+            <div class="w-full h-2 bg-cyan-400"></div>
+          </div>
+        </div>
+        
+        <div class="lg:col-span-3 space-y-12">
+          <div class="fade-in tilt-card brutal bg-pink-500 p-8 transform rotate-3">
+            <div class="brutal bg-gradient-to-br from-cyan-400 to-purple-600 h-64 mb-6"></div>
+            <h3 class="grotesk text-4xl font-black text-black mb-4">VISUAL WARFARE</h3>
+            <p class="text-xl font-bold text-black">We weaponize aesthetics. Your retinas are the battlefield.</p>
+          </div>
+          
+          <div class="fade-in tilt-card brutal bg-cyan-400 p-8 transform -rotate-6" style="margin-left: 2rem;">
+            <div class="brutal bg-gradient-to-br from-pink-500 to-yellow-300 h-64 mb-6"></div>
+            <h3 class="grotesk text-4xl font-black text-black mb-4">ANTI-MINIMALISM CULT</h3>
+            <p class="text-xl font-bold text-black">More is more. Then more again. Restraint is dead.</p>
+          </div>
+          
+          <div class="fade-in tilt-card brutal bg-yellow-300 p-8 transform rotate-2" style="margin-left: -2rem;">
+            <div class="brutal bg-gradient-to-br from-lime-400 to-red-500 h-64 mb-6"></div>
+            <h3 class="grotesk text-4xl font-black text-black mb-4">FUNCTIONAL DESTRUCTION</h3>
+            <p class="text-xl font-bold text-black">It works flawlessly while looking completely unhinged.</p>
+          </div>
+          
+          <div class="fade-in tilt-card brutal bg-purple-600 p-8 transform -rotate-2">
+            <div class="brutal bg-gradient-to-br from-pink-500 to-cyan-400 h-64 mb-6"></div>
+            <h3 class="grotesk text-4xl font-black text-lime-400 mb-4">MEMORABLE VIOLENCE</h3>
+            <p class="text-xl font-bold text-white">You'll close this tab. You'll dream about it tonight.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="relative py-32 px-4 bg-black overflow-hidden">
+    <div class="max-w-6xl mx-auto">
+      <div class="brutal bg-pink-500 inline-block px-12 py-6 mb-20 transform rotate-3">
+        <h2 class="bebas text-7xl sm:text-8xl md:text-9xl font-black text-black">
+          VICTIM STATEMENTS
+        </h2>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="fade-in brutal bg-gradient-to-br from-lime-400 to-cyan-400 p-10 transform -rotate-3 morph-hover">
+          <div class="flex items-center mb-6">
+            <div class="w-20 h-20 brutal bg-pink-500 mr-4"></div>
+            <div>
+              <div class="grotesk text-2xl font-black text-black">SARAH K.</div>
+              <div class="text-black font-bold">Traumatized Designer</div>
+            </div>
+          </div>
+          <p class="text-2xl font-black text-black">"I can't unsee this. My Figma files look boring now. Help."</p>
+        </div>
+        
+        <div class="fade-in brutal bg-gradient-to-br from-pink-500 to-purple-600 p-10 transform rotate-6 morph-hover" id="shake-testimonial">
+          <div class="flex items-center mb-6">
+            <div class="w-20 h-20 brutal bg-cyan-400 mr-4"></div>
+            <div>
+              <div class="grotesk text-2xl font-black text-white">MIKE R.</div>
+              <div class="text-white font-bold">Ex-UX Lead</div>
+            </div>
+          </div>
+          <p class="text-2xl font-black text-white">"Burned my design degree after seeing this. Worth it."</p>
+        </div>
+        
+        <div class="fade-in brutal bg-gradient-to-br from-yellow-300 to-red-500 p-10 transform -rotate-6 morph-hover">
+          <div class="flex items-center mb-6">
+            <div class="w-20 h-20 brutal bg-black mr-4"></div>
+            <div>
+              <div class="grotesk text-2xl font-black text-black">ALEX P.</div>
+              <div class="text-black font-bold">Pixel Casualty</div>
+            </div>
+          </div>
+          <p class="text-2xl font-black text-black">"My eyes are bleeding but I can't stop scrolling."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA - MAXIMUM CHAOS -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
+    <div class="absolute top-0 left-0 w-full h-1/3 bg-black"></div>
+    <div class="absolute top-1/3 left-0 w-full h-1/3 bg-pink-500"></div>
+    <div class="absolute bottom-0 left-0 w-full h-1/3 bg-lime-400"></div>
+    
+    <div class="relative z-10 text-center px-4 w-full">
+      <div class="overflow-hidden mb-16 py-8">
+        <div class="wild-marquee flex whitespace-nowrap">
+          <span class="bebas text-[8rem] sm:text-[12rem] font-black text-cyan-400 mx-8 neon-chaos">ENTER DORKSENSE</span>
+          <span class="bebas text-[8rem] sm:text-[12rem] font-black text-yellow-300 mx-8 neon-chaos">ENTER DORKSENSE</span>
+          <span class="bebas text-[8rem] sm:text-[12rem] font-black text-pink-500 mx-8 neon-chaos">ENTER DORKSENSE</span>
+          <span class="bebas text-[8rem] sm:text-[12rem] font-black text-cyan-400 mx-8 neon-chaos">ENTER DORKSENSE</span>
+          <span class="bebas text-[8rem] sm:text-[12rem] font-black text-yellow-300 mx-8 neon-chaos">ENTER DORKSENSE</span>
+        </div>
+      </div>
+      
+      <button id="final-btn" class="morph-hover brutal bg-black border-black text-lime-400 bebas text-6xl sm:text-7xl md:text-8xl px-20 py-12 font-black hover:bg-pink-500 hover:text-black hover:border-pink-500 cursor-pointer transform rotate-2">
+        DESTROY ME
+      </button>
+      
+      <div class="mt-12 brutal bg-yellow-300 inline-block px-8 py-4 transform -rotate-2">
+        <p class="grotesk text-2xl sm:text-3xl font-black text-black">
+          ⚠️ SEIZURE WARNING UNIRONICALLY ⚠️
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // INTERSECTION OBSERVER
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('show');
+      });
+    }, { threshold: 0.1, rootMargin: '-50px' });
+    
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+    
+    // PARALLAX
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scroll = window.scrollY;
+          const rotateEl = document.getElementById('rotate-text');
+          if (rotateEl) {
+            rotateEl.style.transform = `rotate(${scroll * 0.1}deg) scale(${1 + scroll * 0.0001})`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+    
+    // 3D TILT CARDS
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+      });
+    });
+    
+    // SHAKE TESTIMONIAL
+    const shakeEl = document.getElementById('shake-testimonial');
+    if (shakeEl) {
+      setInterval(() => {
+        if (Math.random() > 0.7) {
+          shakeEl.style.animation = 'none';
+          setTimeout(() => {
+            shakeEl.style.animation = '';
+            shakeEl.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+          }, 10);
+        }
+      }, 3000);
+    }
+    
+    // FINAL BUTTON EXPLOSION
+    const finalBtn = document.getElementById('final-btn');
+    if (finalBtn) {
+      finalBtn.addEventListener('click', function() {
+        // Screen flash
+        const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ff0000', '#00ff00'];
+        let flashes = 0;
+        const flashInterval = setInterval(() => {
+          document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          flashes++;
+          if (flashes > 10) {
+            clearInterval(flashInterval);
+            document.body.style.backgroundColor = '#000';
+          }
+        }, 50);
+        
+        // Button chaos
+        this.style.transform = 'scale(0.8) rotate(360deg)';
+        setTimeout(() => {
+          this.style.transform = 'scale(1.2) rotate(0deg)';
+        }, 100);
+      });
+    }
+    
+    // MOUSE TRAIL
+    let lastTrail = 0;
+    document.addEventListener('mousemove', (e) => {
+      const now = Date.now();
+      if (now - lastTrail > 50) {
+        const trail = document.createElement('div');
+        trail.className = 'trail';
+        const colors = ['#ff00ff', '#00ffff', '#ffff00', '#00ff00', '#ff0000'];
+        trail.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
+        trail.style.left = e.clientX - 10 + 'px';
+        trail.style.top = e.clientY - 10 + 'px';
+        document.body.appendChild(trail);
+        
+        setTimeout(() => trail.remove(), 500);
+        lastTrail = now;
+      }
+    });
+    
+    // SMOOTH SCROLL
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>
