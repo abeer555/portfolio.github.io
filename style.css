@@ -681,7 +681,23 @@ nav ul {
   border: 10px solid var(--black-chaos);
   animation: blob-float 6s ease-in-out infinite;
   top: 20%;
-  right: 10%;
+  right: 15%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blob-shape::before {
+  content: "";
+  position: absolute;
+  width: 130%;
+  height: 130%;
+  background-image: url("abeerface-removebg-preview(1).png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
 }
 
 @keyframes blob-float {
@@ -1237,9 +1253,9 @@ nav ul {
 
 /* WHY ABEER? Sidebar */
 .projects::before {
-  content: "WHY ABEER?";
+  content: "A BEER?";
   position: fixed;
-  right: -8rem;
+  right: -3rem;
   top: 50%;
   transform: translateY(-50%) rotate(90deg);
   font-family: var(--font-mega);
