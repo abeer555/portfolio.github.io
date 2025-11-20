@@ -5,7 +5,20 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   // ============================================
-  // 1. GENERATIVE CANVAS BACKGROUND
+  // 1. PRELOADER
+  // ============================================
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      const preloader = document.getElementById("preloader");
+      if (preloader) {
+        preloader.classList.add("loaded");
+      }
+      ScrollTrigger.refresh();
+    }, 1000);
+  });
+
+  // ============================================
+  // 2. GENERATIVE CANVAS BACKGROUND
   // ============================================
   const canvas = document.getElementById("fluid");
   if (canvas) {
@@ -76,13 +89,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ============================================
-  // 2. SMOOTH SCROLL (Lenis)
+  // 3. SMOOTH SCROLL (Lenis)
   // ============================================
   if (typeof Lenis !== "undefined") {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
+      direction: "vertical",
+      gestureDirection: "vertical",
+      smoothTouch: false,
+      touchMultiplier: 2,
     });
 
     function raf(time) {
@@ -90,13 +107,24 @@ document.addEventListener("DOMContentLoaded", function () {
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
+
+    // Sync Lenis with ScrollTrigger if available
+    if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+    }
   }
 
   // ============================================
-  // 3. INTERACTIVE CURSOR
+  // 4. INTERACTIVE CURSOR
   // ============================================
   const cursor = document.getElementById("cursor");
+  const grid = document.getElementById("grid");
   if (cursor) {
+    const cursorDot = cursor.querySelector(".cursor-dot");
     const cursorText = cursor.querySelector(".cursor-text");
     let mouseX = 0,
       mouseY = 0;
@@ -106,63 +134,67 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("mousemove", (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+
+      // Grid Ripple Effect
+      if (grid) {
+        const x = (mouseX / window.innerWidth) * 100;
+        const y = (mouseY / window.innerHeight) * 100;
+        grid.style.backgroundPosition = `${x}px ${y}px`;
+      }
     });
 
     function animateCursor() {
       const dx = mouseX - cursorX;
       const dy = mouseY - cursorY;
 
-      cursorX += dx * 0.15;
-      cursorY += dy * 0.15;
+      cursorX += dx * 0.2;
+      cursorY += dy * 0.2;
 
-      cursor.style.left = `${cursorX}px`;
-      cursor.style.top = `${cursorY}px`;
+      cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
 
       requestAnimationFrame(animateCursor);
     }
     animateCursor();
 
-    // Cursor Hovers
+    // Cursor Hovers - Updated to support hover-trigger class
     const interactiveElements = document.querySelectorAll(
-      "a, button, .img-reveal-wrapper, .project-card, .skill-item"
+      "a, button, .img-reveal-wrapper, .project-card, .skill-item, .hover-trigger"
     );
     interactiveElements.forEach((el) => {
       el.addEventListener("mouseenter", () => {
         cursor.classList.add("hovered");
+        if (cursorDot) cursorDot.classList.add("active");
         const text = el.getAttribute("data-cursor");
-        if (text) cursorText.innerText = text;
-        else cursorText.innerText = "VIEW";
+        if (text && cursorText) cursorText.innerText = text;
+        else if (cursorText) cursorText.innerText = "VIEW";
       });
       el.addEventListener("mouseleave", () => {
         cursor.classList.remove("hovered");
-        cursorText.innerText = "";
+        if (cursorDot) cursorDot.classList.remove("active");
+        if (cursorText) cursorText.innerText = "";
       });
     });
   }
 
   // ============================================
-  // 4. SCROLL TRIGGERS (GSAP)
+  // 5. SCROLL TRIGGERS (GSAP)
   // ============================================
   if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero text reveal
+    // Hero text reveal - Trigger immediately on load
     const heroTexts = document.querySelectorAll(".clip-text");
-    heroTexts.forEach((text, index) => {
-      gsap.to(text, {
-        scrollTrigger: {
-          trigger: ".hero",
-          start: "top top",
-          once: true,
-        },
+    if (heroTexts.length > 0) {
+      gsap.to(heroTexts, {
         y: 0,
         opacity: 1,
         clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
-        duration: 1.2,
-        delay: index * 0.2,
-        ease: "power3.out",
+        duration: 1.5,
+        stagger: 0.2,
+        ease: "power4.out",
+        delay: 0.5, // Wait for preloader
       });
-    });
+    }
 
     // Image Reveal Logic
     const images = document.querySelectorAll(".img-reveal-wrapper");
@@ -199,7 +231,31 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
-    // Text skew on scroll
+    // Horizontal Scroll Logic for Projects
+    const horizontalSection = document.querySelector(".horizontal-outer");
+    const horizontalInner = document.querySelector(".horizontal-scroll-inner");
+
+    if (horizontalSection && horizontalInner) {
+      // Refresh ScrollTrigger on window resize
+      window.addEventListener("resize", () => {
+        ScrollTrigger.refresh();
+      });
+
+      gsap.to(horizontalInner, {
+        x: () => -Math.max(0, horizontalInner.scrollWidth - window.innerWidth),
+        ease: "none",
+        scrollTrigger: {
+          trigger: horizontalSection,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+    }
+
+    // Text skew on scroll - REMOVED for smoother performance
+    /*
     let proxy = { skew: 0 },
       skewSetter = gsap.quickSetter("section", "skewY", "deg"),
       clamp = gsap.utils.clamp(-2, 2);
@@ -219,6 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       },
     });
+    */
   }
 
   // ============================================

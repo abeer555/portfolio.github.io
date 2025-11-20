@@ -32,15 +32,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     
-    <!-- Professional Fonts: Manrope (Clean UI) + Oswald (Impact) -->
+    <!-- Professional Fonts: Space Grotesk (Clean UI) + Syne (Impact) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style-new.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   </head>
   <body>
+    <!-- SVG FILTERS DEFINITION -->
+    <svg style="display: none;">
+        <defs>
+            <filter id="liquid">
+                <feTurbulence type="fractalNoise" baseFrequency="0.01 0.005" numOctaves="5" seed="2">
+                    <animate attributeName="baseFrequency" dur="10s" values="0.01 0.005;0.02 0.01;0.01 0.005" repeatCount="indefinite" />
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" scale="10" />
+            </filter>
+            <filter id="turbulence">
+                <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" result="turbulence" />
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- PRELOADER -->
+    <div id="preloader" class="fixed inset-0 z-[100] bg-acid flex items-center justify-center text-void">
+        <div class="text-6xl font-display font-black animate-pulse">INITIALIZING...</div>
+    </div>
+
     <!-- CURSOR -->
     <div id="cursor">
         <div class="cursor-dot"></div>
@@ -55,20 +76,23 @@
     <!-- NOISE OVERLAY -->
     <div class="noise-overlay"></div>
     
+    <!-- REACTIVE GRID -->
+    <div class="reactive-grid" id="grid"></div>
+    
     <header>
       <div class="header-content">
         <div class="logo">
           <img src="photo2.jpg" alt="Abeer Gupta" class="profile-logo" />
-          <span class="logo-text">Abeer Gupta</span>
+          <span class="logo-text hover-trigger">Abeer Gupta</span>
         </div>
         <nav id="navbar">
           <ul>
-            <li><a href="#home" class="nav-link">Home</a></li>
-            <li><a href="#about" class="nav-link">About</a></li>
-            <li><a href="#experience" class="nav-link">Experience</a></li>
-            <li><a href="#projects" class="nav-link">Projects</a></li>
-            <li><a href="#skills" class="nav-link">Skills</a></li>
-            <li><a href="#contact" class="nav-link">Contact</a></li>
+            <li><a href="#home" class="nav-link hover-trigger">Home</a></li>
+            <li><a href="#about" class="nav-link hover-trigger">About</a></li>
+            <li><a href="#experience" class="nav-link hover-trigger">Experience</a></li>
+            <li><a href="#projects" class="nav-link hover-trigger">Projects</a></li>
+            <li><a href="#skills" class="nav-link hover-trigger">Skills</a></li>
+            <li><a href="#contact" class="nav-link hover-trigger">Contact</a></li>
           </ul>
         </nav>
         <div class="nav-right">
@@ -89,7 +113,7 @@
         <div class="hero-content">
           <span class="hero-greeting">CONNECTION ESTABLISHED...</span>
           <h1 class="hero-title">
-            <div class="split-line"><span class="clip-text">ABEER</span></div>
+            <div class="split-line"><span class="clip-text liquid-text">ABEER</span></div>
             <div class="split-line"><span class="clip-text">GUPTA</span></div>
           </h1>
           <div class="dynamic-text">
@@ -105,13 +129,13 @@
             <a href="#contact" class="btn secondary-btn">Contact Me</a>
           </div>
           <div class="social-links">
-            <a href="https://github.com/abeer555/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a href="https://github.com/abeer555/" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover-trigger">
               <i class="fab fa-github"></i>
             </a>
-            <a href="https://www.linkedin.com/in/abeer-gupta/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/abeer-gupta/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover-trigger">
               <i class="fab fa-linkedin-in"></i>
             </a>
-            <a href="mailto:abeergupta555@gmail.com" aria-label="Email">
+            <a href="mailto:abeergupta555@gmail.com" aria-label="Email" class="hover-trigger">
               <i class="fas fa-envelope"></i>
             </a>
           </div>
@@ -286,127 +310,82 @@
         </div>
       </section>
 
-      <!-- Projects Section -->
-      <section id="projects" class="projects">
-        <div class="container">
-          <h2 class="section-title fade-in-up">Projects</h2>
-          <div class="section-subtitle fade-in-up">My Recent Work</div>
-          
-          <div class="projects-container">
-            <!-- <div class="project-card" data-aos-delay="100">
-              <div class="project-image">
-                
-                <div class="project-overlay">
-                  <div class="project-links">
-                    <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">
-                      <i class="fas fa-external-link-alt"></i>
-                    </a>
+      <!-- Projects Section - Horizontal Scroll -->
+      <section id="projects" class="projects relative">
+        <div class="horizontal-outer">
+          <div class="sticky-wrapper">
+            <div class="horizontal-scroll-inner flex gap-12 px-12">
+              
+              <!-- Title Card -->
+              <div class="project-title-card flex-shrink-0 flex flex-col justify-end p-8 hover-trigger">
+                <h2 class="section-title-horizontal">SELECTED<br>PROJECTS<br><span class="text-outline-acid" style="-webkit-text-stroke: 2px var(--concrete);">(2025)</span></h2>
+              </div>
+
+              <!-- Project 1 -->
+              <div class="project-card-horizontal flex-shrink-0 relative group hover-trigger overflow-hidden" data-cursor="EXPLORE">
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors z-10"></div>
+                <img src="Hackrx.png" alt="Bajaj HackRx" class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110" />
+                <div class="project-info-overlay absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-void text-white">
+                  <h3 class="project-title-overlay">RAG DOCUMENT QUERY</h3>
+                  <p class="project-subtitle-overlay">/// Bajaj HackRx - Top 55/1000+</p>
+                  <div class="project-tech-horizontal">
+                    <span>RAG</span>
+                    <span>LLM</span>
+                    <span>OCR</span>
                   </div>
                 </div>
               </div>
-              <div class="project-content">
-                <h3></h3>
-                <p>
-                  
-                </p>
-                <div class="project-tech">
-                  
-                </div>
-              </div>
-            </div> -->
-            <div class="project-card fade-in-up" data-cursor="EXPLORE">
-              <div class="project-image">
-                <img src="Hackrx.png" alt="Bajaj HackRx" />
-                <div class="project-overlay">
-                  <div class="project-links">
-                    <a href="https://github.com/vansh-9878/RAG" class="project-link" target="_blank" rel="noopener noreferrer">
-                      <i class="fab fa-github"></i>
-                    </a>
+
+              <!-- Project 2 -->
+              <div class="project-card-horizontal flex-shrink-0 relative group hover-trigger overflow-hidden" data-cursor="EXPLORE">
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors z-10"></div>
+                <img src="hyprland_image.png" alt="Hyprland-Dots" class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110" />
+                <div class="project-info-overlay absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-void text-white">
+                  <h3 class="project-title-overlay">HYPRLAND DOTS</h3>
+                  <p class="project-subtitle-overlay">/// Custom Desktop Environment</p>
+                  <div class="project-tech-horizontal">
+                    <span>Arch Linux</span>
+                    <span>Hyprland</span>
+                    <span>Shell</span>
                   </div>
                 </div>
               </div>
-              <div class="project-content">
-                <h3>RAG Document Query System — Bajaj HackRx</h3>
-                <p>
-                  Placed 55 / 1000+ teams at Bajaj HackRx. An end-to-end Retrieval-Augmented Generation system that converts dense PDFs/DOCs into multilingual, natural-language Q&A with context-aware answer generation.
-                </p>
-                <div class="project-tech">
-                  <span>RAG</span>
-                  <span>LLM</span>
-                  <span>OCR</span>
-                  <span>Vector Embeddings</span>
-                </div>
-              </div>
-            </div>
-            <div class="project-card fade-in-up" data-cursor="EXPLORE">
-              <div class="project-image">
-                <img src="hyprland_image.png" alt="Hyprland-Dots" />
-                <div class="project-overlay">
-                  <div class="project-links">
-                    <a href="https://github.com/abeer555/Hyprland-Dots" class="project-link" target="_blank" rel="noopener noreferrer">
-                      <i class="fab fa-github"></i>
-                    </a>
+
+              <!-- Project 3 -->
+              <div class="project-card-horizontal flex-shrink-0 relative group hover-trigger overflow-hidden" data-cursor="EXPLORE">
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors z-10"></div>
+                <img src="server.png" alt="Secure File Server" class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110" />
+                <div class="project-info-overlay absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-void text-white">
+                  <h3 class="project-title-overlay">SECURE FILE SERVER</h3>
+                  <p class="project-subtitle-overlay">/// Encrypted Transfer System</p>
+                  <div class="project-tech-horizontal">
+                    <span>OpenSSL</span>
+                    <span>Multi-threading</span>
+                    <span>AES-256</span>
                   </div>
                 </div>
               </div>
-              <div class="project-content">
-                <h3>Hyprland-Dots: Custom Hyprland Desktop Environment</h3>
-                <p>
-                  Configured Arch Linux with Hyprland for 3+ personal systems, optimizing performance and user experience (25% faster). Designed a minimalist, cohesive UI for Linux, enhancing usability and aesthetics.
-                </p>
-                <div class="project-tech">
-                  <span>Arch Linux</span>
-                  <span>Hyprland</span>
-                  <span>Shell</span>
-                </div>
-              </div>
-            </div>
-            <div class="project-card fade-in-up" data-cursor="EXPLORE">
-              <div class="project-image">
-                <img src="server.png" alt="Secure File Server" />
-                <div class="project-overlay">
-                  <div class="project-links">
-                    <a href="https://github.com/abeer555/Secure-File-Server.git" class="project-link" target="_blank" rel="noopener noreferrer">
-                      <i class="fab fa-github"></i>
-                    </a>
+
+              <!-- Project 4 -->
+              <div class="project-card-horizontal flex-shrink-0 relative group hover-trigger overflow-hidden" data-cursor="EXPLORE">
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors z-10"></div>
+                <img src="pentest.png" alt="Web Penetration Testing Toolkit" class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110" />
+                <div class="project-info-overlay absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-void text-white">
+                  <h3 class="project-title-overlay">PENTEST TOOLKIT</h3>
+                  <p class="project-subtitle-overlay">/// Security Tools Collection</p>
+                  <div class="project-tech-horizontal">
+                    <span>Python</span>
+                    <span>Bash</span>
+                    <span>Security</span>
                   </div>
                 </div>
               </div>
-              <div class="project-content">
-                <h3>Secure File Server</h3>
-                <p>
-                  Developed a multi-threaded HTTP server with OpenSSL AES-256-CBC encryption for secure file storage and transfer. Reduced processing times by 25% for files exceeding 10GB with streaming and transparent encryption.
-                </p>
-                <div class="project-tech">
-                  <span>OpenSSL</span>
-                  <span>Multi-threading</span>
-                  <span>Encryption</span>
-                </div>
+
+              <!-- End Card -->
+              <div class="project-end-card flex-shrink-0 flex items-center justify-center bg-acid border-4 border-void hover-trigger">
+                <a href="https://github.com/abeer555" target="_blank" rel="noopener noreferrer" class="end-card-link">VIEW ALL →</a>
               </div>
-            </div>
-            <div class="project-card fade-in-up" data-cursor="EXPLORE">
-              <div class="project-image">
-                <img src="pentest.png" alt="Web Penetration Testing Toolkit" />
-                <div class="project-overlay">
-                  <div class="project-links">
-                    <a href="https://github.com/abeer555/Web-Pentest-Toolkit.git" class="project-link" target="_blank" rel="noopener noreferrer">
-                      <i class="fab fa-github"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="project-content">
-                <h3>Web Penetration Testing Toolkit</h3>
-                <p>
-                  A comprehensive collection of penetration testing tools, scripts, and configurations developed during my cybersecurity learning journey.
-                </p>
-                <div class="project-tech">
-                  <span>Python</span>
-                  <span>Bash</span>
-                  <span>Linux</span>
-                  <span>Security</span>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>

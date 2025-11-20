@@ -1,40 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" class="cursor-none bg-[#050505]">
+<html lang="en" class="cursor-none">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DORKSENSE | MAGNUM OPUS</title>
-    
-    <!-- CORE DEPENDENCIES -->
+    <title>DORKSENSE | GOD MODE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    
-    <!-- FONTS: Manrope (Clean UI) + Oswald (Impact) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        'header': ['"Oswald"', 'sans-serif'],
-                        'body': ['"Manrope"', 'sans-serif'],
+                        'display': ['"Syne"', 'sans-serif'],
+                        'mono': ['"Space Grotesk"', 'monospace'],
                     },
                     colors: {
-                        'brand': '#E63946', /* Striking International Red */
-                        'void': '#0a0a0a',
-                        'paper': '#f1f1f1',
-                        'surface': '#1a1a1a'
+                        'acid': '#ccff00',
+                        'void': '#050505',
+                        'concrete': '#f0f0f0',
+                        'hyper': '#3b82f6',
                     },
                     backgroundImage: {
-                        'grain': "url('https://assets.iceable.com/img/noise-transparent.png')",
+                        'noise': "url('https://assets.iceable.com/img/noise-transparent.png')",
                     },
-                    spacing: {
-                        '128': '32rem',
+                    cursor: {
+                        'none': 'none',
                     }
                 }
             }
@@ -42,540 +38,367 @@
     </script>
 
     <style>
-        /* --- SENIOR LEVEL CSS --- */
-        :root {
-            --cursor-size: 12px;
-        }
+        /* --- GLOBAL RESET --- */
+        :root { --cursor-size: 20px; }
+        body { background-color: #050505; color: #f0f0f0; overflow-x: hidden; }
         
-        body {
-            overflow-x: hidden;
-            background-color: #050505;
-            color: #f1f1f1;
-        }
-
-        /* Smooth Text Rendering */
-        * {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            box-sizing: border-box;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-
+        /* --- SVG FILTERS (The Secret Sauce) --- */
+        .liquid-text { filter: url(#liquid); will-change: transform; }
+        .distort-hover { transition: filter 0.3s ease; }
+        .distort-hover:hover { filter: url(#turbulence); }
+        
         /* --- CUSTOM CURSOR --- */
         #cursor {
-            position: fixed; top: 0; left: 0; z-index: 10000; pointer-events: none;
-            mix-blend-mode: exclusion;
+            position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;
+            mix-blend-mode: difference;
         }
         .cursor-dot {
             width: var(--cursor-size); height: var(--cursor-size);
-            background: white; border-radius: 50%;
+            background: #ccff00; border-radius: 50%;
             transform: translate(-50%, -50%);
-            transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1), 
-                        height 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
         }
-        .cursor-text {
-            position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
-            font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700;
-            letter-spacing: 1px; color: white; opacity: 0; white-space: nowrap;
-            transition: opacity 0.3s;
-        }
-        #cursor.hovered .cursor-dot { width: 60px; height: 60px; background: rgba(255,255,255,0.1); border: 1px solid white; backdrop-filter: blur(2px); }
-        #cursor.hovered .cursor-text { opacity: 1; }
-
-        /* --- CANVAS BACKGROUND --- */
-        #canvas-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            opacity: 0.4; pointer-events: none;
-        }
-
-        /* --- TYPOGRAPHY EFFECTS --- */
-        .clip-text {
-            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
-            transform: translateY(100%);
-            opacity: 0;
-            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .clip-text.visible {
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .split-line { overflow: hidden; display: block; }
+        .cursor-dot.active { width: 80px; height: 80px; background: white; mix-blend-mode: exclusion; }
         
-        /* --- IMAGE REVEAL SHADER-LIKE EFFECT --- */
-        .img-reveal-wrapper {
-            overflow: hidden; position: relative;
+        /* --- UTILITIES --- */
+        .blend-diff { mix-blend-mode: difference; }
+        .text-outline { -webkit-text-stroke: 1px rgba(255,255,255,0.5); color: transparent; }
+        .text-outline-acid { -webkit-text-stroke: 1px #ccff00; color: transparent; }
+        
+        /* --- GRID BACKGROUND --- */
+        .reactive-grid {
+            position: fixed; inset: 0; z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
         }
-        .img-reveal-wrapper img {
-            transform: scale(1.4);
-            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+
+        /* --- HORIZONTAL SCROLL SECTION --- */
+        .horizontal-scroll-wrapper {
+            overflow: hidden;
+            width: 100%;
+        }
+        .horizontal-scroll-inner {
+            display: flex;
+            flex-wrap: nowrap;
             will-change: transform;
-        }
-        .img-reveal-wrapper.in-view img {
-            transform: scale(1);
-        }
-        .img-overlay {
-            position: absolute; inset: 0; background: #050505; z-index: 2;
-            transform-origin: bottom;
-            transition: transform 1s cubic-bezier(0.8, 0, 0.2, 1);
-        }
-        .img-reveal-wrapper.in-view .img-overlay {
-            transform: scaleY(0);
         }
 
         /* --- PRELOADER --- */
-        #loader {
-            position: fixed; inset: 0; background: #0a0a0a; z-index: 9999;
-            display: flex; flex-direction: column; justify-content: center; items-center;
+        #preloader {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+            transition: clip-path 0.8s cubic-bezier(0.87, 0, 0.13, 1);
         }
-        .loader-bar {
-            width: 200px; height: 2px; background: #333; margin-top: 20px; position: relative; overflow: hidden;
-        }
-        .loader-progress {
-            position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: #E63946;
+        #preloader.loaded {
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
         }
     </style>
 </head>
-<body>
+<body class="selection:bg-acid selection:text-void">
+
+    <!-- SVG FILTERS DEFINITION -->
+    <svg style="display: none;">
+        <defs>
+            <filter id="liquid">
+                <feTurbulence type="fractalNoise" baseFrequency="0.01 0.005" numOctaves="5" seed="2">
+                    <animate attributeName="baseFrequency" dur="10s" values="0.01 0.005;0.02 0.01;0.01 0.005" repeatCount="indefinite" />
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" scale="10" />
+            </filter>
+            <filter id="turbulence">
+                <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" result="turbulence" />
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
 
     <!-- PRELOADER -->
-    <div id="loader">
-        <div class="flex gap-2 font-header text-6xl font-bold text-white tracking-tighter overflow-hidden">
-            <span class="loader-char translate-y-full">D</span>
-            <span class="loader-char translate-y-full">O</span>
-            <span class="loader-char translate-y-full">R</span>
-            <span class="loader-char translate-y-full">K</span>
-            <span class="loader-char translate-y-full text-brand">.</span>
-        </div>
-        <div class="loader-bar">
-            <div class="loader-progress"></div>
-        </div>
-        <div class="font-mono text-xs text-gray-500 mt-4 counter">000</div>
+    <div id="preloader" class="fixed inset-0 z-[100] bg-acid flex items-center justify-center text-void">
+        <div class="text-6xl font-display font-black animate-pulse">INITIALIZING GOD MODE...</div>
     </div>
 
     <!-- CURSOR -->
-    <div id="cursor">
-        <div class="cursor-dot"></div>
-        <span class="cursor-text">VIEW</span>
-    </div>
+    <div id="cursor"><div class="cursor-dot"></div></div>
 
-    <!-- GENERATIVE CANVAS BACKGROUND -->
-    <div id="canvas-container">
-        <canvas id="fluid"></canvas>
-    </div>
-    
-    <!-- NOISE OVERLAY -->
-    <div class="fixed inset-0 bg-grain opacity-[0.04] pointer-events-none z-50 mix-blend-overlay"></div>
+    <!-- NOISE & GRID -->
+    <div class="fixed inset-0 bg-noise opacity-[0.03] pointer-events-none z-50"></div>
+    <div class="reactive-grid" id="grid"></div>
 
     <!-- NAV -->
-    <nav class="fixed top-0 w-full p-8 flex justify-between items-start z-40 mix-blend-difference text-white">
-        <a href="#" class="font-header font-bold text-2xl tracking-tight group">
-            DS<span class="text-brand">.</span> STUDIO
+    <nav class="fixed top-0 left-0 w-full p-6 z-40 flex justify-between items-center blend-diff text-white pointer-events-none">
+        <a href="#" class="font-display font-black text-3xl tracking-tighter pointer-events-auto hover-trigger">
+            DORKSENSE<span class="text-acid">.</span>
         </a>
-        <div class="flex flex-col items-end gap-1">
-            <span class="font-mono text-xs text-gray-400">LOCATION</span>
-            <span class="font-body text-sm font-bold">TOKYO / LA</span>
+        <div class="hidden md:flex gap-12 font-mono text-sm font-bold pointer-events-auto">
+            <a href="#manifesto" class="hover:text-acid transition-colors hover-trigger">/// MANIFESTO</a>
+            <a href="#work" class="hover:text-acid transition-colors hover-trigger">/// WORK</a>
+            <a href="#contact" class="hover:text-acid transition-colors hover-trigger">/// CONTACT</a>
         </div>
     </nav>
 
-    <!-- CONTENT WRAPPER -->
-    <main>
+    <!-- HERO -->
+    <section class="relative min-h-screen flex flex-col justify-center items-center overflow-hidden">
+        <div class="relative z-10 text-center mix-blend-difference">
+            <div class="font-mono text-acid mb-4 tracking-[0.5em] text-sm animate-bounce">SYSTEM STATUS: OVERCLOCKED</div>
+            <h1 class="font-display font-black text-[15vw] leading-[0.8] text-white liquid-text select-none hover-trigger">
+                VISUAL
+            </h1>
+            <h1 class="font-display font-black text-[15vw] leading-[0.8] text-outline hover:text-acid transition-colors duration-500 select-none">
+                ANARCHY
+            </h1>
+        </div>
         
-        <!-- HERO SECTION -->
-        <section class="min-h-screen flex flex-col justify-center px-6 md:px-20 relative pt-32">
-            <div class="max-w-[90vw]">
-                <h1 class="font-header text-[12vw] leading-[0.85] uppercase text-white tracking-tighter font-bold">
-                    <div class="split-line"><span class="clip-text block">We Engineer</span></div>
-                    <div class="split-line"><span class="clip-text block text-transparent" style="-webkit-text-stroke: 2px #fff;">Digital</span></div>
-                    <div class="split-line"><span class="clip-text block text-brand">Dominance</span></div>
-                </h1>
-            </div>
-            
-            <div class="mt-24 flex flex-col md:flex-row justify-between items-end border-t border-white/20 pt-8">
-                <div class="max-w-md">
-                    <p class="font-body text-gray-400 text-lg leading-relaxed reveal-p opacity-0 translate-y-4">
-                        A technical design authority specializing in high-performance rendering, generative aesthetics, and brand elevation. We don't follow trends. We write the code that sets them.
-                    </p>
-                </div>
-                <div class="mt-8 md:mt-0">
-                    <div class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center animate-bounce">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="absolute bottom-12 left-0 w-full flex justify-center">
+             <div class="w-[1px] h-24 bg-white/20 overflow-hidden">
+                <div class="w-full h-1/2 bg-acid animate-[dropdown_1.5s_infinite]"></div>
+             </div>
+        </div>
+        
+        <!-- Decorative Blur Blobs -->
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-hyper rounded-full blur-[120px] opacity-20 animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-acid rounded-full blur-[150px] opacity-10 animate-pulse" style="animation-delay: 1s"></div>
+    </section>
 
-        <!-- SELECTED WORKS (Horizontal Scroll with Parallax) -->
-        <section class="py-32 border-t border-white/10 bg-[#050505] relative z-10" id="work">
-            <div class="px-6 md:px-20 mb-20 flex justify-between items-end">
-                <h2 class="font-header text-6xl text-white uppercase">Selected<br>Works (24-25)</h2>
-                <span class="font-mono text-brand">/// CASE STUDIES</span>
+    <!-- MANIFESTO (Text Reveal) -->
+    <section id="manifesto" class="py-32 px-6 md:px-20 max-w-[1800px] mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div class="lg:col-span-4">
+                <h2 class="font-mono text-acid text-sm sticky top-32">/// MISSION_LOG_01</h2>
             </div>
+            <div class="lg:col-span-8">
+                <p class="reveal-text font-display font-bold text-4xl md:text-7xl leading-[1.1] text-white/20">
+                    Design is not about safety. It is about dominance. We reject the sterile, corporate grids of the past decade. We build digital experiences that feel broken, tangible, and alive. 
+                    <span class="text-white block mt-8">Welcome to the new internet.</span>
+                </p>
+            </div>
+        </div>
+    </section>
 
-            <div class="flex flex-col gap-32 px-6 md:px-20">
+    <!-- HORIZONTAL SCROLL GALLERY (The Sticky Trick) -->
+    <section id="work" class="relative bg-concrete text-void">
+        <div class="horizontal-outer h-[400vh] relative"> <!-- Height determines scroll speed/length -->
+            <div class="sticky top-0 h-screen overflow-hidden flex items-center">
                 
-                <!-- Project 1 -->
-                <div class="group w-full relative cursor-none" data-cursor="EXPLORE">
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                        <div class="md:col-span-8 img-reveal-wrapper aspect-video">
-                            <div class="img-overlay"></div>
-                            <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Project 1">
-                        </div>
-                        <div class="md:col-span-4 flex flex-col justify-center h-full pl-0 md:pl-12">
-                            <span class="font-mono text-brand text-xs mb-4">01 / WEBGL</span>
-                            <h3 class="font-header text-5xl md:text-7xl text-white uppercase mb-6 group-hover:translate-x-4 transition-transform duration-500">Aero<br>Dynamics</h3>
-                            <p class="font-body text-gray-400 text-sm max-w-xs">A physics-based vehicle configurator built with Three.js and pure mathematics.</p>
-                            <div class="mt-8 w-full h-[1px] bg-white/20 group-hover:bg-brand transition-colors duration-500"></div>
-                        </div>
+                <div class="horizontal-scroll-inner flex gap-12 px-12">
+                    <!-- Title Card -->
+                    <div class="w-[60vw] md:w-[30vw] h-[70vh] flex-shrink-0 flex flex-col justify-end p-8 border-4 border-void bg-transparent">
+                        <h2 class="font-display font-black text-8xl leading-none">SELECTED<br>WORKS<br><span class="text-acid text-outline" style="-webkit-text-stroke: 2px #111;">(2025)</span></h2>
                     </div>
-                </div>
 
-                <!-- Project 2 -->
-                <div class="group w-full relative cursor-none" data-cursor="EXPLORE">
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                        <div class="md:col-span-4 order-2 md:order-1 flex flex-col justify-center h-full pr-0 md:pr-12 text-right md:text-left">
-                            <span class="font-mono text-brand text-xs mb-4">02 / E-COMMERCE</span>
-                            <h3 class="font-header text-5xl md:text-7xl text-white uppercase mb-6 group-hover:translate-x-4 transition-transform duration-500">Kuro<br>Fashion</h3>
-                            <p class="font-body text-gray-400 text-sm max-w-xs">Headless Shopify build with fluid page transitions and AI-powered recommendations.</p>
-                            <div class="mt-8 w-full h-[1px] bg-white/20 group-hover:bg-brand transition-colors duration-500"></div>
-                        </div>
-                        <div class="md:col-span-8 order-1 md:order-2 img-reveal-wrapper aspect-video">
-                            <div class="img-overlay"></div>
-                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Project 2">
+                    <!-- Project 1 -->
+                    <div class="w-[85vw] md:w-[60vw] h-[70vh] flex-shrink-0 relative group border-4 border-void bg-white hover-trigger overflow-hidden">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000" class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110" alt="Project 1">
+                        <div class="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-void text-white">
+                            <h3 class="font-display font-black text-4xl">NEON_GUTTER</h3>
+                            <p class="font-mono text-acid">/// WebGL Experience</p>
                         </div>
                     </div>
-                </div>
 
-                <!-- Project 3 -->
-                <div class="group w-full relative cursor-none" data-cursor="EXPLORE">
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                        <div class="md:col-span-8 img-reveal-wrapper aspect-video">
-                            <div class="img-overlay"></div>
-                            <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Project 3">
-                        </div>
-                        <div class="md:col-span-4 flex flex-col justify-center h-full pl-0 md:pl-12">
-                            <span class="font-mono text-brand text-xs mb-4">03 / FINTECH</span>
-                            <h3 class="font-header text-5xl md:text-7xl text-white uppercase mb-6 group-hover:translate-x-4 transition-transform duration-500">Vault<br>Protocol</h3>
-                            <p class="font-body text-gray-400 text-sm max-w-xs">Real-time data visualization dashboard for a decentralized finance protocol.</p>
-                            <div class="mt-8 w-full h-[1px] bg-white/20 group-hover:bg-brand transition-colors duration-500"></div>
+                    <!-- Project 2 -->
+                    <div class="w-[85vw] md:w-[60vw] h-[70vh] flex-shrink-0 relative group border-4 border-void bg-white hover-trigger overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000" class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110" alt="Project 2">
+                         <div class="absolute top-0 right-0 p-4 bg-acid text-void font-mono font-bold border-l-4 border-b-4 border-void">SOLD OUT</div>
+                        <div class="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-void text-white">
+                            <h3 class="font-display font-black text-4xl">CYBER_CORE</h3>
+                            <p class="font-mono text-acid">/// E-Commerce</p>
                         </div>
                     </div>
-                </div>
 
-            </div>
-            
-            <div class="text-center mt-32">
-                <a href="#" class="inline-block font-header text-xl border border-white/20 px-12 py-4 hover:bg-white hover:text-black transition-all duration-300 rounded-full">VIEW ARCHIVE</a>
-            </div>
-        </section>
+                    <!-- Project 3 -->
+                    <div class="w-[85vw] md:w-[60vw] h-[70vh] flex-shrink-0 relative group border-4 border-void bg-white hover-trigger overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1535905557558-afc4877a26fc?q=80&w=1000" class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110" alt="Project 3">
+                        <div class="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-void text-white">
+                            <h3 class="font-display font-black text-4xl">VOID_WALKER</h3>
+                            <p class="font-mono text-acid">/// Interactive Documentary</p>
+                        </div>
+                    </div>
 
-        <!-- EXPERTISE (Marquee + Accordion) -->
-        <section class="py-32 bg-surface text-white overflow-hidden">
-            <div class="flex whitespace-nowrap border-y border-white/10 py-8 overflow-hidden relative">
-                <div class="animate-marquee flex font-header text-8xl text-white/10 font-bold uppercase">
-                    <span class="mx-8">System Architecture</span>
-                    <span class="mx-8">Creative Direction</span>
-                    <span class="mx-8">WebGL Engineering</span>
-                    <span class="mx-8">Motion Design</span>
-                    <span class="mx-8">System Architecture</span>
-                    <span class="mx-8">Creative Direction</span>
-                    <span class="mx-8">WebGL Engineering</span>
-                    <span class="mx-8">Motion Design</span>
-                </div>
-            </div>
-
-            <div class="max-w-4xl mx-auto px-6 mt-32">
-                <div class="text-center mb-20">
-                    <h2 class="font-header text-5xl mb-4">Technical Stack</h2>
-                    <p class="font-body text-gray-400">Tools are irrelevant without mastery. We use the best.</p>
-                </div>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                    <div class="p-8 border border-white/10 hover:border-brand transition-colors group bg-void">
-                        <h3 class="font-mono text-brand text-xs mb-4">01</h3>
-                        <p class="font-header text-2xl group-hover:translate-x-2 transition-transform">Three.js</p>
-                    </div>
-                    <div class="p-8 border border-white/10 hover:border-brand transition-colors group bg-void">
-                        <h3 class="font-mono text-brand text-xs mb-4">02</h3>
-                        <p class="font-header text-2xl group-hover:translate-x-2 transition-transform">React</p>
-                    </div>
-                    <div class="p-8 border border-white/10 hover:border-brand transition-colors group bg-void">
-                        <h3 class="font-mono text-brand text-xs mb-4">03</h3>
-                        <p class="font-header text-2xl group-hover:translate-x-2 transition-transform">GLSL</p>
-                    </div>
-                    <div class="p-8 border border-white/10 hover:border-brand transition-colors group bg-void">
-                        <h3 class="font-mono text-brand text-xs mb-4">04</h3>
-                        <p class="font-header text-2xl group-hover:translate-x-2 transition-transform">Node.js</p>
+                    <!-- End Card -->
+                     <div class="w-[60vw] md:w-[40vw] h-[70vh] flex-shrink-0 flex items-center justify-center bg-acid border-4 border-void hover-trigger">
+                        <a href="#" class="font-display font-black text-6xl underline decoration-void hover:no-underline">VIEW ALL -></a>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- FOOTER (Massive Impact) -->
-        <footer class="min-h-screen bg-void flex flex-col justify-between pt-32 pb-8 px-6 md:px-20 relative overflow-hidden">
-            
-            <div class="relative z-10">
-                <span class="font-mono text-brand text-sm mb-8 block">/// READY TO UPGRADE?</span>
-                <a href="mailto:work@dorksense.studio" class="font-header text-[10vw] leading-[0.8] text-white uppercase hover:text-brand transition-colors duration-500 block w-full border-b border-white/20 pb-8 cursor-none" data-cursor="EMAIL">
-                    Let's<br>Talk.
+    <!-- INTERACTIVE GRID & SERVICES -->
+    <section class="py-32 bg-void relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-24">
+                <div class="sticky top-32 h-fit">
+                    <h2 class="font-display font-black text-7xl text-white mb-8">CAPABILITIES</h2>
+                    <p class="font-mono text-gray-400 text-lg">We don't just design. We engineer chaos into usable formats.</p>
+                </div>
+                <div class="flex flex-col gap-0 border-t border-gray-800">
+                    <!-- Service Item -->
+                    <div class="group py-12 border-b border-gray-800 hover:bg-white/5 transition-colors cursor-none relative overflow-hidden hover-trigger">
+                        <h3 class="font-display font-black text-5xl text-white group-hover:text-acid transition-colors relative z-10">01. BRANDING</h3>
+                        <p class="font-mono text-gray-500 mt-4 max-w-md">Visual identity systems that offend the elderly and attract the youth.</p>
+                        <!-- Liquid Distortion Image on Hover (JS handled) -->
+                        <img src="https://images.unsplash.com/photo-1614726365723-49cfa0a274b3?q=80&w=300" class="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-48 h-32 object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 distort-hover" style="transform: rotate(-5deg);" alt="Service 1">
+                    </div>
+                    
+                    <div class="group py-12 border-b border-gray-800 hover:bg-white/5 transition-colors cursor-none relative overflow-hidden hover-trigger">
+                        <h3 class="font-display font-black text-5xl text-white group-hover:text-acid transition-colors relative z-10">02. DEVELOPMENT</h3>
+                        <p class="font-mono text-gray-500 mt-4 max-w-md">React, Three.js, WebGL. Code so clean you could eat off it.</p>
+                         <img src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?q=80&w=300" class="hidden md:block absolute right-10 top-1/2 -translate-y-1/2 w-48 h-32 object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 distort-hover" style="transform: rotate(5deg);" alt="Service 2">
+                    </div>
+
+                    <div class="group py-12 border-b border-gray-800 hover:bg-white/5 transition-colors cursor-none relative overflow-hidden hover-trigger">
+                        <h3 class="font-display font-black text-5xl text-white group-hover:text-acid transition-colors relative z-10">03. MOTION</h3>
+                        <p class="font-mono text-gray-500 mt-4 max-w-md">If it doesn't move, it's dead. We breathe life into static pixels.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (Portal Effect) -->
+    <footer id="contact" class="relative min-h-screen flex flex-col justify-between bg-acid text-void pt-32 px-6 pb-6 overflow-hidden">
+        <!-- Big Background Video/Image masked by text -->
+        
+        <div class="max-w-7xl w-full mx-auto z-10">
+            <h2 class="font-mono font-bold text-xl mb-12 border-b-2 border-void pb-4 inline-block">/// INITIATE_CONTACT</h2>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
+                <a href="mailto:godmode@dorksense.com" class="font-display font-black text-6xl md:text-8xl underline decoration-4 decoration-void hover:text-white hover:decoration-white transition-colors hover-trigger">
+                    SAY HELLO
                 </a>
-            </div>
-
-            <div class="flex flex-col md:flex-row justify-between items-end relative z-10">
-                <div class="flex gap-8 font-body text-sm text-gray-400">
-                    <a href="#" class="hover:text-white transition-colors">INSTAGRAM</a>
-                    <a href="#" class="hover:text-white transition-colors">LINKEDIN</a>
-                    <a href="#" class="hover:text-white transition-colors">GITHUB</a>
-                </div>
-                <div class="text-right mt-8 md:mt-0">
-                    <p class="font-mono text-xs text-gray-500">© 2025 DORKSENSE STUDIO. ALL RIGHTS RESERVED.</p>
-                    <p class="font-mono text-xs text-gray-600 mt-2">ENGINEERED FOR DOMINANCE.</p>
+                <div class="font-mono font-bold text-lg">
+                    <p>LOS ANGELES, CA</p>
+                    <p>EARTH-616</p>
                 </div>
             </div>
+        </div>
 
-            <!-- Giant Watermark -->
-            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 font-header text-[25vw] leading-none text-white/5 select-none pointer-events-none whitespace-nowrap">
+        <div class="relative w-full mt-24">
+            <!-- Giant Text acts as mask (using mix-blend) -->
+            <h1 class="font-display font-black text-[18vw] leading-none text-center mix-blend-overlay opacity-50 select-none">
                 DORKSENSE
-            </div>
-        </footer>
-
-    </main>
+            </h1>
+             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                 <p class="font-mono text-xs font-bold bg-void text-acid px-2 py-1">SCROLL_END_REACHED</p>
+             </div>
+        </div>
+    </footer>
 
     <script>
-        /* --- 1. SENIOR ENGINEER LEVEL: GENERATIVE CANVAS BACKGROUND --- */
-        // This creates a floating particle field that connects with lines when close.
-        // It mimics a neural network or constellation, signifying "complexity" & "connection".
-        
-        const canvas = document.getElementById('fluid');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
+        // --- REGISTER GSAP PLUGINS ---
+        gsap.registerPlugin(ScrollTrigger);
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-                ctx.fill();
-            }
-        }
+        // --- 1. PRELOADER ---
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('loaded');
+            }, 1000);
+        };
 
-        function initCanvas() {
-            resize();
-            for (let i = 0; i < 50; i++) particles.push(new Particle());
-        }
-
-        function animateCanvas() {
-            ctx.clearRect(0, 0, width, height);
-            
-            // Draw Connections
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (dist < 200) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - dist/2000})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-                particles[i].update();
-                particles[i].draw();
-            }
-            requestAnimationFrame(animateCanvas);
-        }
-
-        window.addEventListener('resize', resize);
-        initCanvas();
-        animateCanvas();
-
-        /* --- 2. INITIALIZATION SEQUENCE (PRELOADER) --- */
-        const tl = gsap.timeline();
-        
-        // Counter Animation
-        const counterObj = { val: 0 };
-        const counterEl = document.querySelector('.counter');
-        
-        tl.to(counterObj, {
-            val: 100,
-            duration: 2,
-            ease: "power2.inOut",
-            onUpdate: () => {
-                counterEl.innerText = Math.floor(counterObj.val).toString().padStart(3, '0');
-            }
-        }, 0);
-
-        // Bar Animation
-        tl.to('.loader-progress', {
-            width: '100%',
-            duration: 2,
-            ease: "power2.inOut"
-        }, 0);
-
-        // Text Reveal in Loader
-        tl.to('.loader-char', {
-            y: 0,
-            stagger: 0.1,
-            duration: 0.8,
-            ease: "back.out(1.7)"
-        }, 0.5);
-
-        // Exit Loader
-        tl.to('#loader', {
-            yPercent: -100,
-            duration: 1,
-            ease: "power4.inOut",
-            delay: 0.5
-        });
-
-        // Intro Hero Reveal
-        tl.to('.clip-text', {
-            y: 0,
-            opacity: 1,
-            clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
-            stagger: 0.2,
-            duration: 1.2,
-            ease: "power3.out"
-        }, "-=0.5");
-        
-        tl.to('.reveal-p', {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power2.out"
-        }, "-=0.8");
-
-        /* --- 3. SMOOTH SCROLL (Lenis) --- */
+        // --- 2. LENIS INIT ---
         const lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            smooth: true
+            smooth: true,
         });
-
         function raf(time) {
             lenis.raf(time);
             requestAnimationFrame(raf);
         }
         requestAnimationFrame(raf);
 
-        /* --- 4. SCROLL TRIGGERS --- */
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Image Reveal Logic
-        const images = document.querySelectorAll('.img-reveal-wrapper');
-        images.forEach(wrapper => {
-            ScrollTrigger.create({
-                trigger: wrapper,
-                start: "top 80%",
-                onEnter: () => wrapper.classList.add('in-view')
-            });
+        // Sync Lenis with ScrollTrigger
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
         });
+        gsap.ticker.lagSmoothing(0);
 
-        // Parallax Effect for Images
-        images.forEach(wrapper => {
-            const img = wrapper.querySelector('img');
-            gsap.to(img, {
-                yPercent: 15,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: wrapper,
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: true
-                }
-            });
-        });
-
-        /* --- 5. INTERACTIVE CURSOR --- */
-        const cursor = document.getElementById('cursor');
-        const cursorText = cursor.querySelector('.cursor-text');
+        // --- 3. CUSTOM CURSOR ---
+        const cursor = document.querySelector('.cursor-dot');
+        const cursorWrapper = document.getElementById('cursor');
         let mouseX = 0, mouseY = 0;
         let cursorX = 0, cursorY = 0;
 
         window.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
+            
+            // Grid Ripple Effect
+            const grid = document.getElementById('grid');
+            const x = (mouseX / window.innerWidth) * 100;
+            const y = (mouseY / window.innerHeight) * 100;
+            grid.style.backgroundPosition = `${x}px ${y}px`; // subtle parallax
         });
 
+        // Smooth Cursor Animation
         function animateCursor() {
             const dx = mouseX - cursorX;
             const dy = mouseY - cursorY;
-            
-            cursorX += dx * 0.15;
-            cursorY += dy * 0.15;
-            
-            cursor.style.left = `${cursorX}px`;
-            cursor.style.top = `${cursorY}px`;
-            
+            cursorX += dx * 0.2;
+            cursorY += dy * 0.2;
+            cursorWrapper.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
 
-        // Cursor Hovers
-        const interactiveElements = document.querySelectorAll('a, button, .img-reveal-wrapper');
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.classList.add('hovered');
-                const text = el.getAttribute('data-cursor');
-                if(text) cursorText.innerText = text;
-                else cursorText.innerText = "VIEW";
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.classList.remove('hovered');
-                cursorText.innerText = "";
-            });
+        // Cursor Hover States
+        document.querySelectorAll('.hover-trigger').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
         });
 
-        /* --- 6. TEXT PHYSICS (SKEW ON SCROLL) --- */
-        // Senior touch: The faster you scroll, the more the text skews
-        let proxy = { skew: 0 },
-            skewSetter = gsap.quickSetter("section", "skewY", "deg"), // fast
-            clamp = gsap.utils.clamp(-5, 5);
+        // --- 4. TEXT REVEAL ANIMATION ---
+        const revealText = document.querySelector('.reveal-text');
+        const textContent = revealText.innerText;
+        revealText.innerHTML = '';
+        textContent.split(' ').forEach(word => {
+            const span = document.createElement('span');
+            span.innerText = word + ' ';
+            span.style.opacity = '0.2';
+            span.style.transition = 'opacity 0.5s ease';
+            revealText.appendChild(span);
+        });
 
         ScrollTrigger.create({
+            trigger: '#manifesto',
+            start: 'top 80%',
+            end: 'bottom 20%',
             onUpdate: (self) => {
-                let skew = clamp(self.getVelocity() / -300);
-                if (Math.abs(skew) > Math.abs(proxy.skew)) {
-                    proxy.skew = skew;
-                    gsap.to(proxy, {
-                        skew: 0,
-                        duration: 0.8,
-                        ease: "power3",
-                        overwrite: true,
-                        onUpdate: () => skewSetter(proxy.skew)
-                    });
-                }
+                const spans = revealText.querySelectorAll('span');
+                const progress = Math.floor(self.progress * spans.length);
+                spans.forEach((span, i) => {
+                    if (i <= progress) {
+                        span.style.opacity = '1';
+                        span.style.color = '#ffffff';
+                    } else {
+                        span.style.opacity = '0.2';
+                    }
+                });
             }
         });
 
+        // --- 5. HORIZONTAL SCROLL LOGIC ---
+        const horizontalSection = document.querySelector('.horizontal-outer');
+        const horizontalInner = document.querySelector('.horizontal-scroll-inner');
+
+        gsap.to(horizontalInner, {
+            x: () => -(horizontalInner.scrollWidth - window.innerWidth),
+            ease: "none",
+            scrollTrigger: {
+                trigger: horizontalSection,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+                invalidateOnRefresh: true,
+            }
+        });
+
+        // --- 6. HERO DISTORTION ---
+        // Simple baseFrequency animation is in CSS/SVG
+        // More complex interactions would go here if needed
+        
     </script>
 </body>
 </html>
