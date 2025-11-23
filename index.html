@@ -3,678 +3,776 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>root@abeer:~/portfolio</title>
+    <title>ROOT ACCESS // ABEER GUPTA</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;300;500;700;800&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Updated Lucide CDN for better stability -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
+        /* --- CORE VARS --- */
         :root {
-            --bg-color: #050505;
+            --bg-color: #030303;
             --term-green: #00ff41;
             --term-cyan: #00f3ff;
             --term-red: #ff2a2a;
-            --term-dim: #003b0f;
-            --glass: rgba(10, 20, 10, 0.7);
+            --term-yellow: #facc15;
+            --term-dim: #1a1a1a;
+            --glass: rgba(10, 10, 10, 0.9);
         }
 
-        * {
-            cursor: none; /* Custom cursor handling */
-        }
-
+        /* --- GLOBAL RESET --- */
+        html { scroll-behavior: smooth; }
         body {
             background-color: var(--bg-color);
             color: #e0e0e0;
             font-family: 'JetBrains Mono', monospace;
             overflow-x: hidden;
+            cursor: none; /* Custom cursor active */
         }
 
         /* --- CUSTOM CURSOR --- */
         #cursor {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border: 1px solid var(--term-green);
             background: rgba(0, 255, 65, 0.1);
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 9999;
             transition: width 0.2s, height 0.2s, background 0.2s;
-            mix-blend-mode: difference;
+            mix-blend-mode: exclusion;
         }
-        #cursor::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
+        #cursor-dot {
+            position: fixed;
             width: 4px;
             height: 4px;
             background: var(--term-cyan);
             transform: translate(-50%, -50%);
-        }
-        body:hover #cursor {
-            opacity: 1;
+            pointer-events: none;
+            z-index: 10000;
         }
 
         /* --- SCROLLBAR --- */
-        ::-webkit-scrollbar {
-            width: 8px;
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { 
+            background: #111; 
+            border: 1px solid var(--term-green); 
         }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-color);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--term-dim);
-            border: 1px solid var(--term-green);
-        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--term-green); }
 
-        /* --- GLITCH EFFECT --- */
-        .glitch {
-            position: relative;
-            color: #fff;
-        }
-        .glitch::before, .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-color);
-        }
-        .glitch::before {
-            left: 2px;
-            text-shadow: -1px 0 var(--term-red);
-            clip: rect(24px, 550px, 90px, 0);
-            animation: glitch-anim-2 3s infinite linear alternate-reverse;
-        }
-        .glitch::after {
-            left: -2px;
-            text-shadow: -1px 0 var(--term-cyan);
-            clip: rect(85px, 550px, 140px, 0);
-            animation: glitch-anim 2.5s infinite linear alternate-reverse;
-        }
-        @keyframes glitch-anim {
-            0% { clip: rect(12px, 9999px, 5px, 0); }
-            20% { clip: rect(120px, 9999px, 15px, 0); }
-            40% { clip: rect(45px, 9999px, 84px, 0); }
-            60% { clip: rect(4px, 9999px, 100px, 0); }
-            80% { clip: rect(98px, 9999px, 4px, 0); }
-            100% { clip: rect(35px, 9999px, 92px, 0); }
-        }
-        @keyframes glitch-anim-2 {
-            0% { clip: rect(65px, 9999px, 100px, 0); }
-            20% { clip: rect(10px, 9999px, 4px, 0); }
-            40% { clip: rect(99px, 9999px, 12px, 0); }
-            60% { clip: rect(15px, 9999px, 68px, 0); }
-            80% { clip: rect(120px, 9999px, 4px, 0); }
-            100% { clip: rect(4px, 9999px, 15px, 0); }
-        }
-
-        /* --- TERMINAL WINDOW STYLING --- */
-        .window-border {
-            border: 1px solid #333;
-            background: rgba(10, 10, 10, 0.95);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.05);
-            transition: all 0.3s ease;
-        }
-        .window-border:hover {
-            border-color: var(--term-green);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
-        }
-        .window-header {
-            background: #111;
-            border-bottom: 1px solid #333;
-            padding: 4px 8px;
-            display: flex;
-            align-items: center;
-            font-size: 0.75rem;
-            color: #666;
-        }
-
-        /* --- SCANLINE & CRT EFFECT --- */
+        /* --- CRT SCANLINES --- */
         .crt::before {
             content: " ";
             display: block;
             position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 50;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 9990;
             background-size: 100% 2px, 3px 100%;
             pointer-events: none;
         }
 
-        /* --- UTILS --- */
-        .typing-cursor::after {
-            content: '█';
-            animation: blink 1s infinite;
-            color: var(--term-green);
-            margin-left: 4px;
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
         }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Glitch Effect */
+        .glitch { position: relative; }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg-color);
+        }
+        .glitch::before {
+            left: 2px; text-shadow: -1px 0 var(--term-red);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: -2px; text-shadow: -1px 0 var(--term-cyan);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(20% 0 80% 0); }
+            20% { clip-path: inset(60% 0 10% 0); }
+            100% { clip-path: inset(10% 0 50% 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(10% 0 60% 0); }
+            20% { clip-path: inset(80% 0 5% 0); }
+            100% { clip-path: inset(30% 0 20% 0); }
         }
 
-        .text-neon-green { color: var(--term-green); }
-        .text-neon-cyan { color: var(--term-cyan); }
-        .border-neon-green { border-color: var(--term-green); }
-        
-        .skill-tag {
-            background: rgba(0, 255, 65, 0.05);
-            border: 1px solid var(--term-dim);
-            transition: all 0.2s;
+        /* --- UTILITY CLASSES --- */
+        .border-glow {
+            border: 1px solid #333;
+            transition: all 0.3s ease;
         }
-        .skill-tag:hover {
-            background: var(--term-green);
-            color: black;
-            transform: translateY(-2px);
+        .border-glow:hover {
+            border-color: var(--term-green);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #333, transparent);
+            margin: 4rem 0;
+            position: relative;
+        }
+        .section-divider::after {
+            content: attr(data-label);
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-color);
+            padding: 0 1rem;
+            color: #555;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* --- MATRIX CANVAS --- */
+        #matrix-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.07;
         }
 
         /* --- BOOT LOADER --- */
         #boot-screen {
-            position: fixed;
-            inset: 0;
-            background: black;
-            z-index: 99999;
+            position: fixed; inset: 0;
+            background: #000;
+            z-index: 100000;
+            display: flex; flex-direction: column;
+            justify-content: flex-end;
             padding: 2rem;
             font-size: 14px;
-            color: #aaa;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
         }
     </style>
 </head>
-<body class="crt selection:bg-[#00ff41] selection:text-black">
-    
-    <!-- CUSTOM CURSOR -->
-    <div id="cursor"></div>
+<body class="crt">
 
-    <!-- BOOT SCREEN -->
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
+
+    <canvas id="matrix-bg"></canvas>
+
     <div id="boot-screen">
-        <div id="boot-text" class="mb-4"></div>
-        <div class="w-full h-1 bg-gray-900 mt-2">
-            <div id="boot-progress" class="h-full bg-[#00ff41] w-0 transition-all duration-100"></div>
+        <div id="boot-log" class="font-mono text-gray-400 mb-4 h-64 overflow-hidden flex flex-col justify-end"></div>
+        <div class="w-full bg-gray-900 h-1">
+            <div id="boot-bar" class="h-full bg-green-500 w-0 transition-all duration-75"></div>
         </div>
     </div>
 
-    <!-- BACKGROUND CANVAS -->
-    <canvas id="matrix-canvas" class="fixed top-0 left-0 w-full h-full -z-10 opacity-20"></canvas>
+    <nav class="fixed top-0 w-full z-50 mix-blend-difference px-6 py-4 flex justify-between items-center backdrop-blur-sm border-b border-white/10">
+        <div class="text-xl font-bold tracking-tighter text-white">
+            root@abeer:~<span class="animate-pulse">_</span>
+        </div>
+        <div class="hidden md:flex space-x-8 text-xs font-bold tracking-widest text-gray-400">
+            <a href="#about" class="hover:text-[#00ff41] transition-colors">./ABOUT</a>
+            <a href="#education" class="hover:text-[#00ff41] transition-colors">./EDUCATION</a>
+            <a href="#experience" class="hover:text-[#00ff41] transition-colors">./LOGS</a>
+            <a href="#skills" class="hover:text-[#00ff41] transition-colors">./ARSENAL</a>
+            <a href="#projects" class="hover:text-[#00ff41] transition-colors">./PROJECTS</a>
+            <a href="#contact" class="hover:text-[#00ff41] transition-colors">./CONTACT</a>
+        </div>
+    </nav>
 
-    <!-- MAIN LAYOUT -->
-    <main class="relative min-h-screen p-4 md:p-8 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6">
-        
-        <!-- SIDEBAR / STATUS -->
-        <aside class="md:col-span-3 space-y-6 sticky top-8 h-fit z-20">
+    <section class="min-h-screen flex items-center justify-center relative px-6 overflow-hidden">
+        <div class="absolute top-1/4 -left-20 w-96 h-96 bg-green-500 rounded-full mix-blend-overlay filter blur-[128px] opacity-10 animate-pulse"></div>
+        <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-cyan-500 rounded-full mix-blend-overlay filter blur-[128px] opacity-10 animate-pulse"></div>
+
+        <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            <!-- PROFILE CARD -->
-            <div class="window-border rounded p-1 relative group overflow-hidden">
-                <div class="window-header flex justify-between">
-                    <span>USER: ROOT</span>
-                    <span class="text-neon-green">ONLINE</span>
-                </div>
-                <div class="p-4 text-center">
-                    <div class="w-32 h-32 mx-auto rounded-full border-2 border-[#00ff41] p-1 mb-4 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-[#00ff41] opacity-20 animate-pulse"></div>
-                        <!-- Fallback to initial if image fails, but referencing the assets provided -->
-                        <img src="photo2.jpg" onerror="this.src='https://ui-avatars.com/api/?name=Abeer+Gupta&background=000&color=0f0'" alt="Abeer Gupta" class="w-full h-full object-cover rounded-full grayscale contrast-125 hover:grayscale-0 transition-all duration-500">
-                    </div>
-                    <h1 class="text-2xl font-bold tracking-tighter glitch" data-text="ABEER GUPTA">ABEER GUPTA</h1>
-                    <p class="text-sm text-gray-400 mt-2 font-light">
-                        &lt;<span class="text-neon-cyan">Dev</span> /&gt; | 
-                        <span class="text-neon-green">SecOp</span> | 
-                        <span class="text-purple-400">Arch</span>
-                    </p>
+            <div class="lg:col-span-8 space-y-8 z-10">
+                <div class="inline-block border border-[#00ff41] bg-[#00ff41]/10 px-4 py-2 text-xs font-bold text-[#00ff41] mb-4 rounded tracking-widest reveal">
+                    SYSTEM STATUS: ONLINE
                 </div>
                 
-                <!-- SOCIAL LINKS -->
-                <div class="grid grid-cols-3 border-t border-gray-800 divide-x divide-gray-800">
-                    <a href="https://github.com/abeer555" target="_blank" class="p-3 flex justify-center hover:bg-[#00ff41] hover:text-black transition-colors">
-                        <i data-lucide="github" class="w-5 h-5"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/abeer-gupta" target="_blank" class="p-3 flex justify-center hover:bg-[#00f3ff] hover:text-black transition-colors">
-                        <i data-lucide="linkedin" class="w-5 h-5"></i>
-                    </a>
-                    <a href="mailto:abeergupta555@gmail.com" class="p-3 flex justify-center hover:bg-[#ff2a2a] hover:text-black transition-colors">
-                        <i data-lucide="mail" class="w-5 h-5"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- SYSTEM STATS (NeoFetch Style) -->
-            <div class="window-border rounded p-4 font-mono text-xs md:text-sm leading-relaxed">
-                <div class="text-neon-cyan mb-2">$ neofetch</div>
-                <div class="grid grid-cols-[80px_1fr] gap-2">
-                    <span class="text-gray-500">OS</span>       <span>Arch Linux x86_64</span>
-                    <span class="text-gray-500">Host</span>     <span>VIT Chennai / IITM</span>
-                    <span class="text-gray-500">Kernel</span>   <span>6.8.9-arch1-1</span>
-                    <span class="text-gray-500">Uptime</span>   <span>20 years, 4 mins</span>
-                    <span class="text-gray-500">Shell</span>    <span>zsh 5.9</span>
-                    <span class="text-gray-500">Focus</span>    <span>Cybersecurity, Full-Stack</span>
-                    <span class="text-gray-500">Coffee</span>   <span>ERROR: CAFFEINE_LOW</span>
-                </div>
-            </div>
-
-            <!-- LANGUAGES -->
-            <div class="window-border rounded p-4">
-                <div class="window-header mb-3">
-                    <span>~/languages</span>
-                </div>
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between"><span>English</span><span class="text-neon-green">Fluent</span></div>
-                    <div class="w-full bg-gray-800 h-1"><div class="bg-neon-green h-1 w-full bg-[#00ff41]"></div></div>
-                    
-                    <div class="flex justify-between"><span>Hindi</span><span class="text-neon-green">Fluent</span></div>
-                    <div class="w-full bg-gray-800 h-1"><div class="bg-neon-green h-1 w-full bg-[#00ff41]"></div></div>
-
-                    <div class="flex justify-between"><span>Japanese</span><span class="text-yellow-400">N5/Beginner</span></div>
-                    <div class="w-full bg-gray-800 h-1"><div class="bg-yellow-400 h-1 w-[20%]"></div></div>
-                </div>
-            </div>
-
-        </aside>
-
-        <!-- MAIN CONTENT AREA -->
-        <section class="md:col-span-9 space-y-8 pb-20">
-            
-            <!-- HERO STATEMENT -->
-            <div class="relative py-10 md:py-20 border-b border-gray-800">
-                <div class="absolute -top-10 -left-10 text-[10rem] font-bold text-gray-900 opacity-20 select-none pointer-events-none -z-10 overflow-hidden">ROOT</div>
-                <h2 class="text-4xl md:text-6xl font-bold mb-4">I BREAK SYSTEMS <br> <span class="text-neon-green typing-cursor">TO MAKE THEM STRONGER.</span></h2>
-                <p class="text-gray-400 max-w-2xl text-lg">
-                    Security Analyst. Full-Stack Engineer. Linux Tinkerer. <br>
-                    Currently securing networks and creating efficient code architectures at 
-                    <span class="text-white border-b border-neon-cyan">VIT Chennai</span> & <span class="text-white border-b border-neon-cyan">IIT Madras</span>.
+                <h1 class="text-6xl md:text-8xl font-black text-white leading-tight tracking-tighter reveal" style="transition-delay: 100ms;">
+                    ABEER <br>
+                    <span class="glitch text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-500" data-text="GUPTA">GUPTA</span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-gray-400 max-w-2xl leading-relaxed reveal" style="transition-delay: 200ms;">
+                    <span class="text-[#00ff41]">&lt;Developer /&gt;</span> 
+                    <span class="text-[#00f3ff] mx-2">|</span> 
+                    <span class="text-[#00ff41]">SecOps Specialist</span> 
+                    <span class="text-[#00f3ff] mx-2">|</span> 
+                    <span class="text-[#00ff41]">Linux Enthusiast</span>
                 </p>
-            </div>
 
-            <!-- EXPERIENCE LOGS -->
-            <div>
-                <div class="flex items-center mb-6">
-                    <i data-lucide="terminal" class="text-neon-green mr-2"></i>
-                    <h3 class="text-xl font-bold text-white">/var/log/experience</h3>
-                </div>
-                
-                <div class="space-y-4 border-l-2 border-gray-800 ml-2 pl-6 relative">
-                    <!-- Item 1 -->
-                    <div class="relative group">
-                        <div class="absolute -left-[31px] top-2 w-4 h-4 bg-gray-900 border border-[#00ff41] rounded-full group-hover:bg-[#00ff41] transition-colors"></div>
-                        <div class="text-sm text-neon-green font-mono mb-1">May 2025 - Aug 2025</div>
-                        <h4 class="text-lg font-bold">Cybersecurity Intern @ C9Labs</h4>
-                        <p class="text-gray-400 text-sm mt-1">Executing vulnerability assessments. Ranked Top 6% globally on TryHackMe. Breaking in to keep intruders out.</p>
-                    </div>
-                     <!-- Item 2 -->
-                     <div class="relative group">
-                        <div class="absolute -left-[31px] top-2 w-4 h-4 bg-gray-900 border border-gray-600 rounded-full group-hover:border-[#00ff41] transition-colors"></div>
-                        <div class="text-sm text-gray-500 font-mono mb-1">Sep 2024 - Present</div>
-                        <h4 class="text-lg font-bold">Technical Member @ Linux Club</h4>
-                        <p class="text-gray-400 text-sm mt-1">Orchestrated configuration of 20+ systems. Spreading the gospel of Open Source and Kernel panic recovery.</p>
-                    </div>
-                    <!-- Item 3 -->
-                    <div class="relative group">
-                        <div class="absolute -left-[31px] top-2 w-4 h-4 bg-gray-900 border border-gray-600 rounded-full group-hover:border-[#00ff41] transition-colors"></div>
-                        <div class="text-sm text-gray-500 font-mono mb-1">Aug 2024 - Present</div>
-                        <h4 class="text-lg font-bold">Comp. Programming Member @ CodeChef</h4>
-                        <p class="text-gray-400 text-sm mt-1">Mentored 15+ students in DSA. Solving problems faster than the compiler can optimize them.</p>
-                    </div>
+                <p class="text-gray-500 max-w-xl reveal" style="transition-delay: 300ms;">
+                    Building secure architectures and breaking vulnerable ones. 
+                    Currently pursuing dual degrees at <strong class="text-white">VIT Chennai</strong> & <strong class="text-white">IIT Madras</strong>.
+                </p>
+
+                <div class="flex flex-wrap gap-4 pt-4 reveal" style="transition-delay: 400ms;">
+                    <a href="#projects" class="px-8 py-4 bg-[#00ff41] text-black font-bold text-sm tracking-widest hover:bg-white hover:scale-105 transition-all">
+                        INITIATE_PROTOCOL
+                    </a>
+                    <a href="https://github.com/abeer555" target="_blank" class="px-8 py-4 border border-gray-700 text-white font-bold text-sm tracking-widest hover:border-[#00ff41] hover:text-[#00ff41] transition-all flex items-center gap-2">
+                        <i data-lucide="github" class="w-4 h-4"></i> GITHUB
+                    </a>
                 </div>
             </div>
 
-            <!-- SKILLS MATRIX -->
-            <div>
-                <div class="flex items-center mb-6">
-                    <i data-lucide="cpu" class="text-neon-cyan mr-2"></i>
-                    <h3 class="text-xl font-bold text-white">~/bin/skills</h3>
+            <div class="lg:col-span-4 relative reveal lg:block hidden" style="transition-delay: 500ms;">
+                <div class="w-full aspect-square relative border border-gray-800 bg-gray-900/50 p-2 rounded-lg">
+                    <div class="absolute inset-0 bg-[url('photo2.jpg')] bg-cover bg-center opacity-80 grayscale contrast-125 hover:grayscale-0 transition-all duration-700"></div>
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 border-r-2 border-b-2 border-[#00ff41]"></div>
+                    <div class="absolute -top-6 -left-6 w-32 h-32 border-l-2 border-t-2 border-[#00f3ff]"></div>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Dev -->
-                    <div class="window-border rounded p-4">
-                        <h4 class="text-neon-cyan mb-3 border-b border-gray-800 pb-2 font-bold text-sm">[ DEVELOPMENT ]</h4>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="skill-tag px-3 py-1 text-xs rounded">Python</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">C / C++</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">Java</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">TypeScript</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">React / Next.js</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">FastAPI</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">PostgreSQL</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">MongoDB</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">Docker</span>
-                        </div>
-                    </div>
-
-                    <!-- Security -->
-                    <div class="window-border rounded p-4">
-                        <h4 class="text-neon-green mb-3 border-b border-gray-800 pb-2 font-bold text-sm">[ SECURITY & OPS ]</h4>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="skill-tag px-3 py-1 text-xs rounded">Penetration Testing</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">Vulnerability Assessment</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">Linux Admin</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">AWS / Azure</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">PyTorch</span>
-                            <span class="skill-tag px-3 py-1 text-xs rounded">Pandas</span>
-                        </div>
-                    </div>
+                <div class="absolute bottom-10 -left-10 bg-black border border-gray-700 p-4 shadow-2xl rounded text-xs font-mono text-gray-400">
+                    <div>> last_login: now</div>
+                    <div>> permission: root</div>
+                    <div class="text-[#00ff41]">> location: Chennai</div>
                 </div>
-            </div>
-
-            <!-- PROJECTS GRID -->
-            <div>
-                <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center">
-                        <i data-lucide="folder-open" class="text-purple-400 mr-2"></i>
-                        <h3 class="text-xl font-bold text-white">./projects</h3>
-                    </div>
-                    <span class="text-xs text-gray-600">drwxr-xr-x</span>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    
-                    <!-- Project 1 -->
-                    <div class="window-border rounded group relative overflow-hidden h-64">
-                        <img src="Hackrx-project.png" onerror="this.src='https://placehold.co/600x400/111/0f0?text=RAG+System'" class="w-full h-full object-cover opacity-60 group-hover:opacity-20 transition-opacity duration-500">
-                        <div class="absolute inset-0 p-6 flex flex-col justify-end translate-y-20 group-hover:translate-y-0 transition-transform duration-300">
-                            <div class="text-neon-cyan text-xs mb-1 font-bold">BAJAJ HACKRX (RANK 55/1000+)</div>
-                            <h4 class="text-xl font-bold bg-black w-fit px-1">RAG Doc Query System</h4>
-                            <p class="text-sm text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                Advanced retrieval-augmented generation system. Processed massive datasets with high-speed query resolution.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Project 2 -->
-                    <div class="window-border rounded group relative overflow-hidden h-64">
-                        <img src="hyprland_image.png" onerror="this.src='https://placehold.co/600x400/111/0ff?text=Hyprland'" class="w-full h-full object-cover opacity-60 group-hover:opacity-20 transition-opacity duration-500">
-                        <div class="absolute inset-0 p-6 flex flex-col justify-end translate-y-20 group-hover:translate-y-0 transition-transform duration-300">
-                            <div class="text-purple-400 text-xs mb-1 font-bold">LINUX CUSTOMIZATION</div>
-                            <h4 class="text-xl font-bold bg-black w-fit px-1">Hyprland-Dots</h4>
-                            <p class="text-sm text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                Custom Arch Linux environment. Optimized compositor configs resulting in a 25% performance boost. Visual ecstasy.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Project 3 -->
-                    <div class="window-border rounded group relative overflow-hidden h-64">
-                        <img src="server.png" onerror="this.src='https://placehold.co/600x400/111/f00?text=Secure+Server'" class="w-full h-full object-cover opacity-60 group-hover:opacity-20 transition-opacity duration-500">
-                        <div class="absolute inset-0 p-6 flex flex-col justify-end translate-y-20 group-hover:translate-y-0 transition-transform duration-300">
-                            <div class="text-neon-green text-xs mb-1 font-bold">CRYPTOGRAPHY</div>
-                            <h4 class="text-xl font-bold bg-black w-fit px-1">Secure File Server</h4>
-                            <p class="text-sm text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                Multi-threaded server implementing OpenSSL AES-256-CBC encryption. Zero-knowledge architecture principles.
-                            </p>
-                        </div>
-                    </div>
-
-                     <!-- Project 4 -->
-                     <div class="window-border rounded group relative overflow-hidden h-64">
-                        <img src="pentest-project.png" onerror="this.src='https://placehold.co/600x400/111/ff0?text=Pentest+Toolkit'" class="w-full h-full object-cover opacity-60 group-hover:opacity-20 transition-opacity duration-500">
-                        <div class="absolute inset-0 p-6 flex flex-col justify-end translate-y-20 group-hover:translate-y-0 transition-transform duration-300">
-                            <div class="text-red-500 text-xs mb-1 font-bold">OFFENSIVE SECURITY</div>
-                            <h4 class="text-xl font-bold bg-black w-fit px-1">Web Pentest Toolkit</h4>
-                            <p class="text-sm text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                Comprehensive suite for vulnerability scanning and exploitation. Built for automated security auditing.
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- ACHIEVEMENTS -->
-            <div class="window-border rounded p-6 border-l-4 border-l-yellow-500">
-                <h3 class="text-lg font-bold mb-4 text-yellow-500">CTF_WINS_&_HACKATHONS</h3>
-                <ul class="space-y-2 text-sm font-mono">
-                    <li class="flex justify-between border-b border-gray-800 pb-1">
-                        <span>Password x CTF Hackathon</span> 
-                        <span class="text-gray-500">Feb 2024</span>
-                    </li>
-                    <li class="flex justify-between border-b border-gray-800 pb-1">
-                        <span>Hack-n-Droid Finalist (35th/300+)</span> 
-                        <span class="text-gray-500">2025</span>
-                    </li>
-                    <li class="flex justify-between border-b border-gray-800 pb-1">
-                        <span>VITISH Internal Hackathon (Top 126/600+)</span> 
-                        <span class="text-gray-500">2024</span>
-                    </li>
-                    <li class="flex justify-between pb-1">
-                        <span class="text-neon-cyan">Organized: Cyber-0-day-3.0 (400+ peers)</span> 
-                        <span class="text-gray-500">Nov 2024</span>
-                    </li>
-                </ul>
-            </div>
-
-        </section>
-    </main>
-
-    <!-- FOOTER / COMMAND LINE -->
-    <footer class="border-t border-gray-800 bg-black py-6 mt-12" onclick="document.getElementById('terminal-input').focus()">
-        <div class="max-w-7xl mx-auto px-4 font-mono text-sm">
-            <div id="terminal-output" class="mb-2 text-gray-400 space-y-1"></div>
-            <div class="flex items-center flex-wrap">
-                <span class="text-neon-green mr-2 whitespace-nowrap">root@abeer:~/portfolio $</span>
-                <input type="text" id="terminal-input" 
-                       class="bg-transparent border-none outline-none text-white flex-1 min-w-[200px] font-mono caret-[#00ff41]" 
-                       placeholder="type 'help'..." autocomplete="off">
-            </div>
-            <div class="text-gray-600 text-xs mt-4 text-right">
-                B.Tech CSE (VIT) + B.S. Data Science (IITM) | CGPA: 8.84
             </div>
         </div>
-    </footer>
+    </section>
+
+    <div class="section-divider" data-label="SYSTEM_INFO"></div>
+
+    <section id="education" class="py-20 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl md:text-7xl font-bold mb-20 text-center reveal">
+                PROCESSING <span class="text-stroke text-transparent" style="-webkit-text-stroke: 1px #fff;">UNITS</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                
+                <div class="border-glow bg-[#0a0a0a] p-10 relative group reveal min-h-[400px] flex flex-col justify-between">
+                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="cpu" class="w-16 h-16 text-[#00ff41]"></i>
+                    </div>
+                    <div>
+                        <div class="text-[#00ff41] text-xs font-bold tracking-[0.2em] mb-4">PRIMARY CORE</div>
+                        <h3 class="text-3xl font-bold text-white mb-2">VIT Chennai</h3>
+                        <p class="text-gray-400 text-lg mb-6">B.Tech Computer Science & Engineering</p>
+                        <ul class="space-y-3 text-gray-500 font-mono text-sm">
+                            <li class="flex items-center"><span class="w-2 h-2 bg-[#00ff41] mr-3"></span>2023 - 2027</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-[#00ff41] mr-3"></span>CGPA: 8.84</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-[#00ff41] mr-3"></span>Specialization: Core CSE</li>
+                        </ul>
+                    </div>
+                    <div class="w-full bg-gray-900 h-1 mt-8 overflow-hidden">
+                        <div class="h-full bg-[#00ff41] w-[60%] animate-pulse"></div>
+                    </div>
+                </div>
+
+                <div class="border-glow bg-[#0a0a0a] p-10 relative group reveal min-h-[400px] flex flex-col justify-between" style="transition-delay: 200ms;">
+                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="database" class="w-16 h-16 text-[#00f3ff]"></i>
+                    </div>
+                    <div>
+                        <div class="text-[#00f3ff] text-xs font-bold tracking-[0.2em] mb-4">CO-PROCESSOR</div>
+                        <h3 class="text-3xl font-bold text-white mb-2">IIT Madras</h3>
+                        <p class="text-gray-400 text-lg mb-6">B.S. Data Science & Applications</p>
+                        <ul class="space-y-3 text-gray-500 font-mono text-sm">
+                            <li class="flex items-center"><span class="w-2 h-2 bg-[#00f3ff] mr-3"></span>2023 - 2027</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-[#00f3ff] mr-3"></span>Focus: Data Analysis & AI</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-[#00f3ff] mr-3"></span>Foundation Level Cleared</li>
+                        </ul>
+                    </div>
+                    <div class="w-full bg-gray-900 h-1 mt-8 overflow-hidden">
+                        <div class="h-full bg-[#00f3ff] w-[45%] animate-pulse"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider" data-label="EXECUTABLE_MODULES"></div>
+
+    <section id="skills" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 reveal">
+                <span class="text-[#00ff41] font-mono">> list_capabilities --verbose</span>
+                <h2 class="text-5xl md:text-7xl font-bold mt-2">THE ARSENAL</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="border border-gray-800 p-8 hover:bg-gray-900 transition-all reveal">
+                    <div class="flex items-center mb-6">
+                        <i data-lucide="shield-alert" class="text-[#ff2a2a] mr-4"></i>
+                        <h3 class="text-xl font-bold">Cybersecurity</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-1 bg-[#ff2a2a]/10 border border-[#ff2a2a]/30 text-[#ff2a2a] text-xs">Penetration Testing</span>
+                        <span class="px-3 py-1 bg-[#ff2a2a]/10 border border-[#ff2a2a]/30 text-[#ff2a2a] text-xs">Vulnerability Assessment</span>
+                        <span class="px-3 py-1 bg-[#ff2a2a]/10 border border-[#ff2a2a]/30 text-[#ff2a2a] text-xs">Burp Suite</span>
+                        <span class="px-3 py-1 bg-[#ff2a2a]/10 border border-[#ff2a2a]/30 text-[#ff2a2a] text-xs">Metasploit</span>
+                        <span class="px-3 py-1 bg-[#ff2a2a]/10 border border-[#ff2a2a]/30 text-[#ff2a2a] text-xs">Wireshark</span>
+                    </div>
+                </div>
+
+                <div class="border border-gray-800 p-8 hover:bg-gray-900 transition-all reveal" style="transition-delay: 100ms;">
+                    <div class="flex items-center mb-6">
+                        <i data-lucide="code-2" class="text-[#00ff41] mr-4"></i>
+                        <h3 class="text-xl font-bold">Development</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 text-[#00ff41] text-xs">C / C++</span>
+                        <span class="px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 text-[#00ff41] text-xs">Python</span>
+                        <span class="px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 text-[#00ff41] text-xs">React.js</span>
+                        <span class="px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 text-[#00ff41] text-xs">Next.js</span>
+                        <span class="px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 text-[#00ff41] text-xs">Tailwind</span>
+                        <span class="px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 text-[#00ff41] text-xs">FastAPI</span>
+                    </div>
+                </div>
+
+                <div class="border border-gray-800 p-8 hover:bg-gray-900 transition-all reveal" style="transition-delay: 200ms;">
+                    <div class="flex items-center mb-6">
+                        <i data-lucide="server" class="text-[#00f3ff] mr-4"></i>
+                        <h3 class="text-xl font-bold">Infrastructure & Data</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-1 bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-xs">Linux (Arch)</span>
+                        <span class="px-3 py-1 bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-xs">Docker</span>
+                        <span class="px-3 py-1 bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-xs">AWS</span>
+                        <span class="px-3 py-1 bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-xs">PostgreSQL</span>
+                        <span class="px-3 py-1 bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-xs">Pandas</span>
+                        <span class="px-3 py-1 bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-xs">PyTorch</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-10 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-gray-900/50 p-6 rounded border-l-4 border-yellow-500 reveal">
+                <h4 class="text-yellow-500 font-bold mb-2">TRYHACKME</h4>
+                <p class="text-white text-lg">Top 6% Global Rank</p>
+                <div class="text-sm text-gray-500 mt-2">Consistent excellence in CTF challenges and room completions.</div>
+            </div>
+            <div class="bg-gray-900/50 p-6 rounded border-l-4 border-blue-500 reveal">
+                <h4 class="text-blue-500 font-bold mb-2">AWS CERTIFIED</h4>
+                <p class="text-white text-lg">Cloud Practitioner</p>
+                <div class="text-sm text-gray-500 mt-2">Validated expertise in AWS Cloud platform and basic security concepts.</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider" data-label="SYSTEM_LOGS"></div>
+
+    <section id="experience" class="py-32 px-6">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-5xl md:text-7xl font-bold mb-24 text-right reveal text-gray-800 select-none">
+                /VAR/LOG/EXP
+            </h2>
+
+            <div class="space-y-24 relative border-l border-gray-800 ml-4 md:ml-0">
+                
+                <div class="relative pl-12 md:pl-0 reveal">
+                    <div class="md:w-1/2 md:pr-16 md:text-right md:absolute md:left-0 top-0">
+                        <span class="text-[#00ff41] font-mono text-sm">May 2025 - Aug 2025</span>
+                        <h3 class="text-2xl font-bold text-white mt-1">Cybersecurity Intern</h3>
+                        <p class="text-gray-500">C9Labs</p>
+                    </div>
+                    <div class="absolute left-[-5px] top-2 w-3 h-3 bg-[#00ff41] rounded-full shadow-[0_0_10px_#00ff41]"></div>
+                    <div class="md:w-1/2 md:ml-[50%] md:pl-16">
+                        <ul class="space-y-4 text-gray-400 list-disc">
+                            <li>Conducted rigorous vulnerability assessments on web infrastructure.</li>
+                            <li>Identified critical security gaps in legacy systems.</li>
+                            <li>Collaborated with senior analysts to patch potential exploit vectors.</li>
+                            <li>Achieved <strong>Top 6%</strong> rank on TryHackMe during the internship tenure.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="relative pl-12 md:pl-0 reveal">
+                    <div class="md:w-1/2 md:pr-16 md:text-right md:absolute md:left-0 top-0">
+                        <span class="text-gray-500 font-mono text-sm">Sep 2024 - Present</span>
+                        <h3 class="text-2xl font-bold text-white mt-1">Technical Member</h3>
+                        <p class="text-gray-500">Linux Club</p>
+                    </div>
+                    <div class="absolute left-[-5px] top-2 w-3 h-3 bg-gray-600 rounded-full hover:bg-[#00ff41] transition-colors"></div>
+                    <div class="md:w-1/2 md:ml-[50%] md:pl-16">
+                        <ul class="space-y-4 text-gray-400 list-disc">
+                            <li>Orchestrated the configuration and maintenance of <strong>20+ Linux systems</strong>.</li>
+                            <li>Led workshops on kernel customization and shell scripting.</li>
+                            <li>Advocated for Open Source software adoption across campus.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="relative pl-12 md:pl-0 reveal">
+                    <div class="md:w-1/2 md:pr-16 md:text-right md:absolute md:left-0 top-0">
+                        <span class="text-gray-500 font-mono text-sm">Aug 2024 - Present</span>
+                        <h3 class="text-2xl font-bold text-white mt-1">Comp. Programming Member</h3>
+                        <p class="text-gray-500">CodeChef Chapter</p>
+                    </div>
+                    <div class="absolute left-[-5px] top-2 w-3 h-3 bg-gray-600 rounded-full hover:bg-[#00ff41] transition-colors"></div>
+                    <div class="md:w-1/2 md:ml-[50%] md:pl-16">
+                        <ul class="space-y-4 text-gray-400 list-disc">
+                            <li>Mentored <strong>15+ students</strong> in Data Structures and Algorithms.</li>
+                            <li>Designed problem sets for internal coding contests.</li>
+                            <li>Solved 300+ problems across LeetCode and CodeChef.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider" data-label="DEPLOYED_PROJECTS"></div>
+
+    <section id="projects" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl md:text-8xl font-black mb-24 reveal text-center">PROJECTS</h2>
+
+            <div class="space-y-32">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
+                    <div class="order-2 lg:order-1 space-y-6">
+                        <div class="text-[#00ff41] font-mono text-sm mb-2">BAJAJ HACKRX (RANK 55/1000+)</div>
+                        <h3 class="text-4xl font-bold text-white">RAG Doc Query System</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">
+                            An advanced Retrieval-Augmented Generation system designed to process massive datasets. 
+                            Uses vector embeddings to allow natural language querying of static documentation with high precision.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Python</span>
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">LangChain</span>
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">VectorDB</span>
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">OpenAI API</span>
+                        </div>
+                        <div class="pt-4">
+                            <a href="#" class="inline-flex items-center text-[#00ff41] hover:underline">
+                                View Source <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2 relative group">
+                        <div class="absolute -inset-2 bg-gradient-to-r from-[#00ff41] to-blue-600 rounded-lg blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
+                        <div class="relative bg-gray-900 rounded-lg overflow-hidden border border-gray-800 aspect-video">
+                            <div class="bg-gray-800 px-4 py-2 flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <img src="Hackrx-project.png" onerror="this.src='https://placehold.co/800x450/111/0f0?text=RAG+Architecture'" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
+                    <div class="relative group">
+                        <div class="absolute -inset-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
+                        <div class="relative bg-gray-900 rounded-lg overflow-hidden border border-gray-800 aspect-video">
+                            <div class="bg-gray-800 px-4 py-2 flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <img src="hyprland_image.png" onerror="this.src='https://placehold.co/800x450/111/0ff?text=Hyprland+Rice'" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="text-[#00f3ff] font-mono text-sm mb-2">SYSTEM ARCHITECTURE</div>
+                        <h3 class="text-4xl font-bold text-white">Hyprland Dots</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">
+                            A highly optimized, aesthetic configuration for the Hyprland Wayland compositor on Arch Linux. 
+                            Features custom scripts for memory management, dynamic animations, and a 25% workflow efficiency boost.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Shell Scripting</span>
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">CSS</span>
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Lua</span>
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Arch Linux</span>
+                        </div>
+                        <div class="pt-4">
+                            <a href="#" class="inline-flex items-center text-[#00f3ff] hover:underline">
+                                View Configs <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
+                    <div class="order-2 lg:order-1 space-y-6">
+                        <div class="text-[#ff2a2a] font-mono text-sm mb-2">CRYPTOGRAPHY</div>
+                        <h3 class="text-4xl font-bold text-white">Secure File Server</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">
+                            A multi-threaded file server implemented in C++ focusing on security. 
+                            Integrates OpenSSL AES-256-CBC encryption for data at rest and in transit.
+                            Zero-knowledge principles applied to file storage.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">C++</span>
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">OpenSSL</span>
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Socket Programming</span>
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Multithreading</span>
+                        </div>
+                        <div class="pt-4">
+                            <a href="#" class="inline-flex items-center text-[#ff2a2a] hover:underline">
+                                Analyze Code <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2 relative group">
+                        <div class="absolute -inset-2 bg-gradient-to-r from-red-600 to-orange-600 rounded-lg blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
+                        <div class="relative bg-gray-900 rounded-lg overflow-hidden border border-gray-800 aspect-video">
+                            <div class="bg-gray-800 px-4 py-2 flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <img src="server.png" onerror="this.src='https://placehold.co/800x450/111/f00?text=Encrypted+Server'" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
+                    <div class="relative group">
+                        <div class="absolute -inset-2 bg-gradient-to-r from-yellow-500 to-green-600 rounded-lg blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
+                        <div class="relative bg-gray-900 rounded-lg overflow-hidden border border-gray-800 aspect-video">
+                            <div class="bg-gray-800 px-4 py-2 flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <img src="pentest-project.png" onerror="this.src='https://placehold.co/800x450/111/ff0?text=Pentest+Toolkit'" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="text-yellow-500 font-mono text-sm mb-2">OFFENSIVE SECURITY</div>
+                        <h3 class="text-4xl font-bold text-white">Web Pentest Toolkit</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">
+                            Automated vulnerability scanner for web applications. Checks for XSS, SQLi, and misconfigurations.
+                            Built to streamline the reconnaissance phase of ethical hacking engagements.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Python</span>
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Requests</span>
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">BeautifulSoup</span>
+                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">OWASP Top 10</span>
+                        </div>
+                        <div class="pt-4">
+                            <a href="#" class="inline-flex items-center text-yellow-500 hover:underline">
+                                Launch Tool <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 bg-gray-900/20">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl md:text-6xl font-bold mb-12 text-center reveal">CAPTURED FLAGS</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <div class="p-6 border border-gray-800 bg-black hover:border-yellow-500 transition-all duration-300 reveal">
+                    <h3 class="text-3xl font-bold text-white mb-2">55<span class="text-sm text-gray-500">/1000+</span></h3>
+                    <div class="text-yellow-500 font-bold text-sm mb-1">BAJAJ HACKRX</div>
+                    <p class="text-xs text-gray-500">Elite performance in national hackathon.</p>
+                </div>
+
+                <div class="p-6 border border-gray-800 bg-black hover:border-[#00ff41] transition-all duration-300 reveal" style="transition-delay: 100ms;">
+                    <h3 class="text-3xl font-bold text-white mb-2">Top 126</h3>
+                    <div class="text-[#00ff41] font-bold text-sm mb-1">VITISH SIH</div>
+                    <p class="text-xs text-gray-500">Internal Hackathon selection out of 600+ teams.</p>
+                </div>
+
+                <div class="p-6 border border-gray-800 bg-black hover:border-[#00f3ff] transition-all duration-300 reveal" style="transition-delay: 200ms;">
+                    <h3 class="text-3xl font-bold text-white mb-2">Finalist</h3>
+                    <div class="text-[#00f3ff] font-bold text-sm mb-1">HACK-N-DROID</div>
+                    <p class="text-xs text-gray-500">Ranked 35th among 300+ competitive teams.</p>
+                </div>
+
+                <div class="p-6 border border-gray-800 bg-black hover:border-purple-500 transition-all duration-300 reveal" style="transition-delay: 300ms;">
+                    <h3 class="text-3xl font-bold text-white mb-2">400+</h3>
+                    <div class="text-purple-500 font-bold text-sm mb-1">COMMUNITY LEAD</div>
+                    <p class="text-xs text-gray-500">Organized Cyber-0-day-3.0 event.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-32 px-6">
+        <div class="max-w-4xl mx-auto border-glow bg-black p-8 md:p-12 rounded-lg relative overflow-hidden reveal">
+            <div class="flex items-center gap-2 mb-6 border-b border-gray-800 pb-4">
+                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                <span class="ml-4 text-xs text-gray-500 font-mono">user@abeer:~/contact</span>
+            </div>
+
+            <div class="space-y-6 font-mono">
+                <p class="text-gray-400">
+                    <span class="text-[#00ff41]">root@abeer:~$</span> echo "Let's build something secure."
+                </p>
+                <p class="text-white text-xl md:text-3xl font-bold">
+                    "Let's build something secure."
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+                    <div>
+                        <span class="text-gray-500 text-xs uppercase tracking-widest">Transmit Data</span>
+                        <a href="mailto:abeergupta555@gmail.com" class="block text-2xl text-[#00ff41] hover:underline mt-2">abeergupta555@gmail.com</a>
+                    </div>
+                    <div>
+                        <span class="text-gray-500 text-xs uppercase tracking-widest">Secure Link</span>
+                        <div class="flex gap-6 mt-2">
+                            <a href="https://github.com/abeer555" class="text-white hover:text-[#00ff41] transition-colors"><i data-lucide="github" class="w-8 h-8"></i></a>
+                            <a href="https://linkedin.com/in/abeer-gupta" class="text-white hover:text-[#00f3ff] transition-colors"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-600 text-sm">
+                    <p>Session ID: 0x5F3A1C • Encrypted via SSL</p>
+                    <p class="mt-2">&copy; 2025 Abeer Gupta. System Integrity Verified.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
-        // --- ICONS ---
-        // Safely initialize icons here after full load
-        window.addEventListener('load', () => {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-            setTimeout(typeBootLines, 500);
-        });
+        // --- 1. ICON INITIALIZATION ---
+        lucide.createIcons();
 
-        // --- CURSOR FOLLOWER ---
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // --- BOOT SEQUENCE ---
-        const bootScreen = document.getElementById('boot-screen');
-        const bootText = document.getElementById('boot-text');
-        const bootProgress = document.getElementById('boot-progress');
-        
+        // --- 2. BOOT SEQUENCE ---
         const bootLines = [
-            "Initializing Kernel...",
-            "Loading Arch Linux...",
-            "Mounting /dev/sda1...",
-            "Starting Network Manager...",
-            "Connecting to C9Labs Secure Server...",
-            "Fetching User Profile: Abeer Gupta...",
-            "Decrypting Assets...",
-            "[ OK ] System Ready."
+            "BIOS Date 11/23/25 10:46:15 Ver: 1.0.2",
+            "CPU: AMD Ryzen 9 5950X 16-Core Processor",
+            "Memory Test: 65536K OK",
+            "Detecting Primary Master ... VIT_CHENNAI",
+            "Detecting Primary Slave ... IIT_MADRAS",
+            "Loading Kernel Modules ... [ OK ]",
+            "Mounting Filesystems ... [ OK ]",
+            "Starting Network Services ... [ OK ]",
+            "Initializing Graphics Interface ... [ OK ]",
+            "Welcome to AbeerOS."
         ];
-
+        
+        const bootLog = document.getElementById('boot-log');
+        const bootBar = document.getElementById('boot-bar');
+        const bootScreen = document.getElementById('boot-screen');
+        
         let lineIndex = 0;
-
-        function typeBootLines() {
+        
+        function typeBoot() {
             if (lineIndex < bootLines.length) {
-                const p = document.createElement('div');
-                p.className = "font-mono text-xs mb-1";
-                if (bootLines[lineIndex].includes("[ OK ]")) p.className += " text-neon-green";
-                p.innerText = `> ${bootLines[lineIndex]}`;
-                bootText.appendChild(p);
+                const div = document.createElement('div');
+                div.textContent = "> " + bootLines[lineIndex];
+                bootLog.appendChild(div);
+                bootLog.scrollTop = bootLog.scrollHeight;
                 
-                // Scroll to bottom
-                bootText.scrollTop = bootText.scrollHeight;
-                
-                // Progress bar
                 const progress = ((lineIndex + 1) / bootLines.length) * 100;
-                bootProgress.style.width = `${progress}%`;
-
+                bootBar.style.width = `${progress}%`;
+                
                 lineIndex++;
-                const delay = Math.random() * 300 + 100;
-                setTimeout(typeBootLines, delay);
+                setTimeout(typeBoot, Math.random() * 200 + 50);
             } else {
                 setTimeout(() => {
                     bootScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        bootScreen.style.display = 'none';
-                    }, 500);
+                    setTimeout(() => bootScreen.style.display = 'none', 500);
                 }, 800);
             }
         }
-
-        // --- TERMINAL LOGIC ---
-        const terminalInput = document.getElementById('terminal-input');
-        const terminalOutput = document.getElementById('terminal-output');
         
-        const commands = {
-            'help': 'Available commands: <span class="text-white">help, whoami, ls, cat, clear, date, sudo</span>',
-            'whoami': 'Abeer Gupta - Cybersecurity Enthusiast, Linux Tinkerer, Full Stack Dev.',
-            'ls': '<span class="text-blue-400">projects/</span>&nbsp;&nbsp;<span class="text-blue-400">skills/</span>&nbsp;&nbsp;<span class="text-blue-400">experience/</span>&nbsp;&nbsp;<span class="text-gray-400">contact.txt</span>&nbsp;&nbsp;<span class="text-gray-400">resume.pdf</span>',
-            'date': new Date().toString(),
-            'sudo': '<span class="text-red-500">Permission denied: You are not Abeer. nice try.</span>',
-            'clear': '',
-            'cat contact.txt': 'GitHub: github.com/abeer555<br>Email: abeergupta555@gmail.com<br>LinkedIn: linkedin.com/in/abeer-gupta',
-            'cat resume.pdf': '<span class="text-yellow-500">Binary file (matches this portfolio) not displayed.</span>',
-            'cd projects': 'Navigating to projects...',
-            'cd skills': 'Navigating to skills...',
-            'cd experience': 'Navigating to experience...'
-        };
+        // Start Boot immediately
+        typeBoot();
 
-        terminalInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const input = this.value.trim();
-                const args = input.split(' ');
-                const cmd = args[0].toLowerCase();
-                
-                // Add command to history
-                terminalOutput.innerHTML += `<div><span class="text-neon-green">root@abeer:~/portfolio $</span> <span class="text-white">${input}</span></div>`;
-                
-                // Process command
-                let response = '';
-                
-                if (input === 'clear') {
-                    terminalOutput.innerHTML = '';
-                } else if (cmd === 'cd' && args[1]) {
-                    const section = args[1].replace('/', '');
-                    const el = Array.from(document.querySelectorAll('h3, h4')).find(h => h.innerText.toLowerCase().includes(section));
-                    if (el) {
-                        response = `Navigating to ./${section}...`;
-                        el.scrollIntoView({ behavior: 'smooth' });
-                    } else {
-                        response = `<span class="text-red-400">bash: cd: ${section}: No such file or directory</span>`;
-                    }
-                } else if (input === 'ls projects' || input === 'ls skills') {
-                     response = commands['ls'];
-                } else if (commands[input]) {
-                    response = commands[input];
-                } else if (cmd === 'cat' && args[1]) {
-                     const fullCmd = `cat ${args[1]}`;
-                     if (commands[fullCmd]) {
-                         response = commands[fullCmd];
-                     } else {
-                         response = `<span class="text-red-400">cat: ${args[1]}: No such file or directory</span>`;
-                     }
-                } else if (input !== '') {
-                    response = `<span class="text-red-400">bash: ${cmd}: command not found</span>`;
-                }
-                
-                if (response) {
-                    terminalOutput.innerHTML += `<div class="mb-2">${response}</div>`;
-                }
+        // --- 3. CURSOR FOLLOWER ---
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursor-dot');
 
-                this.value = '';
-                // Keep output scrolled to bottom
-                // We use a small timeout to ensure DOM updates first
-                setTimeout(() => {
-                     window.scrollTo(0, document.body.scrollHeight);
-                }, 10);
-            }
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
         });
 
-        // --- MATRIX BACKGROUND EFFECT ---
-        const canvas = document.getElementById('matrix-canvas');
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
+            cursor.style.backgroundColor = 'rgba(0, 255, 65, 0.3)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            cursor.style.backgroundColor = 'rgba(0, 255, 65, 0.1)';
+        });
+
+        // --- 4. SCROLL ANIMATIONS (INTERSECTION OBSERVER) ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- 5. MATRIX BACKGROUND ---
+        const canvas = document.getElementById('matrix-bg');
         const ctx = canvas.getContext('2d');
-
+        
         let width, height;
-
+        
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
         }
+        
         window.addEventListener('resize', resize);
         resize();
-
-        const columns = Math.floor(width / 20);
-        const drops = [];
-
-        for (let i = 0; i < columns; i++) {
-            drops[i] = 1;
-        }
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)'; // Fade effect
+        
+        const cols = Math.floor(width / 20);
+        const ypos = Array(cols).fill(0);
+        
+        function matrix() {
+            ctx.fillStyle = '#0001';
             ctx.fillRect(0, 0, width, height);
-
-            ctx.fillStyle = '#0F0'; // Green text
-            ctx.font = '15px JetBrains Mono';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = String.fromCharCode(0x30A0 + Math.random() * 96);
-                ctx.fillText(text, i * 20, drops[i] * 20);
-
-                if (drops[i] * 20 > height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
+            
+            ctx.fillStyle = '#0f0';
+            ctx.font = '15pt monospace';
+            
+            ypos.forEach((y, i) => {
+                const text = String.fromCharCode(Math.random() * 128);
+                const x = i * 20;
+                ctx.fillText(text, x, y);
+                if (y > 100 + Math.random() * 10000) ypos[i] = 0;
+                else ypos[i] = y + 20;
+            });
         }
-        setInterval(drawMatrix, 50);
-
-
-        // --- HACKER TEXT EFFECT FOR HEADINGS ---
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
-
-        document.querySelectorAll('.glitch').forEach(target => {
-            let interval = null;
-
-            target.onmouseover = event => {  
-                let iteration = 0;
-                
-                clearInterval(interval);
-                
-                interval = setInterval(() => {
-                    event.target.innerText = event.target.innerText
-                    .split("")
-                    .map((letter, index) => {
-                        if(index < iteration) {
-                        return event.target.dataset.text[index];
-                        }
-                    
-                        return letters[Math.floor(Math.random() * 26)]
-                    })
-                    .join("");
-                    
-                    if(iteration >= event.target.dataset.text.length){ 
-                    clearInterval(interval);
-                    }
-                    
-                    iteration += 1 / 3;
-                }, 30);
-            }
-        });
+        
+        setInterval(matrix, 50);
 
     </script>
 </body>
