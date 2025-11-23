@@ -3,47 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DORKSENSE | UI THAT SCREAMS</title>
+    <title>ABEER GUPTA // BRUTALIST PORTFOLIO</title>
     
-    <!-- Tailwind CSS -->
+    <!-- TAILWIND CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
+    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;400;700;800&display=swap" rel="stylesheet">
+    
+    <!-- ICONS -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Custom Configuration & Styles -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'acid': '#ccff00',
-                        'hot-pink': '#ff0099',
-                        'cyan-punch': '#00ffff',
-                        'void': '#050505',
-                        'off-white': '#f0f0f0',
+                        'hyper-yellow': '#FFFF00',
+                        'hot-pink': '#FF1493',
+                        'brutal-black': '#000000',
+                        'terminal-green': '#00FF00',
+                        'terminal-bg': '#0C0C0C',
                     },
                     fontFamily: {
-                        'display': ['Syncopate', 'sans-serif'],
-                        'mono': ['Space Mono', 'monospace'],
+                        'bebas': ['"Bebas Neue"', 'sans-serif'],
+                        'space': ['"Space Grotesk"', 'sans-serif'],
+                        'mono': ['"Courier Prime"', 'monospace'],
                     },
-                    animation: {
-                        'spin-slow': 'spin 12s linear infinite',
-                        'bounce-fast': 'bounce 0.5s infinite',
-                        'pulse-neon': 'pulse-neon 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'marquee': 'marquee 15s linear infinite',
-                    },
-                    keyframes: {
-                        'pulse-neon': {
-                            '0%, 100%': { opacity: 1, filter: 'drop-shadow(0 0 5px #ccff00)' },
-                            '50%': { opacity: .8, filter: 'drop-shadow(0 0 20px #ccff00)' },
-                        },
-                        'marquee': {
-                            '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-100%)' },
-                        }
+                    boxShadow: {
+                        'hard': '8px 8px 0px 0px #000000',
+                        'hard-hover': '12px 12px 0px 0px #000000',
+                        'hard-sm': '4px 4px 0px 0px #000000',
+                        'hard-pink': '8px 8px 0px 0px #FF1493',
+                        'hard-yellow': '8px 8px 0px 0px #FFFF00',
                     }
                 }
             }
@@ -51,43 +45,43 @@
     </script>
 
     <style>
-        /* BRUTALIST RESET & UTILITIES */
+        /* CORE BRUTALIST STYLES */
         body {
+            background-color: #f0f0f0;
             cursor: crosshair;
             overflow-x: hidden;
-            background-color: #f0f0f0;
         }
 
-        /* NOISE OVERLAY */
-        .noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.07;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        /* CUSTOM SCROLLBAR */
-        ::-webkit-scrollbar {
-            width: 16px;
-            background: #000;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ccff00;
+        .brutal-border {
             border: 4px solid #000;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff0099;
+
+        .brutal-btn {
+            transition: all 0.1s ease-in-out;
+            border: 4px solid #000;
         }
 
-        /* GLITCH EFFECT */
+        .brutal-btn:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px 0px #000;
+        }
+        
+        .brutal-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #000;
+        }
+
+        /* TEXT SELECTION */
+        ::selection {
+            background-color: #FF1493;
+            color: #FFFF00;
+        }
+
+        /* GLITCH ANIMATION */
         .glitch-wrapper {
             position: relative;
         }
+        
         .glitch::before, .glitch::after {
             content: attr(data-text);
             position: absolute;
@@ -96,421 +90,497 @@
             width: 100%;
             height: 100%;
         }
+
         .glitch::before {
             left: 2px;
-            text-shadow: -2px 0 #ff0099;
-            clip: rect(24px, 550px, 90px, 0);
-            animation: glitch-anim-1 3s infinite linear alternate-reverse;
+            text-shadow: -1px 0 #FF1493;
+            clip-path: inset(44% 0 61% 0);
+            animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
         }
+
         .glitch::after {
             left: -2px;
-            text-shadow: -2px 0 #00ffff;
-            clip: rect(85px, 550px, 140px, 0);
-            animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+            text-shadow: -1px 0 #FFFF00;
+            clip-path: inset(10% 0 20% 0);
+            animation: glitch-anim-2 3.5s infinite linear alternate-reverse;
         }
+
         @keyframes glitch-anim-1 {
-            0% { clip: rect(20px, 9999px, 10px, 0); }
-            20% { clip: rect(80px, 9999px, 90px, 0); }
-            40% { clip: rect(10px, 9999px, 50px, 0); }
-            60% { clip: rect(90px, 9999px, 20px, 0); }
-            80% { clip: rect(30px, 9999px, 70px, 0); }
-            100% { clip: rect(60px, 9999px, 40px, 0); }
+            0% { clip-path: inset(20% 0 50% 0); }
+            20% { clip-path: inset(60% 0 10% 0); }
+            40% { clip-path: inset(40% 0 20% 0); }
+            60% { clip-path: inset(80% 0 5% 0); }
+            80% { clip-path: inset(10% 0 70% 0); }
+            100% { clip-path: inset(30% 0 40% 0); }
         }
+
         @keyframes glitch-anim-2 {
-            0% { clip: rect(120px, 9999px, 10px, 0); }
-            20% { clip: rect(20px, 9999px, 100px, 0); }
-            40% { clip: rect(90px, 9999px, 30px, 0); }
-            60% { clip: rect(10px, 9999px, 60px, 0); }
-            80% { clip: rect(70px, 9999px, 120px, 0); }
-            100% { clip: rect(40px, 9999px, 80px, 0); }
+            0% { clip-path: inset(10% 0 60% 0); }
+            20% { clip-path: inset(30% 0 10% 0); }
+            40% { clip-path: inset(80% 0 20% 0); }
+            60% { clip-path: inset(10% 0 80% 0); }
+            80% { clip-path: inset(50% 0 10% 0); }
+            100% { clip-path: inset(20% 0 40% 0); }
         }
 
-        /* UTILITIES */
-        .brutal-shadow {
-            box-shadow: 8px 8px 0px 0px #050505;
-            transition: all 0.2s ease;
+        /* SCROLL BAR */
+        ::-webkit-scrollbar {
+            width: 16px;
         }
-        .brutal-shadow:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px 0px #050505;
+        ::-webkit-scrollbar-track {
+            background: #000;
         }
-        .brutal-shadow:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px 0px #050505;
+        ::-webkit-scrollbar-thumb {
+            background: #FF1493;
+            border: 3px solid #000;
         }
-        .brutal-shadow-sm {
-             box-shadow: 4px 4px 0px 0px #050505;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFFF00;
         }
 
-        .text-stroke {
-            -webkit-text-stroke: 2px black;
-            color: transparent;
+        /* TERMINAL CURSOR */
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
-        .blend-diff {
-            mix-blend-mode: difference;
+        /* MARQUEE */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
         }
-        
-        .clip-speech {
-            clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
         }
-
-        /* ROTATING SHAPES */
-        .shape {
-            position: absolute;
-            filter: blur(1px);
-            opacity: 0.8;
-            animation: float 6s ease-in-out infinite;
-            z-index: 0;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
     </style>
 </head>
-<body class="text-void antialiased selection:bg-hot-pink selection:text-white">
+<body class="bg-gray-100 font-space text-brutal-black">
 
-    <!-- NOISE OVERLAY -->
-    <div class="noise-overlay"></div>
-
-    <!-- NAVIGATION (Broken Layout) -->
-    <nav class="fixed top-0 left-0 w-full z-50 p-4 md:p-8 pointer-events-none mix-blend-exclusion text-white">
-        <div class="flex justify-between items-start">
-            <div class="font-display font-bold text-2xl md:text-4xl tracking-tighter border-2 border-white p-2 pointer-events-auto cursor-pointer hover:bg-white hover:text-black transition-colors">
-                DRK/SNS
-            </div>
-            <div class="hidden md:flex flex-col gap-2 font-mono text-sm pointer-events-auto">
-                <a href="#work" class="hover:underline decoration-wavy underline-offset-4">WORK [01]</a>
-                <a href="#about" class="hover:underline decoration-wavy underline-offset-4">ABOUT [02]</a>
-                <a href="#contact" class="hover:underline decoration-wavy underline-offset-4">CONTACT [03]</a>
-            </div>
+    <!-- NAV -->
+    <nav class="fixed top-0 w-full z-50 bg-hyper-yellow border-b-4 border-black px-4 py-3 flex justify-between items-center brutal-shadow">
+        <div class="font-bebas text-3xl tracking-wider">ABEER_GUPTA<span class="text-hot-pink">.DEV</span></div>
+        <div class="hidden md:flex gap-6 font-bold text-lg">
+            <a href="#projects" class="hover:bg-black hover:text-white px-2 transition-colors">PROJECTS</a>
+            <a href="#experience" class="hover:bg-black hover:text-white px-2 transition-colors">LOGS</a>
+            <a href="#contact" class="hover:bg-black hover:text-white px-2 transition-colors">CONTACT</a>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
-    <section class="relative min-h-screen flex flex-col items-center justify-center bg-acid overflow-hidden border-b-8 border-black">
-        <!-- Floating Geo Shapes -->
-        <div class="shape border-4 border-black w-32 h-32 top-20 left-10 rotate-12 bg-cyan-punch"></div>
-        <div class="shape border-4 border-black w-24 h-24 bottom-40 right-20 -rotate-6 bg-hot-pink rounded-full"></div>
-        <div class="shape border-4 border-black w-48 h-12 top-1/3 right-1/4 rotate-45 bg-transparent"></div>
-        
-        <!-- Main Content -->
-        <div class="relative z-10 text-center px-4">
-            <div class="inline-block bg-black text-white font-mono px-4 py-1 mb-4 transform -rotate-2 brutal-shadow-sm animate-pulse-neon">
-                SYSTEM STATUS: UNSTABLE
+    <header class="min-h-screen pt-24 pb-12 px-6 md:px-12 flex flex-col justify-center items-start relative overflow-hidden bg-white border-b-4 border-black">
+        <!-- Floating Shapes (Pure CSS) -->
+        <div class="absolute top-20 right-10 w-32 h-32 bg-hot-pink border-4 border-black shadow-hard rounded-full opacity-50 animate-bounce"></div>
+        <div class="absolute bottom-20 left-10 w-48 h-48 bg-hyper-yellow border-4 border-black shadow-hard rotate-12 opacity-50"></div>
+
+        <div class="z-10 relative max-w-7xl w-full">
+            <div class="bg-black text-white inline-block px-4 py-1 font-mono text-sm mb-4 border-2 border-hot-pink transform -rotate-2">
+                SYSTEM STATUS: CRITICAL ⚡
             </div>
             
-            <div class="glitch-wrapper mb-2">
-                <h1 class="glitch font-display font-bold text-6xl md:text-9xl leading-none tracking-tight text-void" data-text="DORKSENSE">
-                    DORKSENSE
-                </h1>
-            </div>
-            
-            <h2 class="font-mono text-xl md:text-3xl font-bold bg-white inline-block px-6 py-2 border-4 border-black transform skew-x-12 mt-4 brutal-shadow">
-                UI THAT BREAKS THE RULES
-            </h2>
+            <h1 class="text-8xl md:text-[10rem] leading-[0.85] font-bebas glitch-wrapper mb-6">
+                <span class="glitch" data-text="ABEER">ABEER</span><br>
+                <span class="text-stroke-black text-transparent" style="-webkit-text-stroke: 4px black; color: transparent;">GUPTA</span>
+            </h1>
 
-            <div class="mt-12">
-                <button id="magnet-btn" class="magnetic-btn bg-hot-pink text-white font-display font-bold text-xl px-10 py-6 border-4 border-black brutal-shadow relative overflow-hidden group">
-                    <span class="relative z-10 group-hover:text-black transition-colors">INITIALIZE CHAOS</span>
-                    <div class="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200 ease-out"></div>
-                </button>
-            </div>
-        </div>
+            <p class="text-2xl md:text-4xl font-bold bg-hyper-yellow inline-block px-4 py-2 border-4 border-black shadow-hard mb-8 transform rotate-1">
+                CYBERSECURITY ANALYST & FULL STACK ENGINEER
+            </p>
 
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 font-mono text-sm animate-bounce">
-            ↓ SCROLL TO CRASH ↓
-        </div>
-    </section>
-
-    <!-- STATS GRID (Neo-Brutalist) -->
-    <section class="bg-white py-20 border-b-8 border-black overflow-hidden">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-                
-                <!-- Stat 1 -->
-                <div class="scroll-trigger opacity-0 translate-y-20 transition-all duration-700 bg-cyan-punch border-4 border-black p-8 brutal-shadow transform rotate-2 hover:-rotate-1">
-                    <h3 class="font-display text-6xl font-bold mb-2">100%</h3>
-                    <p class="font-mono text-lg font-bold border-t-4 border-black pt-4">VISUAL LOUDNESS</p>
-                    <p class="font-mono text-sm mt-2">We don't whisper. We scream in hex codes.</p>
-                </div>
-
-                <!-- Stat 2 -->
-                <div class="scroll-trigger opacity-0 translate-y-20 transition-all duration-700 delay-100 bg-off-white border-4 border-black p-8 brutal-shadow transform -rotate-2 hover:rotate-1 z-10 md:-mx-4">
-                    <h3 class="font-display text-6xl font-bold mb-2">404</h3>
-                    <p class="font-mono text-lg font-bold border-t-4 border-black pt-4">NORMALITY NOT FOUND</p>
-                    <p class="font-mono text-sm mt-2">Standard templates are for the weak.</p>
-                </div>
-
-                <!-- Stat 3 -->
-                <div class="scroll-trigger opacity-0 translate-y-20 transition-all duration-700 delay-200 bg-hot-pink border-4 border-black p-8 brutal-shadow transform rotate-1 hover:-rotate-2 text-white">
-                    <h3 class="font-display text-6xl font-bold mb-2">&lt;/&gt;</h3>
-                    <p class="font-mono text-lg font-bold border-t-4 border-black pt-4 text-white">CODE IS POETRY</p>
-                    <p class="font-mono text-sm mt-2">Clean stack. Dirty aesthetics.</p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- PARALLAX ART PANEL -->
-    <section id="about" class="relative py-32 overflow-hidden bg-void border-b-8 border-white">
-        <!-- Parallax Elements -->
-        <div class="absolute inset-0 w-full h-full pointer-events-none">
-            <div class="parallax-layer absolute top-0 left-0 w-[150%] h-64 bg-acid transform -rotate-3 skew-y-3 border-b-4 border-black" data-speed="0.2"></div>
-            <div class="parallax-layer absolute bottom-20 right-0 w-2/3 h-96 bg-cyan-punch border-4 border-white transform rotate-6" data-speed="-0.1"></div>
-        </div>
-
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="w-full md:w-1/2">
-                    <div class="bg-white p-2 border-4 border-acid transform -rotate-2 inline-block mb-8">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80" alt="Avatar" class="w-full h-auto grayscale contrast-150 border-2 border-black">
-                    </div>
-                </div>
-                <div class="w-full md:w-1/2 mix-blend-exclusion text-white">
-                    <h2 class="font-display text-5xl md:text-8xl font-bold leading-tight mb-6">
-                        DIGITAL<br>ANARCHY
-                    </h2>
-                    <p class="font-mono text-xl md:text-2xl leading-relaxed bg-black inline box-decoration-clone px-2">
-                        We build interfaces that refuse to be ignored. Combining raw Linux power with design sensitivity. 
-                        <span class="text-acid">Specializing in React, Python, and breaking the grid.</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SHOWCASE (Broken Grid) -->
-    <section id="work" class="py-24 bg-acid border-b-8 border-black">
-        <div class="container mx-auto px-4">
-            <div class="mb-16">
-                <h2 class="font-display text-7xl md:text-[10rem] leading-none font-bold text-stroke opacity-50">
-                    WORKS
-                </h2>
-                <div class="font-mono text-2xl font-bold bg-black text-white inline-block px-4 py-1 transform -translate-y-12 translate-x-12 rotate-3 border-4 border-white">
-                    FEATURED CHAOS
-                </div>
-            </div>
-
-            <!-- Messy Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-y-16 md:gap-8">
-                
-                <!-- Project 1 (Big) -->
-                <div class="md:col-span-7 group relative cursor-pointer">
-                    <div class="absolute inset-0 bg-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-6 group-hover:translate-y-6"></div>
-                    <div class="relative bg-white border-4 border-black p-2 h-full transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1">
-                        <div class="overflow-hidden h-80 border-b-4 border-black">
-                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-end">
-                                <h3 class="font-display text-3xl font-bold">HYPRLAND DOTS</h3>
-                                <span class="font-mono text-sm bg-cyan-punch px-2 border-2 border-black">LINUX</span>
-                            </div>
-                            <p class="font-mono text-sm mt-4">Custom Arch Linux configuration optimized for speed and aesthetic supremacy.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 2 (Small/Offset) -->
-                <div class="md:col-span-5 md:mt-24 group relative cursor-pointer">
-                    <div class="absolute inset-0 bg-hot-pink translate-x-4 translate-y-4"></div>
-                    <div class="relative bg-void border-4 border-white p-2 h-full text-white">
-                        <div class="overflow-hidden h-64 border-b-4 border-white">
-                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all">
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-end">
-                                <h3 class="font-display text-2xl font-bold">CYBER DECK</h3>
-                                <span class="font-mono text-sm bg-acid text-black px-2 border-2 border-white">SECURITY</span>
-                            </div>
-                            <p class="font-mono text-sm mt-4">Penetration testing toolkit built with Python & Bash.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3 (Wide) -->
-                <div class="md:col-span-12 md:w-2/3 md:mx-auto group relative cursor-pointer">
-                    <div class="absolute inset-0 bg-cyan-punch translate-x-4 translate-y-4 rounded-none"></div>
-                    <div class="relative bg-white border-4 border-black p-2 h-full">
-                        <div class="p-8 flex flex-col md:flex-row gap-8 items-center">
-                            <div class="w-full md:w-1/2 h-64 border-4 border-black overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80" class="w-full h-full object-cover filter sepia group-hover:sepia-0 transition-all">
-                            </div>
-                            <div class="w-full md:w-1/2">
-                                <h3 class="font-display text-4xl font-bold mb-4">SECURE SERVER</h3>
-                                <p class="font-mono mb-6">Multi-threaded HTTP server with AES-256 encryption. 25% faster than standard implementations.</p>
-                                <button class="font-mono font-bold uppercase border-b-4 border-hot-pink hover:bg-hot-pink hover:text-white transition-colors">View Source code -></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- TESTIMONIALS (Comic Style) -->
-    <section class="py-20 bg-white border-b-8 border-black overflow-hidden">
-        <div class="container mx-auto px-4">
-            <h2 class="font-display text-4xl md:text-6xl font-bold text-center mb-16">
-                HATE MAIL / LOVE LETTERS
-            </h2>
-            
-            <div class="flex flex-wrap justify-center gap-12">
-                
-                <!-- Review 1 -->
-                <div class="relative w-full md:w-1/3">
-                    <div class="bg-off-white border-4 border-black p-8 brutal-shadow relative z-10">
-                        <p class="font-mono font-bold text-lg">"I tried to break their code, but their layout broke my brain first. 10/10 would crash again."</p>
-                    </div>
-                    <!-- Triangle for speech bubble -->
-                    <div class="absolute bottom-[-20px] left-10 w-0 h-0 border-l-[20px] border-l-transparent border-t-[20px] border-t-black border-r-[20px] border-r-transparent z-0"></div>
-                    <div class="flex items-center gap-4 mt-8 ml-4">
-                        <div class="w-16 h-16 border-4 border-black bg-hot-pink overflow-hidden">
-                             <img src="https://api.dicebear.com/7.x/pixel-art/svg?seed=John" class="w-full h-full">
-                        </div>
-                        <div>
-                            <h4 class="font-display font-bold">ALEX R.</h4>
-                            <span class="font-mono text-xs bg-black text-white px-1">CTO @ NOWHERE</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review 2 (Shaking) -->
-                <div class="relative w-full md:w-1/3 mt-12 md:mt-0 animate-bounce-fast" style="animation-duration: 3s;">
-                    <div class="bg-black text-white border-4 border-acid p-8 brutal-shadow relative z-10 transform rotate-1">
-                        <p class="font-mono font-bold text-lg">"Uncomfortably vibrant. My eyes hurt, but I can't stop looking at the animations."</p>
-                    </div>
-                    <div class="absolute bottom-[-20px] right-10 w-0 h-0 border-l-[20px] border-l-transparent border-t-[20px] border-t-acid border-r-[20px] border-r-transparent z-0"></div>
-                    <div class="flex items-center justify-end gap-4 mt-8 mr-4 text-right">
-                        <div>
-                            <h4 class="font-display font-bold text-black">SARAH K.</h4>
-                            <span class="font-mono text-xs bg-acid text-black px-1">DESIGN LEAD</span>
-                        </div>
-                         <div class="w-16 h-16 border-4 border-black bg-cyan-punch overflow-hidden">
-                             <img src="https://api.dicebear.com/7.x/pixel-art/svg?seed=Sarah" class="w-full h-full">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA FOOTER -->
-    <section id="contact" class="bg-hot-pink border-t-8 border-black">
-        <!-- Marquee -->
-        <div class="bg-black text-white py-4 border-b-8 border-white overflow-hidden whitespace-nowrap">
-            <div class="animate-marquee inline-block font-display font-bold text-4xl md:text-6xl">
-                READY TO BREAK THE INTERNET? <span class="text-acid mx-4">///</span> HIRED OR FIRED? <span class="text-acid mx-4">///</span> LET'S BUILD SOMETHING WEIRD <span class="text-acid mx-4">///</span> 
-                READY TO BREAK THE INTERNET? <span class="text-acid mx-4">///</span> HIRED OR FIRED? <span class="text-acid mx-4">///</span> LET'S BUILD SOMETHING WEIRD <span class="text-acid mx-4">///</span>
-            </div>
-        </div>
-
-        <div class="container mx-auto px-4 py-24 text-center">
-            <h2 class="font-display text-5xl md:text-8xl font-bold mb-12 text-white text-stroke">
-                ENTER THE VOID
-            </h2>
-            
-            <div class="bg-white border-8 border-black p-1 inline-block brutal-shadow hover:scale-105 transition-transform">
-                <a href="mailto:abeergupta555@gmail.com" class="block bg-black text-acid font-display font-bold text-2xl md:text-4xl px-12 py-8 hover:bg-acid hover:text-black transition-colors">
-                    START PROJECT_
+            <div class="flex flex-col md:flex-row gap-6 mt-8">
+                <a href="#contact" class="brutal-btn bg-black text-white px-8 py-4 text-2xl font-bebas tracking-wider shadow-hard-pink hover:bg-hot-pink">
+                    INITIATE CONTACT
+                </a>
+                <a href="https://github.com/abeer555" target="_blank" class="brutal-btn bg-white px-8 py-4 text-2xl font-bebas tracking-wider shadow-hard hover:bg-hyper-yellow">
+                    GITHUB PROFILE
                 </a>
             </div>
+        </div>
 
-            <div class="mt-20 flex flex-col md:flex-row justify-between items-center font-mono text-sm font-bold gap-4">
-                <div class="bg-white border-2 border-black px-2 py-1">
-                    © 2025 DORKSENSE
+        <!-- MARQUEE -->
+        <div class="absolute bottom-0 left-0 w-full bg-hot-pink border-y-4 border-black py-3 marquee-container font-mono font-bold text-xl">
+            <div class="marquee-content">
+                PYTHON // C++ // LINUX // DOCKER // REACT // POSTGRESQL // PENETRATION TESTING // HYPRLAND // ARCH LINUX // PYTHON // C++ // LINUX // DOCKER // REACT // POSTGRESQL // PENETRATION TESTING // HYPRLAND // ARCH LINUX //
+            </div>
+        </div>
+    </header>
+
+    <!-- INTERACTIVE SHELL SECTION -->
+    <section class="py-20 px-4 md:px-12 bg-gray-200 border-b-4 border-black">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-6xl font-bebas mb-8 flex items-center gap-4">
+                <span class="bg-black text-white px-4">01</span> LIVE_TERMINAL
+            </h2>
+
+            <!-- TERMINAL WINDOW -->
+            <div class="w-full bg-terminal-bg border-4 border-black shadow-hard font-mono text-terminal-green rounded-sm overflow-hidden flex flex-col h-[500px]">
+                
+                <!-- Terminal Title Bar -->
+                <div class="bg-gray-800 border-b-4 border-black p-2 flex justify-between items-center select-none">
+                    <div class="flex items-center gap-2">
+                        <div class="w-4 h-4 rounded-full bg-red-500 border-2 border-black"></div>
+                        <div class="w-4 h-4 rounded-full bg-yellow-400 border-2 border-black"></div>
+                        <div class="w-4 h-4 rounded-full bg-green-500 border-2 border-black"></div>
+                    </div>
+                    <span class="font-bold text-gray-300 tracking-widest">SHELL.EXE // GUEST_ACCESS</span>
+                    <div class="w-16"></div> <!-- Spacer -->
                 </div>
-                <div class="flex gap-4">
-                    <a href="#" class="hover:bg-black hover:text-white px-2 transition-colors">GITHUB</a>
-                    <a href="#" class="hover:bg-black hover:text-white px-2 transition-colors">LINKEDIN</a>
-                    <a href="#" class="hover:bg-black hover:text-white px-2 transition-colors">INSTAGRAM</a>
-                </div>
-                <div class="bg-white border-2 border-black px-2 py-1">
-                    LOC: CHENNAI, IN
+
+                <!-- Terminal Content -->
+                <div class="flex-1 p-4 overflow-y-auto font-bold text-lg leading-relaxed" id="terminal-output" onclick="document.getElementById('cli-input').focus()">
+                    <div class="mb-4 text-gray-400">
+                        AbeerOS Kernel v6.9.1 loaded...<br>
+                        Type <span class="text-hyper-yellow">'help'</span> to view available commands.
+                    </div>
+                    <!-- Output will be injected here -->
+                    <div id="command-history"></div>
+                    
+                    <div class="flex items-center">
+                        <span class="text-hot-pink mr-2">visitor@abeer-portfolio:~$</span>
+                        <input type="text" id="cli-input" class="bg-transparent border-none outline-none text-terminal-green flex-1 caret-transparent uppercase" autocomplete="off" spellcheck="false">
+                        <span class="cursor-blink bg-terminal-green text-black w-3 h-6 block -ml-1"></span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="py-20 px-4 md:px-12 bg-hyper-yellow border-b-4 border-black">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-6xl md:text-8xl font-bebas mb-16 text-right">
+                <span class="bg-white px-6 border-4 border-black shadow-hard">SHIPPING_CODE</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                
+                <!-- Project 1 -->
+                <div class="bg-white border-4 border-black p-6 shadow-hard hover:shadow-hard-hover transition-all group">
+                    <div class="bg-black text-white px-3 py-1 font-mono text-sm inline-block mb-4">RAG SYSTEM</div>
+                    <h3 class="text-4xl font-bebas mb-2 group-hover:text-hot-pink transition-colors">DOC QUERY ENGINE</h3>
+                    <div class="h-48 bg-gray-200 border-2 border-black mb-4 overflow-hidden relative">
+                         <img src="Hackrx-project.png" onerror="this.src='https://placehold.co/600x400/000000/FFF?text=RAG+SYSTEM'" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
+                    </div>
+                    <p class="font-space font-bold mb-4 border-l-4 border-hot-pink pl-4">Advanced retrieval-augmented generation system processing massive datasets for instant query resolution.</p>
+                    <div class="flex gap-2 mb-6 flex-wrap">
+                        <span class="border-2 border-black px-2 bg-gray-100 font-mono text-xs">PYTHON</span>
+                        <span class="border-2 border-black px-2 bg-gray-100 font-mono text-xs">LANGCHAIN</span>
+                        <span class="border-2 border-black px-2 bg-gray-100 font-mono text-xs">VECTOR DB</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="#" class="flex-1 bg-black text-white text-center py-2 font-bold border-2 border-black hover:bg-transparent hover:text-black transition-colors">SOURCE</a>
+                        <a href="#" class="flex-1 bg-hot-pink text-white text-center py-2 font-bold border-2 border-black hover:bg-white hover:text-black transition-colors">DEMO</a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-white border-4 border-black p-6 shadow-hard hover:shadow-hard-hover transition-all group">
+                    <div class="bg-black text-white px-3 py-1 font-mono text-sm inline-block mb-4">SYSTEM RICE</div>
+                    <h3 class="text-4xl font-bebas mb-2 group-hover:text-hot-pink transition-colors">HYPRLAND DOTS</h3>
+                    <div class="h-48 bg-gray-200 border-2 border-black mb-4 overflow-hidden relative">
+                        <img src="hyprland_image.png" onerror="this.src='https://placehold.co/600x400/000000/FFF?text=LINUX+RICE'" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
+                    </div>
+                    <p class="font-space font-bold mb-4 border-l-4 border-hot-pink pl-4">Highly optimized Arch Linux configuration. Custom Wayland scripts, animations, and productivity workflow.</p>
+                    <div class="flex gap-2 mb-6 flex-wrap">
+                        <span class="border-2 border-black px-2 bg-gray-100 font-mono text-xs">SHELL</span>
+                        <span class="border-2 border-black px-2 bg-gray-100 font-mono text-xs">LUA</span>
+                        <span class="border-2 border-black px-2 bg-gray-100 font-mono text-xs">ARCH</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="#" class="flex-1 bg-black text-white text-center py-2 font-bold border-2 border-black hover:bg-transparent hover:text-black transition-colors">SOURCE</a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="bg-white border-4 border-black p-6 shadow-hard hover:shadow-hard-hover transition-all group">
+                    <div class="bg-black text-white px-3 py-1 font-mono text-sm inline-block mb-4">CRYPTOGRAPHY</div>
+                    <h3 class="text-4xl font-bebas mb-2 group-hover:text-hot-pink transition-colors">SECURE FILE SERVER</h3>
+                    <div class="h-48 bg-gray-200 border-2 border-black mb-4 overflow-hidden relative">
+                         <img src="server.png" onerror="this.src='https://placehold.co/600x400/000000/FFF?text=ENCRYPTED+SERVER'" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
+                    </div>
+                    <p class="font-space font-bold mb-4 border-l-4 border-hot-pink pl-4">Multi-threaded C++ server implementing OpenSSL AES-256-CBC encryption. Zero-knowledge architecture.</p>
+                    <div class="flex gap-2 mb-6 flex-wrap">
+                        <span class="border-2 border-black px-2 bg-gray-100 font-mono text-xs">C++</span>
+                        <span class="border-2 border-black px-2 bg-gray-100 font-mono text-xs">OPENSSL</span>
+                        <span class="border-2 border-black px-2 bg-gray-100 font-mono text-xs">SOCKETS</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="#" class="flex-1 bg-black text-white text-center py-2 font-bold border-2 border-black hover:bg-transparent hover:text-black transition-colors">SOURCE</a>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="bg-white border-4 border-black p-6 shadow-hard hover:shadow-hard-hover transition-all group">
+                    <div class="bg-black text-white px-3 py-1 font-mono text-sm inline-block mb-4">OFFENSIVE SEC</div>
+                    <h3 class="text-4xl font-bebas mb-2 group-hover:text-hot-pink transition-colors">PENTEST TOOLKIT</h3>
+                    <div class="h-48 bg-gray-200 border-2 border-black mb-4 overflow-hidden relative">
+                         <img src="pentest-project.png" onerror="this.src='https://placehold.co/600x400/000000/FFF?text=PENTEST+KIT'" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
+                    </div>
+                    <p class="font-space font-bold mb-4 border-l-4 border-hot-pink pl-4">Automated vulnerability scanner. Checks for XSS, SQLi, and config errors. Built for speed.</p>
+                    <div class="flex gap-2 mb-6 flex-wrap">
+                        <span class="border-2 border-black px-2 bg-gray-100 font-mono text-xs">PYTHON</span>
+                        <span class="border-2 border-black px-2 bg-gray-100 font-mono text-xs">REQUESTS</span>
+                        <span class="border-2 border-black px-2 bg-gray-100 font-mono text-xs">BS4</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="#" class="flex-1 bg-black text-white text-center py-2 font-bold border-2 border-black hover:bg-transparent hover:text-black transition-colors">SOURCE</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience" class="py-20 px-4 md:px-12 border-b-4 border-black bg-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-6xl font-bebas mb-16 bg-hot-pink inline-block px-4 border-4 border-black transform -rotate-1">
+                WORK_LOGS
+            </h2>
+
+            <div class="relative border-l-8 border-black ml-4 md:ml-0 space-y-16">
+                
+                <!-- Log 1 -->
+                <div class="relative pl-12 md:pl-16">
+                    <div class="absolute -left-5 top-0 w-10 h-10 bg-hyper-yellow border-4 border-black"></div>
+                    <div class="bg-gray-100 border-4 border-black p-6 shadow-hard-sm">
+                        <div class="flex justify-between items-start mb-2 flex-wrap">
+                            <h3 class="text-3xl font-bebas">CYBERSECURITY INTERN</h3>
+                            <span class="font-mono font-bold bg-black text-white px-2">MAY 2025 - AUG 2025</span>
+                        </div>
+                        <div class="text-xl font-bold text-hot-pink mb-4">@ C9LABS</div>
+                        <ul class="list-disc list-inside font-space font-bold space-y-2">
+                            <li>Executed vulnerability assessments on critical infrastructure.</li>
+                            <li>Ranked Top 6% globally on TryHackMe.</li>
+                            <li>Patched 15+ high-severity exploits.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Log 2 -->
+                <div class="relative pl-12 md:pl-16">
+                    <div class="absolute -left-5 top-0 w-10 h-10 bg-hot-pink border-4 border-black"></div>
+                    <div class="bg-gray-100 border-4 border-black p-6 shadow-hard-sm">
+                        <div class="flex justify-between items-start mb-2 flex-wrap">
+                            <h3 class="text-3xl font-bebas">LINUX CLUB TECH MEMBER</h3>
+                            <span class="font-mono font-bold bg-black text-white px-2">SEP 2024 - PRESENT</span>
+                        </div>
+                        <div class="text-xl font-bold text-hot-pink mb-4">@ LINUX CLUB</div>
+                        <ul class="list-disc list-inside font-space font-bold space-y-2">
+                            <li>Configured 20+ systems for open source workshops.</li>
+                            <li>Taught Bash scripting to 50+ students.</li>
+                            <li>Maintained server uptime of 99.9%.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Log 3 -->
+                <div class="relative pl-12 md:pl-16">
+                    <div class="absolute -left-5 top-0 w-10 h-10 bg-white border-4 border-black"></div>
+                    <div class="bg-gray-100 border-4 border-black p-6 shadow-hard-sm">
+                        <div class="flex justify-between items-start mb-2 flex-wrap">
+                            <h3 class="text-3xl font-bebas">COMPETITIVE PROGRAMMER</h3>
+                            <span class="font-mono font-bold bg-black text-white px-2">AUG 2024 - PRESENT</span>
+                        </div>
+                        <div class="text-xl font-bold text-hot-pink mb-4">@ CODECHEF</div>
+                        <ul class="list-disc list-inside font-space font-bold space-y-2">
+                            <li>Mentored 15+ students in Data Structures.</li>
+                            <li>Solved 300+ problems on LeetCode.</li>
+                            <li>Organized internal coding hackathons.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section class="py-20 px-4 md:px-12 bg-black border-b-4 border-white overflow-hidden relative">
+        <h2 class="text-6xl text-white font-bebas text-center mb-12">THE ARSENAL</h2>
+        <div class="flex flex-wrap justify-center gap-6 max-w-6xl mx-auto">
+            <!-- Tags -->
+            <div class="bg-hyper-yellow border-4 border-white px-6 py-3 text-2xl font-bold font-bebas transform hover:scale-110 transition-transform cursor-none">PYTHON</div>
+            <div class="bg-hot-pink border-4 border-white px-6 py-3 text-2xl font-bold font-bebas transform hover:scale-110 transition-transform cursor-none -rotate-3">C++</div>
+            <div class="bg-white border-4 border-white px-6 py-3 text-2xl font-bold font-bebas transform hover:scale-110 transition-transform cursor-none rotate-2">LINUX</div>
+            <div class="bg-hyper-yellow border-4 border-white px-6 py-3 text-2xl font-bold font-bebas transform hover:scale-110 transition-transform cursor-none rotate-6">DOCKER</div>
+            <div class="bg-hot-pink border-4 border-white px-6 py-3 text-2xl font-bold font-bebas transform hover:scale-110 transition-transform cursor-none -rotate-2">REACT</div>
+            <div class="bg-white border-4 border-white px-6 py-3 text-2xl font-bold font-bebas transform hover:scale-110 transition-transform cursor-none">NODE.JS</div>
+            <div class="bg-hyper-yellow border-4 border-white px-6 py-3 text-2xl font-bold font-bebas transform hover:scale-110 transition-transform cursor-none -rotate-6">POSTGRESQL</div>
+            <div class="bg-hot-pink border-4 border-white px-6 py-3 text-2xl font-bold font-bebas transform hover:scale-110 transition-transform cursor-none rotate-3">BURP SUITE</div>
+            <div class="bg-white border-4 border-white px-6 py-3 text-2xl font-bold font-bebas transform hover:scale-110 transition-transform cursor-none">METASPLOIT</div>
+            <div class="bg-hyper-yellow border-4 border-white px-6 py-3 text-2xl font-bold font-bebas transform hover:scale-110 transition-transform cursor-none -rotate-3">WIRESHARK</div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-20 px-4 md:px-12 bg-white relative">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+            
+            <!-- Left Info -->
+            <div>
+                <h2 class="text-7xl font-bebas mb-6 leading-none">HARDLINE<br><span class="text-hot-pink">CONNECTED</span></h2>
+                <p class="text-xl font-space font-bold mb-8">Ready to deploy secure systems or break existing ones? Send the signal.</p>
+                
+                <div class="flex flex-col gap-4">
+                    <a href="mailto:abeergupta555@gmail.com" class="bg-white border-4 border-black p-4 font-mono font-bold text-lg hover:bg-hyper-yellow transition-colors flex items-center gap-4 group shadow-hard">
+                        <i data-lucide="mail" class="w-6 h-6"></i> abeergupta555@gmail.com
+                    </a>
+                    <a href="https://linkedin.com/in/abeer-gupta" target="_blank" class="bg-white border-4 border-black p-4 font-mono font-bold text-lg hover:bg-blue-400 hover:text-white transition-colors flex items-center gap-4 group shadow-hard">
+                        <i data-lucide="linkedin" class="w-6 h-6"></i> linkedin/abeer-gupta
+                    </a>
+                    <a href="https://github.com/abeer555" target="_blank" class="bg-white border-4 border-black p-4 font-mono font-bold text-lg hover:bg-gray-800 hover:text-white transition-colors flex items-center gap-4 group shadow-hard">
+                        <i data-lucide="github" class="w-6 h-6"></i> github/abeer555
+                    </a>
+                </div>
+            </div>
+
+            <!-- FORMSPREE FORM -->
+            <div class="bg-gray-100 border-4 border-black p-8 shadow-hard-pink relative">
+                <div class="absolute -top-6 -right-6 bg-hyper-yellow border-4 border-black px-4 py-2 font-bebas text-xl rotate-12">PRIORITY MESSAGE</div>
+                
+                <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-6">
+                    <div>
+                        <label class="block font-bebas text-2xl text-hot-pink mb-1 tracking-wider">CODENAME</label>
+                        <input type="text" name="name" required class="w-full bg-white border-4 border-black p-3 font-mono text-lg focus:bg-hyper-yellow focus:outline-none transition-colors">
+                    </div>
+                    
+                    <div>
+                        <label class="block font-bebas text-2xl text-hot-pink mb-1 tracking-wider">COMM CHANNEL (EMAIL)</label>
+                        <input type="email" name="email" required class="w-full bg-white border-4 border-black p-3 font-mono text-lg focus:bg-hyper-yellow focus:outline-none transition-colors">
+                    </div>
+
+                    <div>
+                        <label class="block font-bebas text-2xl text-hot-pink mb-1 tracking-wider">PAYLOAD</label>
+                        <textarea name="message" rows="5" required class="w-full bg-white border-4 border-black p-3 font-mono text-lg focus:bg-hyper-yellow focus:outline-none transition-colors"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-black text-white font-bebas text-3xl py-4 border-4 border-black hover:bg-hot-pink hover:translate-x-1 hover:translate-y-1 hover:shadow-none shadow-hard transition-all">
+                        DEPLOY MESSAGE ⚡
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black text-white py-12 text-center border-t-4 border-hot-pink">
+        <p class="font-mono text-sm opacity-50 mb-2">BUILT WITH BRUTALISM.</p>
+        <p class="font-bebas text-2xl">&copy; 2025 ABEER GUPTA. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <!-- SCRIPT LOGIC -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // 1. Scroll Animations (Intersection Observer)
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: "0px 0px -50px 0px"
-            };
+        // 1. INITIALIZE ICONS
+        lucide.createIcons();
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.remove('opacity-0', 'translate-y-20');
-                        entry.target.classList.add('opacity-100', 'translate-y-0');
-                    }
-                });
-            }, observerOptions);
+        // 2. TERMINAL LOGIC
+        const cliInput = document.getElementById('cli-input');
+        const terminalOutput = document.getElementById('terminal-output');
+        const historyContainer = document.getElementById('command-history');
+        
+        let commandHistory = [];
+        let historyIndex = -1;
 
-            document.querySelectorAll('.scroll-trigger').forEach(el => {
-                observer.observe(el);
-            });
+        const commands = {
+            'help': `<div class="grid grid-cols-2 gap-4 max-w-md">
+                        <span class="text-hyper-yellow">ABOUT</span><span>View developer bio</span>
+                        <span class="text-hyper-yellow">PROJECTS</span><span>List major projects</span>
+                        <span class="text-hyper-yellow">SKILLS</span><span>Show technical arsenal</span>
+                        <span class="text-hyper-yellow">CONTACT</span><span>Display comm links</span>
+                        <span class="text-hyper-yellow">EXPERIENCE</span><span>Show work logs</span>
+                        <span class="text-hyper-yellow">CLEAR</span><span>Clear screen</span>
+                    </div>`,
+            'about': `NAME: Abeer Gupta<br>
+                      ROLE: Cybersecurity Analyst & Full Stack Dev<br>
+                      STATUS: Pursuing B.Tech CSE (VIT) + BS Data Science (IITM)<br>
+                      MISSION: Securing networks & building robust architectures.`,
+            'projects': `1. <a href="#projects" class="text-hot-pink underline">RAG SYSTEM</a> - Doc Query Engine<br>
+                         2. <a href="#projects" class="text-hot-pink underline">HYPRLAND DOTS</a> - Arch Linux Config<br>
+                         3. <a href="#projects" class="text-hot-pink underline">SECURE SERVER</a> - C++ Encryption<br>
+                         4. <a href="#projects" class="text-hot-pink underline">PENTEST KIT</a> - Python Scanner`,
+            'skills': `+----------------+----------------+<br>
+| LANGUAGES      | TOOLS          |<br>
++----------------+----------------+<br>
+| Python         | Docker         |<br>
+| C/C++          | Burp Suite     |<br>
+| JavaScript     | Metasploit     |<br>
+| SQL            | Wireshark      |<br>
++----------------+----------------+`,
+            'contact': `EMAIL: abeergupta555@gmail.com<br>
+                        GITHUB: github.com/abeer555<br>
+                        LINKEDIN: linkedin.com/in/abeer-gupta`,
+            'experience': `[2025] C9LABS - Cybersecurity Intern<br>
+                           [2024] LINUX CLUB - Tech Member<br>
+                           [2024] CODECHEF - Member`,
+            'sudo rm -rf /': `<span class="text-red-600 font-bold text-2xl bg-black px-2">NICE TRY, HACKER. 🔒 ACCESS DENIED.</span>`
+        };
 
-            // 2. Parallax Effect
-            window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                const layers = document.querySelectorAll('.parallax-layer');
+        cliInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.trim().toLowerCase();
                 
-                layers.forEach(layer => {
-                    const speed = layer.getAttribute('data-speed');
-                    const yPos = -(scrolled * speed);
-                    layer.style.transform = `translateY(${yPos}px) rotate(${speed * 10}deg)`;
-                });
-            });
+                // Add to visible history
+                const entry = document.createElement('div');
+                entry.innerHTML = `<span class="text-hot-pink">visitor@abeer-portfolio:~$</span> ${this.value}`;
+                historyContainer.appendChild(entry);
 
-            // 3. Magnetic Button Effect
-            const btn = document.getElementById('magnet-btn');
-            
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Calculate distance from center
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const deltaX = (x - centerX) * 0.3; // intensity
-                const deltaY = (y - centerY) * 0.3;
-
-                btn.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-                btn.style.boxShadow = `${10 - deltaX}px ${10 - deltaY}px 0px 0px #000`;
-            });
-
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = 'translate(0px, 0px)';
-                btn.style.boxShadow = '8px 8px 0px 0px #050505';
-            });
-
-            // 4. Random Glitch Trigger for Hero Title
-            const title = document.querySelector('.glitch');
-            setInterval(() => {
-                title.style.animation = 'none';
-                title.offsetHeight; /* trigger reflow */
-                title.style.animation = null; 
-                
-                // Randomly toggle custom clip paths via inline styles for chaos
-                if(Math.random() > 0.7) {
-                    title.style.clipPath = `polygon(${Math.random()*100}% 0, 100% ${Math.random()*100}%, 0 ${Math.random()*100}%)`;
-                    setTimeout(() => title.style.clipPath = 'none', 200);
+                // Process command
+                let response = '';
+                if (command === 'clear') {
+                    historyContainer.innerHTML = '';
+                } else if (commands[command]) {
+                    response = commands[command];
+                } else if (command !== '') {
+                    response = `<span class="text-red-500">Command not found: ${command}. Type 'help'.</span>`;
                 }
-            }, 3000);
+
+                if (response) {
+                    const respDiv = document.createElement('div');
+                    respDiv.className = 'mb-4 text-gray-300 mt-1';
+                    respDiv.innerHTML = response;
+                    historyContainer.appendChild(respDiv);
+                }
+
+                // Internal History Logic
+                if (command) {
+                    commandHistory.push(this.value);
+                    historyIndex = commandHistory.length;
+                }
+
+                this.value = '';
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            } else if (e.key === 'ArrowUp') {
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    this.value = commandHistory[historyIndex];
+                }
+                e.preventDefault();
+            } else if (e.key === 'ArrowDown') {
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    this.value = commandHistory[historyIndex];
+                } else {
+                    historyIndex = commandHistory.length;
+                    this.value = '';
+                }
+                e.preventDefault();
+            }
         });
+
+        // Focus input when clicking terminal
+        document.getElementById('terminal-output').addEventListener('click', () => {
+            cliInput.focus();
+        });
+
     </script>
 </body>
 </html>

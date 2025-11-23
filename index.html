@@ -3,776 +3,866 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROOT ACCESS // ABEER GUPTA</title>
+    <title>ABEER GUPTA | /home/abeer</title>
+    <meta name="description" content="Abeer Gupta: Linux Enthusiast, Cybersecurity Specialist, Full-Stack Developer.">
     
+    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;300;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
+    <!-- ICONS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
     <style>
-        /* --- CORE VARS --- */
         :root {
-            --bg-color: #030303;
-            --term-green: #00ff41;
-            --term-cyan: #00f3ff;
-            --term-red: #ff2a2a;
-            --term-yellow: #facc15;
-            --term-dim: #1a1a1a;
-            --glass: rgba(10, 10, 10, 0.9);
+            --bg-color: #050505;
+            --window-bg: #0a0a0a;
+            --neon-green: #00ff41;
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff0055;
+            --neon-yellow: #fcee0a;
+            --border-color: #333;
+            --text-main: #e0e0e0;
+            --text-dim: #666;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-display: 'Syncopate', sans-serif;
+            --gap: 15px;
         }
 
-        /* --- GLOBAL RESET --- */
-        html { scroll-behavior: smooth; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: crosshair;
+            scrollbar-width: thin;
+            scrollbar-color: var(--neon-green) var(--bg-color);
+        }
+
         body {
             background-color: var(--bg-color);
-            color: #e0e0e0;
-            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-main);
+            font-family: var(--font-mono);
             overflow-x: hidden;
-            cursor: none; /* Custom cursor active */
+            line-height: 1.5;
+            font-size: 14px;
         }
 
-        /* --- CUSTOM CURSOR --- */
-        #cursor {
+        /* --- CRT OVERLAY --- */
+        .scanlines {
             position: fixed;
-            width: 24px;
-            height: 24px;
-            border: 1px solid var(--term-green);
-            background: rgba(0, 255, 65, 0.1);
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9999;
-            transition: width 0.2s, height 0.2s, background 0.2s;
-            mix-blend-mode: exclusion;
-        }
-        #cursor-dot {
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            background: var(--term-cyan);
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 10000;
-        }
-
-        /* --- SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { 
-            background: #111; 
-            border: 1px solid var(--term-green); 
-        }
-        ::-webkit-scrollbar-thumb:hover { background: var(--term-green); }
-
-        /* --- CRT SCANLINES --- */
-        .crt::before {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            z-index: 9990;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
             background-size: 100% 2px, 3px 100%;
             pointer-events: none;
+            z-index: 999;
+            opacity: 0.6;
         }
 
-        /* --- ANIMATIONS --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Glitch Effect */
-        .glitch { position: relative; }
-        .glitch::before, .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: var(--bg-color);
-        }
-        .glitch::before {
-            left: 2px; text-shadow: -1px 0 var(--term-red);
-            animation: glitch-anim-1 2s infinite linear alternate-reverse;
-        }
-        .glitch::after {
-            left: -2px; text-shadow: -1px 0 var(--term-cyan);
-            animation: glitch-anim-2 3s infinite linear alternate-reverse;
-        }
-        @keyframes glitch-anim-1 {
-            0% { clip-path: inset(20% 0 80% 0); }
-            20% { clip-path: inset(60% 0 10% 0); }
-            100% { clip-path: inset(10% 0 50% 0); }
-        }
-        @keyframes glitch-anim-2 {
-            0% { clip-path: inset(10% 0 60% 0); }
-            20% { clip-path: inset(80% 0 5% 0); }
-            100% { clip-path: inset(30% 0 20% 0); }
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 998;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* --- UTILITY CLASSES --- */
-        .border-glow {
-            border: 1px solid #333;
-            transition: all 0.3s ease;
-        }
-        .border-glow:hover {
-            border-color: var(--term-green);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
-        }
-        
-        .section-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #333, transparent);
-            margin: 4rem 0;
-            position: relative;
-        }
-        .section-divider::after {
-            content: attr(data-label);
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--bg-color);
-            padding: 0 1rem;
-            color: #555;
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-        }
-
-        /* --- MATRIX CANVAS --- */
-        #matrix-bg {
+        /* --- BACKGROUND CANVAS --- */
+        #matrix-canvas {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: -1;
-            opacity: 0.07;
+            opacity: 0.15;
         }
 
-        /* --- BOOT LOADER --- */
+        /* --- BOOT SCREEN --- */
         #boot-screen {
-            position: fixed; inset: 0;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: #000;
-            z-index: 100000;
-            display: flex; flex-direction: column;
-            justify-content: flex-end;
+            z-index: 10000;
             padding: 2rem;
-            font-size: 14px;
+            font-family: var(--font-mono);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: opacity 0.5s ease;
         }
+        
+        .boot-log {
+            color: var(--text-dim);
+            margin-bottom: 2px;
+            font-size: 12px;
+        }
+        .boot-log.success { color: var(--neon-green); }
+        .boot-log.warning { color: var(--neon-yellow); }
+        .boot-log.error { color: var(--neon-pink); }
+        .cursor-blink { animation: blink 1s step-end infinite; }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- MAIN LAYOUT (HYPRLAND STYLE) --- */
+        .wrapper {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: var(--gap);
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: var(--gap);
+            opacity: 0; /* Hidden until boot finishes */
+            animation: fadeIn 1s forwards 2.5s; /* Delay matching boot sequence */
+        }
+
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        @media (max-width: 968px) {
+            .wrapper { grid-template-columns: 1fr; }
+        }
+
+        /* --- SIDEBAR (WAYBAR) --- */
+        .sidebar {
+            position: sticky;
+            top: var(--gap);
+            height: calc(100vh - (var(--gap) * 2));
+            background: rgba(10, 10, 10, 0.9);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        @media (max-width: 968px) {
+            .sidebar { position: relative; height: auto; top: 0; margin-bottom: 20px; }
+        }
+
+        .profile-section { text-align: center; }
+
+        .profile-img-box {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-green);
+            padding: 5px;
+            position: relative;
+        }
+        
+        .profile-img-box::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%;
+            border: 2px dashed var(--neon-green);
+            animation: spin 20s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .profile-img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: 0.3s;
+        }
+        .profile-img-box:hover .profile-img { filter: grayscale(0%); }
+
+        .glitch-header {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #fff;
+            text-shadow: 2px 2px 0px var(--neon-pink);
+            margin-bottom: 5px;
+            letter-spacing: -1px;
+        }
+
+        .roles {
+            font-size: 0.8rem;
+            color: var(--neon-green);
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .nav-link {
+            padding: 10px 15px;
+            color: var(--text-dim);
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--bg-color);
+            background: var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .nav-link i { margin-right: 10px; width: 20px; text-align: center; }
+
+        .social-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+        .social-bar a { color: var(--text-dim); transition: 0.2s; }
+        .social-bar a:hover { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan); }
+
+        /* --- CONTENT AREA --- */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        section {
+            scroll-margin-top: 20px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-left: 5px solid var(--neon-pink);
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(90deg, rgba(255,0,85,0.1), transparent);
+        }
+
+        .section-title span { font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-dim); }
+
+        /* --- NEOFETCH BOX --- */
+        .neofetch-container {
+            background: rgba(0,0,0,0.8);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .neofetch-container::after {
+            content: "STATUS: ROOT ACCESS GRANTED";
+            position: absolute;
+            bottom: 5px; right: 10px;
+            font-size: 0.7rem;
+            color: var(--neon-green);
+            opacity: 0.5;
+        }
+
+        .ascii-art {
+            color: var(--neon-cyan);
+            font-size: 8px;
+            line-height: 8px;
+            white-space: pre;
+            flex-shrink: 0;
+            display: none;
+        }
+        @media (min-width: 1200px) { .ascii-art { display: block; } }
+
+        .sys-info div { margin-bottom: 5px; }
+        .sys-key { color: var(--neon-green); font-weight: bold; margin-right: 10px; }
+        .sys-val { color: var(--text-main); }
+
+        /* --- EXPERIENCE LOGS --- */
+        .log-container {
+            border-left: 2px dashed var(--border-color);
+            margin-left: 10px;
+            padding-left: 30px;
+        }
+
+        .log-entry {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .log-entry::before {
+            content: '';
+            position: absolute;
+            left: -36px; top: 5px;
+            width: 10px; height: 10px;
+            background: var(--bg-color);
+            border: 2px solid var(--neon-pink);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        .log-time {
+            background: #222;
+            color: var(--neon-cyan);
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .log-header h3 { font-size: 1.3rem; margin-bottom: 5px; color: #fff; }
+        .log-header h4 { color: var(--text-dim); margin-bottom: 10px; font-weight: normal; }
+        .log-content li { margin-bottom: 5px; color: #ccc; list-style-type: '> '; padding-left: 5px; }
+
+        /* --- PROJECT GRID (TILED WINDOWS) --- */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .window {
+            background: #080808;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .window:hover {
+            border-color: var(--neon-green);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -10px rgba(0, 255, 65, 0.2);
+            z-index: 5;
+        }
+
+        .title-bar {
+            background: #111;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .controls { display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .window-body { padding: 0; display: flex; flex-direction: column; height: 100%; }
+        
+        .project-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            border-bottom: 1px solid var(--border-color);
+            transition: 0.4s;
+        }
+        
+        .window:hover .project-img { filter: grayscale(0%); }
+
+        .project-details { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+        .project-title { color: var(--neon-green); font-size: 1.1rem; margin-bottom: 8px; font-weight: bold; }
+        .project-desc { font-size: 0.9rem; color: #aaa; margin-bottom: 15px; flex-grow: 1; }
+        
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px; }
+        .tech-badge {
+            font-size: 0.7rem;
+            border: 1px solid var(--text-dim);
+            padding: 2px 6px;
+            color: var(--text-dim);
+        }
+
+        .project-links a {
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+            text-decoration: none;
+            display: inline-block;
+            border: 1px solid var(--neon-cyan);
+            padding: 5px 10px;
+            transition: 0.2s;
+        }
+        .project-links a:hover { background: var(--neon-cyan); color: #000; }
+
+        /* --- SKILLS HEX DUMP --- */
+        .hex-dump {
+            background: #080808;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            font-family: 'JetBrains Mono';
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        .hex-row { display: flex; margin-bottom: 5px; }
+        .hex-addr { color: var(--neon-cyan); margin-right: 15px; }
+        .hex-data { color: var(--neon-green); }
+
+        /* --- CONTACT TERMINAL --- */
+        .terminal-form {
+            background: #111;
+            padding: 20px;
+            border-top: 2px solid var(--neon-green);
+        }
+        
+        .cmd-line { display: flex; flex-direction: column; margin-bottom: 15px; }
+        .prompt { color: var(--neon-green); margin-bottom: 5px; }
+        .input-field {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #444;
+            color: #fff;
+            font-family: inherit;
+            padding: 5px;
+            font-size: 1rem;
+            width: 100%;
+        }
+        .input-field:focus { outline: none; border-color: var(--neon-green); }
+        
+        .submit-btn {
+            background: transparent;
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 10px 20px;
+            font-family: inherit;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+        .submit-btn:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 15px var(--neon-green); }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #444;
+            font-size: 0.8rem;
+        }
+
     </style>
 </head>
-<body class="crt">
+<body>
 
-    <div id="cursor"></div>
-    <div id="cursor-dot"></div>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <canvas id="matrix-canvas"></canvas>
 
-    <canvas id="matrix-bg"></canvas>
-
+    <!-- BOOT SEQUENCE -->
     <div id="boot-screen">
-        <div id="boot-log" class="font-mono text-gray-400 mb-4 h-64 overflow-hidden flex flex-col justify-end"></div>
-        <div class="w-full bg-gray-900 h-1">
-            <div id="boot-bar" class="h-full bg-green-500 w-0 transition-all duration-75"></div>
-        </div>
+        <div id="boot-log-container"></div>
     </div>
 
-    <nav class="fixed top-0 w-full z-50 mix-blend-difference px-6 py-4 flex justify-between items-center backdrop-blur-sm border-b border-white/10">
-        <div class="text-xl font-bold tracking-tighter text-white">
-            root@abeer:~<span class="animate-pulse">_</span>
-        </div>
-        <div class="hidden md:flex space-x-8 text-xs font-bold tracking-widest text-gray-400">
-            <a href="#about" class="hover:text-[#00ff41] transition-colors">./ABOUT</a>
-            <a href="#education" class="hover:text-[#00ff41] transition-colors">./EDUCATION</a>
-            <a href="#experience" class="hover:text-[#00ff41] transition-colors">./LOGS</a>
-            <a href="#skills" class="hover:text-[#00ff41] transition-colors">./ARSENAL</a>
-            <a href="#projects" class="hover:text-[#00ff41] transition-colors">./PROJECTS</a>
-            <a href="#contact" class="hover:text-[#00ff41] transition-colors">./CONTACT</a>
-        </div>
-    </nav>
+    <div class="wrapper">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="top-section">
+                <div class="profile-section">
+                    <div class="profile-img-box">
+                        <img src="abeerface-round.png" alt="Abeer" class="profile-img">
+                    </div>
+                    <h1 class="glitch-header">ABEER GUPTA</h1>
+                    <div class="roles">
+                        // CYBERSECURITY<br>
+                        // LINUX_ENTHUSIAST<br>
+                        // FULL_STACK_DEV
+                    </div>
+                </div>
 
-    <section class="min-h-screen flex items-center justify-center relative px-6 overflow-hidden">
-        <div class="absolute top-1/4 -left-20 w-96 h-96 bg-green-500 rounded-full mix-blend-overlay filter blur-[128px] opacity-10 animate-pulse"></div>
-        <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-cyan-500 rounded-full mix-blend-overlay filter blur-[128px] opacity-10 animate-pulse"></div>
+                <nav class="nav-menu">
+                    <a href="#bio" class="nav-link active"><i class="fas fa-terminal"></i> ~/bio</a>
+                    <a href="#experience" class="nav-link"><i class="fas fa-history"></i> /var/log/exp</a>
+                    <a href="#projects" class="nav-link"><i class="fas fa-code"></i> ~/projects</a>
+                    <a href="#skills" class="nav-link"><i class="fas fa-microchip"></i> /usr/bin/skills</a>
+                    <a href="#contact" class="nav-link"><i class="fas fa-envelope"></i> ./contact.sh</a>
+                </nav>
+            </div>
 
-        <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="bottom-section">
+                <div style="font-size: 0.7rem; color: #444; text-align: center; margin-bottom: 10px;">
+                    UPTIME: 21Y 4M 12D<br>
+                    KERNEL: 6.8.9-arch1-1
+                </div>
+                <div class="social-bar">
+                    <a href="https://github.com/abeer555" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/abeer-gupta" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:abeergupta555@gmail.com"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
             
-            <div class="lg:col-span-8 space-y-8 z-10">
-                <div class="inline-block border border-[#00ff41] bg-[#00ff41]/10 px-4 py-2 text-xs font-bold text-[#00ff41] mb-4 rounded tracking-widest reveal">
-                    SYSTEM STATUS: ONLINE
-                </div>
-                
-                <h1 class="text-6xl md:text-8xl font-black text-white leading-tight tracking-tighter reveal" style="transition-delay: 100ms;">
-                    ABEER <br>
-                    <span class="glitch text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-500" data-text="GUPTA">GUPTA</span>
-                </h1>
-                
-                <p class="text-xl md:text-2xl text-gray-400 max-w-2xl leading-relaxed reveal" style="transition-delay: 200ms;">
-                    <span class="text-[#00ff41]">&lt;Developer /&gt;</span> 
-                    <span class="text-[#00f3ff] mx-2">|</span> 
-                    <span class="text-[#00ff41]">SecOps Specialist</span> 
-                    <span class="text-[#00f3ff] mx-2">|</span> 
-                    <span class="text-[#00ff41]">Linux Enthusiast</span>
-                </p>
-
-                <p class="text-gray-500 max-w-xl reveal" style="transition-delay: 300ms;">
-                    Building secure architectures and breaking vulnerable ones. 
-                    Currently pursuing dual degrees at <strong class="text-white">VIT Chennai</strong> & <strong class="text-white">IIT Madras</strong>.
-                </p>
-
-                <div class="flex flex-wrap gap-4 pt-4 reveal" style="transition-delay: 400ms;">
-                    <a href="#projects" class="px-8 py-4 bg-[#00ff41] text-black font-bold text-sm tracking-widest hover:bg-white hover:scale-105 transition-all">
-                        INITIATE_PROTOCOL
-                    </a>
-                    <a href="https://github.com/abeer555" target="_blank" class="px-8 py-4 border border-gray-700 text-white font-bold text-sm tracking-widest hover:border-[#00ff41] hover:text-[#00ff41] transition-all flex items-center gap-2">
-                        <i data-lucide="github" class="w-4 h-4"></i> GITHUB
-                    </a>
-                </div>
-            </div>
-
-            <div class="lg:col-span-4 relative reveal lg:block hidden" style="transition-delay: 500ms;">
-                <div class="w-full aspect-square relative border border-gray-800 bg-gray-900/50 p-2 rounded-lg">
-                    <div class="absolute inset-0 bg-[url('photo2.jpg')] bg-cover bg-center opacity-80 grayscale contrast-125 hover:grayscale-0 transition-all duration-700"></div>
-                    <div class="absolute -bottom-6 -right-6 w-32 h-32 border-r-2 border-b-2 border-[#00ff41]"></div>
-                    <div class="absolute -top-6 -left-6 w-32 h-32 border-l-2 border-t-2 border-[#00f3ff]"></div>
-                </div>
-                <div class="absolute bottom-10 -left-10 bg-black border border-gray-700 p-4 shadow-2xl rounded text-xs font-mono text-gray-400">
-                    <div>> last_login: now</div>
-                    <div>> permission: root</div>
-                    <div class="text-[#00ff41]">> location: Chennai</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="section-divider" data-label="SYSTEM_INFO"></div>
-
-    <section id="education" class="py-20 px-6 relative">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl md:text-7xl font-bold mb-20 text-center reveal">
-                PROCESSING <span class="text-stroke text-transparent" style="-webkit-text-stroke: 1px #fff;">UNITS</span>
-            </h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                
-                <div class="border-glow bg-[#0a0a0a] p-10 relative group reveal min-h-[400px] flex flex-col justify-between">
-                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
-                        <i data-lucide="cpu" class="w-16 h-16 text-[#00ff41]"></i>
+            <!-- HERO / NEOFETCH -->
+            <section id="bio">
+                <h2 class="section-title">SYSTEM_INFO <span>neofetch</span></h2>
+                <div class="neofetch-container">
+                    <div class="ascii-art">
+       /\
+      /  \
+     /    \      ARCH_LINUX
+    /      \     ----------
+   /   ,,   \    OS: Arch Linux x86_64
+  /   |  |   \   Host: Abeer-Main-Rig
+ /_-''    ''-_\  Kernel: 6.8.9-zen
                     </div>
-                    <div>
-                        <div class="text-[#00ff41] text-xs font-bold tracking-[0.2em] mb-4">PRIMARY CORE</div>
-                        <h3 class="text-3xl font-bold text-white mb-2">VIT Chennai</h3>
-                        <p class="text-gray-400 text-lg mb-6">B.Tech Computer Science & Engineering</p>
-                        <ul class="space-y-3 text-gray-500 font-mono text-sm">
-                            <li class="flex items-center"><span class="w-2 h-2 bg-[#00ff41] mr-3"></span>2023 - 2027</li>
-                            <li class="flex items-center"><span class="w-2 h-2 bg-[#00ff41] mr-3"></span>CGPA: 8.84</li>
-                            <li class="flex items-center"><span class="w-2 h-2 bg-[#00ff41] mr-3"></span>Specialization: Core CSE</li>
-                        </ul>
-                    </div>
-                    <div class="w-full bg-gray-900 h-1 mt-8 overflow-hidden">
-                        <div class="h-full bg-[#00ff41] w-[60%] animate-pulse"></div>
-                    </div>
-                </div>
-
-                <div class="border-glow bg-[#0a0a0a] p-10 relative group reveal min-h-[400px] flex flex-col justify-between" style="transition-delay: 200ms;">
-                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
-                        <i data-lucide="database" class="w-16 h-16 text-[#00f3ff]"></i>
-                    </div>
-                    <div>
-                        <div class="text-[#00f3ff] text-xs font-bold tracking-[0.2em] mb-4">CO-PROCESSOR</div>
-                        <h3 class="text-3xl font-bold text-white mb-2">IIT Madras</h3>
-                        <p class="text-gray-400 text-lg mb-6">B.S. Data Science & Applications</p>
-                        <ul class="space-y-3 text-gray-500 font-mono text-sm">
-                            <li class="flex items-center"><span class="w-2 h-2 bg-[#00f3ff] mr-3"></span>2023 - 2027</li>
-                            <li class="flex items-center"><span class="w-2 h-2 bg-[#00f3ff] mr-3"></span>Focus: Data Analysis & AI</li>
-                            <li class="flex items-center"><span class="w-2 h-2 bg-[#00f3ff] mr-3"></span>Foundation Level Cleared</li>
-                        </ul>
-                    </div>
-                    <div class="w-full bg-gray-900 h-1 mt-8 overflow-hidden">
-                        <div class="h-full bg-[#00f3ff] w-[45%] animate-pulse"></div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <div class="section-divider" data-label="EXECUTABLE_MODULES"></div>
-
-    <section id="skills" class="py-20 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-20 reveal">
-                <span class="text-[#00ff41] font-mono">> list_capabilities --verbose</span>
-                <h2 class="text-5xl md:text-7xl font-bold mt-2">THE ARSENAL</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
-                <div class="border border-gray-800 p-8 hover:bg-gray-900 transition-all reveal">
-                    <div class="flex items-center mb-6">
-                        <i data-lucide="shield-alert" class="text-[#ff2a2a] mr-4"></i>
-                        <h3 class="text-xl font-bold">Cybersecurity</h3>
-                    </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-3 py-1 bg-[#ff2a2a]/10 border border-[#ff2a2a]/30 text-[#ff2a2a] text-xs">Penetration Testing</span>
-                        <span class="px-3 py-1 bg-[#ff2a2a]/10 border border-[#ff2a2a]/30 text-[#ff2a2a] text-xs">Vulnerability Assessment</span>
-                        <span class="px-3 py-1 bg-[#ff2a2a]/10 border border-[#ff2a2a]/30 text-[#ff2a2a] text-xs">Burp Suite</span>
-                        <span class="px-3 py-1 bg-[#ff2a2a]/10 border border-[#ff2a2a]/30 text-[#ff2a2a] text-xs">Metasploit</span>
-                        <span class="px-3 py-1 bg-[#ff2a2a]/10 border border-[#ff2a2a]/30 text-[#ff2a2a] text-xs">Wireshark</span>
-                    </div>
-                </div>
-
-                <div class="border border-gray-800 p-8 hover:bg-gray-900 transition-all reveal" style="transition-delay: 100ms;">
-                    <div class="flex items-center mb-6">
-                        <i data-lucide="code-2" class="text-[#00ff41] mr-4"></i>
-                        <h3 class="text-xl font-bold">Development</h3>
-                    </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 text-[#00ff41] text-xs">C / C++</span>
-                        <span class="px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 text-[#00ff41] text-xs">Python</span>
-                        <span class="px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 text-[#00ff41] text-xs">React.js</span>
-                        <span class="px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 text-[#00ff41] text-xs">Next.js</span>
-                        <span class="px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 text-[#00ff41] text-xs">Tailwind</span>
-                        <span class="px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 text-[#00ff41] text-xs">FastAPI</span>
-                    </div>
-                </div>
-
-                <div class="border border-gray-800 p-8 hover:bg-gray-900 transition-all reveal" style="transition-delay: 200ms;">
-                    <div class="flex items-center mb-6">
-                        <i data-lucide="server" class="text-[#00f3ff] mr-4"></i>
-                        <h3 class="text-xl font-bold">Infrastructure & Data</h3>
-                    </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-3 py-1 bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-xs">Linux (Arch)</span>
-                        <span class="px-3 py-1 bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-xs">Docker</span>
-                        <span class="px-3 py-1 bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-xs">AWS</span>
-                        <span class="px-3 py-1 bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-xs">PostgreSQL</span>
-                        <span class="px-3 py-1 bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-xs">Pandas</span>
-                        <span class="px-3 py-1 bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-xs">PyTorch</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section class="py-10 px-6">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-gray-900/50 p-6 rounded border-l-4 border-yellow-500 reveal">
-                <h4 class="text-yellow-500 font-bold mb-2">TRYHACKME</h4>
-                <p class="text-white text-lg">Top 6% Global Rank</p>
-                <div class="text-sm text-gray-500 mt-2">Consistent excellence in CTF challenges and room completions.</div>
-            </div>
-            <div class="bg-gray-900/50 p-6 rounded border-l-4 border-blue-500 reveal">
-                <h4 class="text-blue-500 font-bold mb-2">AWS CERTIFIED</h4>
-                <p class="text-white text-lg">Cloud Practitioner</p>
-                <div class="text-sm text-gray-500 mt-2">Validated expertise in AWS Cloud platform and basic security concepts.</div>
-            </div>
-        </div>
-    </section>
-
-    <div class="section-divider" data-label="SYSTEM_LOGS"></div>
-
-    <section id="experience" class="py-32 px-6">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-5xl md:text-7xl font-bold mb-24 text-right reveal text-gray-800 select-none">
-                /VAR/LOG/EXP
-            </h2>
-
-            <div class="space-y-24 relative border-l border-gray-800 ml-4 md:ml-0">
-                
-                <div class="relative pl-12 md:pl-0 reveal">
-                    <div class="md:w-1/2 md:pr-16 md:text-right md:absolute md:left-0 top-0">
-                        <span class="text-[#00ff41] font-mono text-sm">May 2025 - Aug 2025</span>
-                        <h3 class="text-2xl font-bold text-white mt-1">Cybersecurity Intern</h3>
-                        <p class="text-gray-500">C9Labs</p>
-                    </div>
-                    <div class="absolute left-[-5px] top-2 w-3 h-3 bg-[#00ff41] rounded-full shadow-[0_0_10px_#00ff41]"></div>
-                    <div class="md:w-1/2 md:ml-[50%] md:pl-16">
-                        <ul class="space-y-4 text-gray-400 list-disc">
-                            <li>Conducted rigorous vulnerability assessments on web infrastructure.</li>
-                            <li>Identified critical security gaps in legacy systems.</li>
-                            <li>Collaborated with senior analysts to patch potential exploit vectors.</li>
-                            <li>Achieved <strong>Top 6%</strong> rank on TryHackMe during the internship tenure.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="relative pl-12 md:pl-0 reveal">
-                    <div class="md:w-1/2 md:pr-16 md:text-right md:absolute md:left-0 top-0">
-                        <span class="text-gray-500 font-mono text-sm">Sep 2024 - Present</span>
-                        <h3 class="text-2xl font-bold text-white mt-1">Technical Member</h3>
-                        <p class="text-gray-500">Linux Club</p>
-                    </div>
-                    <div class="absolute left-[-5px] top-2 w-3 h-3 bg-gray-600 rounded-full hover:bg-[#00ff41] transition-colors"></div>
-                    <div class="md:w-1/2 md:ml-[50%] md:pl-16">
-                        <ul class="space-y-4 text-gray-400 list-disc">
-                            <li>Orchestrated the configuration and maintenance of <strong>20+ Linux systems</strong>.</li>
-                            <li>Led workshops on kernel customization and shell scripting.</li>
-                            <li>Advocated for Open Source software adoption across campus.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="relative pl-12 md:pl-0 reveal">
-                    <div class="md:w-1/2 md:pr-16 md:text-right md:absolute md:left-0 top-0">
-                        <span class="text-gray-500 font-mono text-sm">Aug 2024 - Present</span>
-                        <h3 class="text-2xl font-bold text-white mt-1">Comp. Programming Member</h3>
-                        <p class="text-gray-500">CodeChef Chapter</p>
-                    </div>
-                    <div class="absolute left-[-5px] top-2 w-3 h-3 bg-gray-600 rounded-full hover:bg-[#00ff41] transition-colors"></div>
-                    <div class="md:w-1/2 md:ml-[50%] md:pl-16">
-                        <ul class="space-y-4 text-gray-400 list-disc">
-                            <li>Mentored <strong>15+ students</strong> in Data Structures and Algorithms.</li>
-                            <li>Designed problem sets for internal coding contests.</li>
-                            <li>Solved 300+ problems across LeetCode and CodeChef.</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <div class="section-divider" data-label="DEPLOYED_PROJECTS"></div>
-
-    <section id="projects" class="py-20 px-6">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl md:text-8xl font-black mb-24 reveal text-center">PROJECTS</h2>
-
-            <div class="space-y-32">
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
-                    <div class="order-2 lg:order-1 space-y-6">
-                        <div class="text-[#00ff41] font-mono text-sm mb-2">BAJAJ HACKRX (RANK 55/1000+)</div>
-                        <h3 class="text-4xl font-bold text-white">RAG Doc Query System</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed">
-                            An advanced Retrieval-Augmented Generation system designed to process massive datasets. 
-                            Uses vector embeddings to allow natural language querying of static documentation with high precision.
-                        </p>
-                        <div class="flex flex-wrap gap-2 pt-2">
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Python</span>
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">LangChain</span>
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">VectorDB</span>
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">OpenAI API</span>
-                        </div>
-                        <div class="pt-4">
-                            <a href="#" class="inline-flex items-center text-[#00ff41] hover:underline">
-                                View Source <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-                            </a>
+                    <div class="sys-info">
+                        <div><span class="sys-key">User:</span><span class="sys-val">abeer@vit-chennai</span></div>
+                        <div><span class="sys-key">Uptime:</span><span class="sys-val">24/7 Cybersecurity Grinding</span></div>
+                        <div><span class="sys-key">Packages:</span><span class="sys-val">1337 (pacman), 42 (flatpak)</span></div>
+                        <div><span class="sys-key">Education:</span><span class="sys-val">VIT Chennai (CSE - 8.84 CGPA) + IIT Madras (Data Science)</span></div>
+                        <div><span class="sys-key">Shell:</span><span class="sys-val">zsh 5.9</span></div>
+                        <div><span class="sys-key">Languages:</span><span class="sys-val">English, Hindi, Japanese (N5)</span></div>
+                        <br>
+                        <div style="color: #bbb; line-height: 1.6;">
+                            <span class="sys-key">Bio:</span>
+                            Passionate programmer specializing in Linux systems, Docker, and competitive programming. 
+                            Thriving at the intersection of System Engineering, Cybersecurity, and Full-Stack Development.
+                            I don't just use software; I configure, break, and rebuild it.
                         </div>
                     </div>
-                    <div class="order-1 lg:order-2 relative group">
-                        <div class="absolute -inset-2 bg-gradient-to-r from-[#00ff41] to-blue-600 rounded-lg blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
-                        <div class="relative bg-gray-900 rounded-lg overflow-hidden border border-gray-800 aspect-video">
-                            <div class="bg-gray-800 px-4 py-2 flex gap-2">
-                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+            </section>
+
+            <!-- EXPERIENCE -->
+            <section id="experience">
+                <h2 class="section-title">SYSTEM_LOGS <span>tail -f /var/log/career</span></h2>
+                <div class="log-container">
+                    
+                    <div class="log-entry">
+                        <div class="log-time">May 2025 - Aug 2025</div>
+                        <div class="log-header">
+                            <h3>Cybersecurity Intern</h3>
+                            <h4>@ C9Labs, Indore</h4>
+                        </div>
+                        <ul class="log-content">
+                            <li>Executed vulnerability assessments and defensive strategies.</li>
+                            <li>Completed 88+ hands-on modules: Linux, Cryptography, Wireshark, Nmap.</li>
+                            <li>Achieved Top 6% performer status on TryHackMe.</li>
+                        </ul>
+                    </div>
+
+                    <div class="log-entry">
+                        <div class="log-time">Sep 2024 - PRESENT</div>
+                        <div class="log-header">
+                            <h3>Linux Club Tech Member</h3>
+                            <h4>@ VIT Chennai</h4>
+                        </div>
+                        <ul class="log-content">
+                            <li>Configured/Optimized 20+ Linux desktops for resiliency.</li>
+                            <li>Designed 10+ CTF events; mentored peers in system security.</li>
+                        </ul>
+                    </div>
+
+                    <div class="log-entry">
+                        <div class="log-time">Aug 2024 - PRESENT</div>
+                        <div class="log-header">
+                            <h3>Competitive Programmer</h3>
+                            <h4>@ CodeChef College Chapter</h4>
+                        </div>
+                        <ul class="log-content">
+                            <li>Mentored 15+ students in DSA and Algorithms.</li>
+                            <li>Managed 100+ participants in coding events.</li>
+                            <li>Top 10% rankings in 3 international contests.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- PROJECTS -->
+            <section id="projects">
+                <h2 class="section-title">EXECUTABLES <span>ls -la ~/projects/</span></h2>
+                <div class="project-grid">
+
+                    <!-- RAG -->
+                    <div class="window">
+                        <div class="title-bar">
+                            <span>rag_system.py</span>
+                            <div class="controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                        </div>
+                        <div class="window-body">
+                            <img src="Hackrx-project.png" class="project-img" alt="RAG">
+                            <div class="project-details">
+                                <div class="project-title">Bajaj HackRx RAG System</div>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Python</span>
+                                    <span class="tech-badge">LLM</span>
+                                    <span class="tech-badge">OCR</span>
+                                </div>
+                                <div class="project-desc">
+                                    Ranked 55/1000+ Teams. An end-to-end Retrieval-Augmented Generation system. Converts dense PDFs/DOCs into multilingual natural-language Q&A.
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/vansh-9878/RAG" target="_blank">./view_source</a>
+                                </div>
                             </div>
-                            <img src="Hackrx-project.png" onerror="this.src='https://placehold.co/800x450/111/0f0?text=RAG+Architecture'" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
                         </div>
                     </div>
-                </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
-                    <div class="relative group">
-                        <div class="absolute -inset-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
-                        <div class="relative bg-gray-900 rounded-lg overflow-hidden border border-gray-800 aspect-video">
-                            <div class="bg-gray-800 px-4 py-2 flex gap-2">
-                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <!-- HYPRLAND -->
+                    <div class="window">
+                        <div class="title-bar">
+                            <span>hyprland.conf</span>
+                            <div class="controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                        </div>
+                        <div class="window-body">
+                            <img src="hyprland_image.png" class="project-img" alt="Hyprland">
+                            <div class="project-details">
+                                <div class="project-title">Hyprland Dots</div>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Arch</span>
+                                    <span class="tech-badge">Lua</span>
+                                    <span class="tech-badge">Bash</span>
+                                </div>
+                                <div class="project-desc">
+                                    Custom Arch Linux configuration. Optimized performance (25% faster) for 3+ personal systems. Minimalist, keyboard-driven UI.
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/abeer555/Hyprland-Dots" target="_blank">./view_source</a>
+                                </div>
                             </div>
-                            <img src="hyprland_image.png" onerror="this.src='https://placehold.co/800x450/111/0ff?text=Hyprland+Rice'" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
                         </div>
                     </div>
-                    <div class="space-y-6">
-                        <div class="text-[#00f3ff] font-mono text-sm mb-2">SYSTEM ARCHITECTURE</div>
-                        <h3 class="text-4xl font-bold text-white">Hyprland Dots</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed">
-                            A highly optimized, aesthetic configuration for the Hyprland Wayland compositor on Arch Linux. 
-                            Features custom scripts for memory management, dynamic animations, and a 25% workflow efficiency boost.
-                        </p>
-                        <div class="flex flex-wrap gap-2 pt-2">
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Shell Scripting</span>
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">CSS</span>
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Lua</span>
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Arch Linux</span>
-                        </div>
-                        <div class="pt-4">
-                            <a href="#" class="inline-flex items-center text-[#00f3ff] hover:underline">
-                                View Configs <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
-                    <div class="order-2 lg:order-1 space-y-6">
-                        <div class="text-[#ff2a2a] font-mono text-sm mb-2">CRYPTOGRAPHY</div>
-                        <h3 class="text-4xl font-bold text-white">Secure File Server</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed">
-                            A multi-threaded file server implemented in C++ focusing on security. 
-                            Integrates OpenSSL AES-256-CBC encryption for data at rest and in transit.
-                            Zero-knowledge principles applied to file storage.
-                        </p>
-                        <div class="flex flex-wrap gap-2 pt-2">
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">C++</span>
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">OpenSSL</span>
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Socket Programming</span>
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Multithreading</span>
+                    <!-- SECURE SERVER -->
+                    <div class="window">
+                        <div class="title-bar">
+                            <span>server.cpp</span>
+                            <div class="controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
                         </div>
-                        <div class="pt-4">
-                            <a href="#" class="inline-flex items-center text-[#ff2a2a] hover:underline">
-                                Analyze Code <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="order-1 lg:order-2 relative group">
-                        <div class="absolute -inset-2 bg-gradient-to-r from-red-600 to-orange-600 rounded-lg blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
-                        <div class="relative bg-gray-900 rounded-lg overflow-hidden border border-gray-800 aspect-video">
-                            <div class="bg-gray-800 px-4 py-2 flex gap-2">
-                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <div class="window-body">
+                            <img src="server.png" class="project-img" alt="Server">
+                            <div class="project-details">
+                                <div class="project-title">Secure File Server</div>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">C++</span>
+                                    <span class="tech-badge">OpenSSL</span>
+                                    <span class="tech-badge">AES-256</span>
+                                </div>
+                                <div class="project-desc">
+                                    Multi-threaded HTTP server with OpenSSL AES-256-CBC encryption. Reduced processing times by 25% for 10GB+ files.
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/abeer555/Secure-File-Server.git" target="_blank">./view_source</a>
+                                </div>
                             </div>
-                            <img src="server.png" onerror="this.src='https://placehold.co/800x450/111/f00?text=Encrypted+Server'" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
                         </div>
                     </div>
-                </div>
 
-                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
-                    <div class="relative group">
-                        <div class="absolute -inset-2 bg-gradient-to-r from-yellow-500 to-green-600 rounded-lg blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
-                        <div class="relative bg-gray-900 rounded-lg overflow-hidden border border-gray-800 aspect-video">
-                            <div class="bg-gray-800 px-4 py-2 flex gap-2">
-                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <!-- PENTEST TOOLKIT -->
+                    <div class="window">
+                        <div class="title-bar">
+                            <span>exploit.sh</span>
+                            <div class="controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                        </div>
+                        <div class="window-body">
+                            <img src="pentest-project.png" class="project-img" alt="Pentest">
+                            <div class="project-details">
+                                <div class="project-title">Web Pentest Toolkit</div>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Python</span>
+                                    <span class="tech-badge">Bash</span>
+                                    <span class="tech-badge">Security</span>
+                                </div>
+                                <div class="project-desc">
+                                    Comprehensive collection of scripts and configurations for vulnerability assessment and penetration testing.
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/abeer555/Web-Pentest-Toolkit.git" target="_blank">./view_source</a>
+                                </div>
                             </div>
-                            <img src="pentest-project.png" onerror="this.src='https://placehold.co/800x450/111/ff0?text=Pentest+Toolkit'" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
                         </div>
                     </div>
-                    <div class="space-y-6">
-                        <div class="text-yellow-500 font-mono text-sm mb-2">OFFENSIVE SECURITY</div>
-                        <h3 class="text-4xl font-bold text-white">Web Pentest Toolkit</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed">
-                            Automated vulnerability scanner for web applications. Checks for XSS, SQLi, and misconfigurations.
-                            Built to streamline the reconnaissance phase of ethical hacking engagements.
-                        </p>
-                        <div class="flex flex-wrap gap-2 pt-2">
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Python</span>
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">Requests</span>
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">BeautifulSoup</span>
-                            <span class="px-3 py-1 bg-gray-800 text-xs rounded text-gray-300">OWASP Top 10</span>
-                        </div>
-                        <div class="pt-4">
-                            <a href="#" class="inline-flex items-center text-yellow-500 hover:underline">
-                                Launch Tool <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-                            </a>
-                        </div>
-                    </div>
+
+                </div>
+            </section>
+
+            <!-- SKILLS & CTF -->
+            <section id="skills">
+                <h2 class="section-title">MEMORY_DUMP <span>hexdump -C /bin/skills</span></h2>
+                <div class="hex-dump">
+                    <div class="hex-row"><span class="hex-addr">00000000</span> <span class="hex-data">Python C++ Java Linux Bash SQL</span></div>
+                    <div class="hex-row"><span class="hex-addr">00000010</span> <span class="hex-data">React Node Docker AWS PostgreSQL</span></div>
+                    <div class="hex-row"><span class="hex-addr">00000020</span> <span class="hex-data">PenTest VulnAssess PyTorch MongoDB</span></div>
+                    <div class="hex-row"><span class="hex-addr">00000030</span> <span class="hex-data">Wireshark Nmap BurpSuite Git</span></div>
                 </div>
 
-            </div>
-        </div>
-    </section>
-
-    <section class="py-20 px-6 bg-gray-900/20">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-6xl font-bold mb-12 text-center reveal">CAPTURED FLAGS</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                
-                <div class="p-6 border border-gray-800 bg-black hover:border-yellow-500 transition-all duration-300 reveal">
-                    <h3 class="text-3xl font-bold text-white mb-2">55<span class="text-sm text-gray-500">/1000+</span></h3>
-                    <div class="text-yellow-500 font-bold text-sm mb-1">BAJAJ HACKRX</div>
-                    <p class="text-xs text-gray-500">Elite performance in national hackathon.</p>
-                </div>
-
-                <div class="p-6 border border-gray-800 bg-black hover:border-[#00ff41] transition-all duration-300 reveal" style="transition-delay: 100ms;">
-                    <h3 class="text-3xl font-bold text-white mb-2">Top 126</h3>
-                    <div class="text-[#00ff41] font-bold text-sm mb-1">VITISH SIH</div>
-                    <p class="text-xs text-gray-500">Internal Hackathon selection out of 600+ teams.</p>
-                </div>
-
-                <div class="p-6 border border-gray-800 bg-black hover:border-[#00f3ff] transition-all duration-300 reveal" style="transition-delay: 200ms;">
-                    <h3 class="text-3xl font-bold text-white mb-2">Finalist</h3>
-                    <div class="text-[#00f3ff] font-bold text-sm mb-1">HACK-N-DROID</div>
-                    <p class="text-xs text-gray-500">Ranked 35th among 300+ competitive teams.</p>
-                </div>
-
-                <div class="p-6 border border-gray-800 bg-black hover:border-purple-500 transition-all duration-300 reveal" style="transition-delay: 300ms;">
-                    <h3 class="text-3xl font-bold text-white mb-2">400+</h3>
-                    <div class="text-purple-500 font-bold text-sm mb-1">COMMUNITY LEAD</div>
-                    <p class="text-xs text-gray-500">Organized Cyber-0-day-3.0 event.</p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-32 px-6">
-        <div class="max-w-4xl mx-auto border-glow bg-black p-8 md:p-12 rounded-lg relative overflow-hidden reveal">
-            <div class="flex items-center gap-2 mb-6 border-b border-gray-800 pb-4">
-                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                <span class="ml-4 text-xs text-gray-500 font-mono">user@abeer:~/contact</span>
-            </div>
-
-            <div class="space-y-6 font-mono">
-                <p class="text-gray-400">
-                    <span class="text-[#00ff41]">root@abeer:~$</span> echo "Let's build something secure."
-                </p>
-                <p class="text-white text-xl md:text-3xl font-bold">
-                    "Let's build something secure."
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-                    <div>
-                        <span class="text-gray-500 text-xs uppercase tracking-widest">Transmit Data</span>
-                        <a href="mailto:abeergupta555@gmail.com" class="block text-2xl text-[#00ff41] hover:underline mt-2">abeergupta555@gmail.com</a>
-                    </div>
-                    <div>
-                        <span class="text-gray-500 text-xs uppercase tracking-widest">Secure Link</span>
-                        <div class="flex gap-6 mt-2">
-                            <a href="https://github.com/abeer555" class="text-white hover:text-[#00ff41] transition-colors"><i data-lucide="github" class="w-8 h-8"></i></a>
-                            <a href="https://linkedin.com/in/abeer-gupta" class="text-white hover:text-[#00f3ff] transition-colors"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
-                        </div>
+                <div style="margin-top: 30px;">
+                    <h3 style="color: var(--neon-yellow); margin-bottom: 15px; font-family: var(--font-display);">>> CERTIFICATES</h3>
+                    <div style="display: grid; gap: 10px;">
+                        <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-YDK3OUKCDC.pdf" class="nav-link" style="border: 1px solid #333;">[PDF] TryHackMe: Pre-Security</a>
+                        <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-GYTHCWS1S0.pdf" class="nav-link" style="border: 1px solid #333;">[PDF] TryHackMe: Cyber Security 101</a>
+                        <a href="https://www.credly.com/badges/aac01b04-c768-442b-a321-ab1d17e61dbe" class="nav-link" style="border: 1px solid #333;">[LINK] AWS Educate: Cloud 101</a>
                     </div>
                 </div>
 
-                <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-600 text-sm">
-                    <p>Session ID: 0x5F3A1C • Encrypted via SSL</p>
-                    <p class="mt-2">&copy; 2025 Abeer Gupta. System Integrity Verified.</p>
+                <div style="margin-top: 30px;">
+                     <h3 style="color: var(--neon-pink); margin-bottom: 15px; font-family: var(--font-display);">>> CTF_ACHIEVEMENTS</h3>
+                     <ul style="list-style: none; color: #aaa;">
+                        <li style="margin-bottom: 10px;"><span style="color: var(--neon-pink);">[FEB 2025]</span> Hack-n-Droid Finalist (35th/300+ Teams)</li>
+                        <li style="margin-bottom: 10px;"><span style="color: var(--neon-pink);">[NOV 2024]</span> Cyber-0-day-3.0 (Mentored 400+ Peers)</li>
+                        <li style="margin-bottom: 10px;"><span style="color: var(--neon-pink);">[FEB 2024]</span> Password x CTF (Evaluated Vulnerabilities)</li>
+                     </ul>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
+
+            <!-- CONTACT -->
+            <section id="contact">
+                <h2 class="section-title">ROOT_SHELL <span>sudo ./contact_me.sh</span></h2>
+                <div class="terminal-form">
+                    <form action="https://formspree.io/f/mzzykapj" method="POST">
+                        <div class="cmd-line">
+                            <label class="prompt">root@abeer:~/mail# input_name</label>
+                            <input type="text" name="name" class="input-field" placeholder="_" required>
+                        </div>
+                        <div class="cmd-line">
+                            <label class="prompt">root@abeer:~/mail# input_email</label>
+                            <input type="email" name="email" class="input-field" placeholder="_" required>
+                        </div>
+                        <div class="cmd-line">
+                            <label class="prompt">root@abeer:~/mail# input_message</label>
+                            <textarea name="message" class="input-field" rows="4" placeholder="_" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">EXECUTE SEND_PROTOCOL</button>
+                    </form>
+                </div>
+            </section>
+
+            <footer>
+                <p>UID: 1000 | GID: 1000 | PERMISSIONS: 777</p>
+                <p>&copy; 2025 Abeer Gupta. Built with Arch Linux (btw).</p>
+            </footer>
+
+        </main>
+    </div>
 
     <script>
-        // --- 1. ICON INITIALIZATION ---
-        lucide.createIcons();
+        // --- MATRIX RAIN EFFECT ---
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
 
-        // --- 2. BOOT SEQUENCE ---
-        const bootLines = [
-            "BIOS Date 11/23/25 10:46:15 Ver: 1.0.2",
-            "CPU: AMD Ryzen 9 5950X 16-Core Processor",
-            "Memory Test: 65536K OK",
-            "Detecting Primary Master ... VIT_CHENNAI",
-            "Detecting Primary Slave ... IIT_MADRAS",
-            "Loading Kernel Modules ... [ OK ]",
-            "Mounting Filesystems ... [ OK ]",
-            "Starting Network Services ... [ OK ]",
-            "Initializing Graphics Interface ... [ OK ]",
-            "Welcome to AbeerOS."
-        ];
-        
-        const bootLog = document.getElementById('boot-log');
-        const bootBar = document.getElementById('boot-bar');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const alphabet = katakana + latin + nums;
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const rainDrops = Array.from({ length: columns }).fill(1);
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+
+        setInterval(draw, 30);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // --- BOOT SEQUENCE ---
+        const bootContainer = document.getElementById('boot-log-container');
         const bootScreen = document.getElementById('boot-screen');
         
-        let lineIndex = 0;
-        
-        function typeBoot() {
-            if (lineIndex < bootLines.length) {
+        const logs = [
+            { msg: "Initializing kernel...", type: "normal" },
+            { msg: "ACPI: BIOS Error (bug): Could not resolve symbol", type: "warning" },
+            { msg: "Loading modules: kvm, nvidia, bluetooth...", type: "normal" },
+            { msg: "Mounting /dev/sda1 (Root) [OK]", type: "success" },
+            { msg: "Starting systemd-udevd...", type: "normal" },
+            { msg: "Applying firewall rules (iptables)... [OK]", type: "success" },
+            { msg: "Scanning for vulnerabilities...", type: "warning" },
+            { msg: "Vulnerabilities found: 0", type: "success" },
+            { msg: "Loading user profile: Abeer Gupta...", type: "normal" },
+            { msg: "Decrypting projects... [OK]", type: "success" },
+            { msg: "Starting Hyprland Window Manager...", type: "normal" },
+            { msg: "Connect to session: SUCCESS", type: "success" }
+        ];
+
+        let logIndex = 0;
+
+        function typeLog() {
+            if (logIndex < logs.length) {
+                const log = logs[logIndex];
                 const div = document.createElement('div');
-                div.textContent = "> " + bootLines[lineIndex];
-                bootLog.appendChild(div);
-                bootLog.scrollTop = bootLog.scrollHeight;
-                
-                const progress = ((lineIndex + 1) / bootLines.length) * 100;
-                bootBar.style.width = `${progress}%`;
-                
-                lineIndex++;
-                setTimeout(typeBoot, Math.random() * 200 + 50);
+                div.className = `boot-log ${log.type}`;
+                div.innerHTML = `[ ${(Math.random() * 5).toFixed(6)} ] ${log.msg}`;
+                bootContainer.appendChild(div);
+                logIndex++;
+                setTimeout(typeLog, Math.random() * 100 + 50);
             } else {
                 setTimeout(() => {
                     bootScreen.style.opacity = '0';
-                    setTimeout(() => bootScreen.style.display = 'none', 500);
+                    setTimeout(() => {
+                        bootScreen.style.display = 'none';
+                    }, 500);
                 }, 800);
             }
         }
-        
-        // Start Boot immediately
-        typeBoot();
 
-        // --- 3. CURSOR FOLLOWER ---
-        const cursor = document.getElementById('cursor');
-        const cursorDot = document.getElementById('cursor-dot');
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            cursorDot.style.left = e.clientX + 'px';
-            cursorDot.style.top = e.clientY + 'px';
-        });
-
-        document.addEventListener('mousedown', () => {
-            cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
-            cursor.style.backgroundColor = 'rgba(0, 255, 65, 0.3)';
-        });
-
-        document.addEventListener('mouseup', () => {
-            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-            cursor.style.backgroundColor = 'rgba(0, 255, 65, 0.1)';
-        });
-
-        // --- 4. SCROLL ANIMATIONS (INTERSECTION OBSERVER) ---
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
+        window.onload = () => {
+            setTimeout(typeLog, 500);
         };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target); // Only animate once
+        // --- ACTIVE NAVIGATION ---
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
                 }
             });
-        }, observerOptions);
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // --- 5. MATRIX BACKGROUND ---
-        const canvas = document.getElementById('matrix-bg');
-        const ctx = canvas.getContext('2d');
-        
-        let width, height;
-        
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        
-        window.addEventListener('resize', resize);
-        resize();
-        
-        const cols = Math.floor(width / 20);
-        const ypos = Array(cols).fill(0);
-        
-        function matrix() {
-            ctx.fillStyle = '#0001';
-            ctx.fillRect(0, 0, width, height);
-            
-            ctx.fillStyle = '#0f0';
-            ctx.font = '15pt monospace';
-            
-            ypos.forEach((y, i) => {
-                const text = String.fromCharCode(Math.random() * 128);
-                const x = i * 20;
-                ctx.fillText(text, x, y);
-                if (y > 100 + Math.random() * 10000) ypos[i] = 0;
-                else ypos[i] = y + 20;
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
             });
-        }
-        
-        setInterval(matrix, 50);
+        });
 
     </script>
 </body>
