@@ -1,787 +1,807 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Abeer Gupta | Developer & Linux Enthusiast</title>
-    <meta name="description" content="Full-stack developer and Linux enthusiast with expertise in web development, cybersecurity, and system administration. Explore my portfolio of projects and technical skills." />
-    <meta name="keywords" content="Abeer Gupta, developer, Linux, cybersecurity, web development, full-stack, portfolio" />
-    <meta name="author" content="Abeer Gupta" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABEER GUPTA | [ROOT ACCESS]</title>
+    <meta name="description" content="Abeer Gupta: Linux Enthusiast, Cybersecurity Specialist, Full-Stack Developer.">
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Abeer Gupta | Developer & Linux Enthusiast" />
-    <meta property="og:description" content="Full-stack developer and Linux enthusiast with expertise in web development, cybersecurity, and system administration." />
-    <meta property="og:url" content="https://abeer.is-a.dev" />
-    <meta property="og:image" content="https://abeer.is-a.dev/photo2.jpg" />
+    <!-- FONTS: JetBrains Mono for code, Syncopate for aggressive headers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Abeer Gupta | Developer & Linux Enthusiast" />
-    <meta name="twitter:description" content="Full-stack developer and Linux enthusiast with expertise in web development, cybersecurity, and system administration." />
-    <meta name="twitter:image" content="https://abeer.is-a.dev/photo2.jpg" />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/photo2.jpg" />
-    <link rel="manifest" href="/site.webmanifest" />
-    
-    <link rel="stylesheet" href="style.css" />
+    <!-- FONT AWESOME -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <!-- DORKSENSE CHAOS FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <!-- NO GRADIENT BG - PURE BLACK CHAOS -->
-    
-    <header>
-      <div class="header-content">
-        <div class="logo">
-          <img src="photo2.jpg" alt="Abeer Gupta" class="profile-logo" />
-          <span class="logo-text">Abeer Gupta</span>
-        </div>
-        <nav id="navbar">
-          <ul>
-            <li><a href="#home" class="nav-link">Home</a></li>
-            <li><a href="#about" class="nav-link">About</a></li>
-            <li><a href="#experience" class="nav-link">Experience</a></li>
-            <li><a href="#projects" class="nav-link">Projects</a></li>
-            <li><a href="#skills" class="nav-link">Skills</a></li>
-            <li><a href="#contact" class="nav-link">Contact</a></li>
-          </ul>
-        </nav>
-        <div class="nav-right">
-          <div class="theme-toggle">
-            <i class="fas fa-moon"></i>
-            <i class="fas fa-sun"></i>
-          </div>
-          <div class="menu-btn">
-            <div class="menu-btn__burger"></div>
-          </div>
-        </div>
-      </div>
-    </header>
 
-    <main class="scroll-snap-container">
-      <!-- Hero Section - CHAOS MODE -->
-      <section id="home" class="hero scanlines">
-        <div class="container">
-          <div class="hero-content">
-            <div class="hero-text">
-              <span class="hero-greeting neon-chaos">CONNECTION ESTABLISHED...
-              </span>
-              <h1 class="hero-title mega-glitch" data-text="ABEER GUPTA">ABEER GUPTA</h1>
-              <div class="dynamic-text">
-                <span class="typed-text"></span><span class="cursor">&nbsp;</span>
-              </div>
-              <p class="hero-description">
-                A passionate programmer specializing in Linux systems, Docker, and 
-                competitive programming. Technical team member at LUG VITC with 
-                expertise in cybersecurity and full-stack development.
-              </p>
-              <div class="hero-buttons">
-                <a href="#projects" class="btn primary-btn">View Projects</a>
-                <a href="#contact" class="btn secondary-btn">Contact Me</a>
-              </div>
-              <div class="social-links">
-                <a href="https://github.com/abeer555/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                  <i class="fab fa-github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/abeer-gupta/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                  <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="mailto:abeergupta555@gmail.com" aria-label="Email">
-                  <i class="fas fa-envelope"></i>
-                </a>
-              </div>
-            </div>
-            <div class="hero-image">
-              <div class="image-container">
-                <img src="photo2.jpg" alt="Abeer Gupta" />
-                <div class="blob-shape"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="scroll-down">
-          <span>Scroll Down</span>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-      </section>
+    <style>
+        /* --- CORE CHAOS VARIABLES --- */
+        :root {
+            --bg-color: #050505;
+            --terminal-bg: #0a0a0a;
+            --neon-green: #00ff41;
+            --cyber-cyan: #00f3ff;
+            --alert-red: #ff0055;
+            --warn-yellow: #fcee0a;
+            --dim-gray: #444;
+            --glass: rgba(20, 20, 20, 0.8);
+            --font-main: 'JetBrains Mono', monospace;
+            --font-display: 'Syncopate', sans-serif;
+        }
 
-      <!-- About Section -->
-      <section id="about" class="about">
-        <div class="container">
-          <h2 class="section-title">About Me</h2>
-          <div class="section-subtitle">My Background & Education</div>
-          
-          <div class="about-content">
-            <div class="about-text">
-              <div class="about-description">
-                I am a dual-degree student pursuing a <span class="highlight">B.Tech in Computer Science and Engineering</span> at VIT Chennai and a <span class="highlight">B.S. in Data Science and Applications</span> at IIT Madras. My academic journey is defined by a strong foundation in data science, software engineering, and cybersecurity, with a proven record of excellence and leadership.
-              </div>
-                    
-              <div class="about-description">
-                I thrive at the intersection of <span class="highlight">Linux system engineering, cybersecurity, and full-stack development</span>. My experience spans configuring secure Linux environments, building scalable web and AI solutions, and leading technical teams in high-impact projects and hackathons.
-              </div>
+        /* --- RESET & BASE --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: crosshair; /* Gamer/Hacker vibe */
+        }
 
-              <div class="education-section">
-                <h3>Education</h3>
-                
-                <div class="education-cards">
-                  <div class="education-card">
-                    <div class="education-icon">
-                      <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <div class="education-details">
-                      <h4>B.Tech in Computer Science and Engineering</h4>
-                      <div class="institution">Vellore Institute of Technology, Chennai</div>
-                      <div class="education-meta">
-                        <span><i class="far fa-calendar-alt"></i> 2023 – 2027</span>
-                        <span><i class="fas fa-star"></i> CGPA: 8.84</span>
-                      </div>
-                    </div>
-                  </div>
+        body {
+            background-color: var(--bg-color);
+            color: #eee;
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-                  <div class="education-card">
-                    <div class="education-icon">
-                      <i class="fas fa-university"></i>
-                    </div>
-                    <div class="education-details">
-                      <h4>B.S. in Data Science and Applications</h4>
-                      <div class="institution">Indian Institute of Technology Madras (IITM)</div>
-                      <div class="education-meta">
-                        <span><i class="far fa-calendar-alt"></i> 2023 – 2027</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        /* --- CRT SCANLINE EFFECT (OVERLAY) --- */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.6;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--cyber-cyan);
+            position: relative;
+            transition: 0.2s;
+        }
+
+        a:hover {
+            color: var(--neon-green);
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .highlight { color: var(--neon-green); }
+        .alert { color: var(--alert-red); }
+        .dim { color: var(--dim-gray); }
+
+        /* --- LAYOUT GRID (HYPRLAND STYLE) --- */
+        .wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            min-height: 100vh;
+        }
+
+        @media (max-width: 900px) {
+            .wrapper { grid-template-columns: 1fr; }
+        }
+
+        /* --- SIDEBAR (WAYBAR METAPHOR) --- */
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            background: var(--terminal-bg);
+            border: 1px solid var(--dim-gray);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar { position: relative; height: auto; top: 0; }
+        }
+
+        .profile-pic-container {
+            width: 100%;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            border: 2px solid var(--neon-green);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(120%);
+            transition: 0.3s;
+        }
+
+        .profile-pic-container:hover .profile-pic {
+            filter: grayscale(0%) contrast(100%);
+        }
+
+        .glitch-text {
+            position: relative;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 red;
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 blue;
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(20% 0 80% 0); }
+            20% { clip-path: inset(60% 0 10% 0); }
+            40% { clip-path: inset(40% 0 50% 0); }
+            60% { clip-path: inset(80% 0 5% 0); }
+            80% { clip-path: inset(10% 0 70% 0); }
+            100% { clip-path: inset(30% 0 20% 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(10% 0 60% 0); }
+            20% { clip-path: inset(80% 0 5% 0); }
+            40% { clip-path: inset(30% 0 10% 0); }
+            60% { clip-path: inset(50% 0 40% 0); }
+            80% { clip-path: inset(0% 0 20% 0); }
+            100% { clip-path: inset(70% 0 5% 0); }
+        }
+
+        .nav-links li {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .nav-links a {
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links a::before {
+            content: '>';
+            color: var(--neon-green);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
+            margin-right: 5px;
+        }
+
+        .socials {
+            display: flex;
+            gap: 15px;
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* --- NEOFETCH STYLE BIO --- */
+        .neofetch-box {
+            background: rgba(10, 10, 10, 0.9);
+            border: 1px solid var(--dim-gray);
+            padding: 30px;
+            font-family: var(--font-main);
+            position: relative;
+            overflow: hidden;
+        }
         
-        <!-- Floating Bubble Effects -->
-        <div class="bubble-container">
-          <div class="chaos-bubble bubble-1"></div>
-          <div class="chaos-bubble bubble-2"></div>
-          <div class="chaos-bubble bubble-3"></div>
-          <div class="chaos-bubble bubble-4"></div>
-          <div class="chaos-bubble bubble-5"></div>
-          <div class="chaos-bubble bubble-6"></div>
-          <div class="explode-circle explode-1"></div>
-          <div class="explode-circle explode-2"></div>
-          <div class="explode-circle explode-3"></div>
-        </div>
-      </section>
+        .neofetch-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 3px; height: 100%;
+            background: var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-green);
+        }
 
-      <!-- Experience Section -->
-      <section id="experience" class="experience">
-        <div class="container">
-          <div class="experience-grid">
-            <div class="experience-sticky">
-              <h2 class="section-title">Experience</h2>
-              <div class="section-subtitle" data-aos-delay="100">My Professional Journey</div>
+        .ascii-logo {
+            color: var(--cyber-cyan);
+            font-size: 10px;
+            line-height: 10px;
+            white-space: pre;
+            float: left;
+            margin-right: 30px;
+            display: none; /* Hidden on small screens */
+        }
+
+        @media(min-width: 1100px) { .ascii-logo { display: block; } }
+
+        .sys-info span {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .sys-key { color: var(--neon-green); font-weight: bold; }
+
+        /* --- SECTION HEADERS --- */
+        .section-header {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--dim-gray);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-header::after {
+            content: '0x0' attr(data-index);
+            font-size: 0.8rem;
+            color: var(--dim-gray);
+            font-family: var(--font-main);
+        }
+
+        /* --- EXPERIENCE TIMELINE (SYSTEM LOGS) --- */
+        .log-entry {
+            border-left: 1px dashed var(--dim-gray);
+            padding-left: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .log-entry::before {
+            content: '●';
+            color: var(--neon-green);
+            position: absolute;
+            left: -6px;
+            top: 0;
+        }
+
+        .log-timestamp {
+            font-size: 0.9rem;
+            color: var(--cyber-cyan);
+            margin-bottom: 5px;
+            display: inline-block;
+            background: #111;
+            padding: 2px 8px;
+            border: 1px solid var(--cyber-cyan);
+        }
+
+        .log-title { font-size: 1.4rem; color: #fff; margin: 5px 0; }
+        .log-company { color: var(--dim-gray); font-style: italic; }
+        .log-details li { margin-left: 20px; color: #ccc; margin-top: 5px; list-style: square; }
+
+        /* --- PROJECTS GRID (TILED WINDOWS) --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .window-card {
+            background: #000;
+            border: 1px solid var(--dim-gray);
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .window-card:hover {
+            border-color: var(--neon-green);
+            transform: translateY(-5px);
+            box-shadow: 5px 5px 0px var(--dim-gray);
+        }
+
+        .window-header {
+            background: #111;
+            padding: 8px 15px;
+            border-bottom: 1px solid var(--dim-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--dim-gray);
+        }
+
+        .window-buttons span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        .btn-close { background: var(--alert-red); }
+        .btn-min { background: var(--warn-yellow); }
+        .btn-max { background: var(--neon-green); }
+
+        .window-content { padding: 20px; }
+        .project-tags span {
+            display: inline-block;
+            font-size: 0.75rem;
+            border: 1px solid var(--cyber-cyan);
+            color: var(--cyber-cyan);
+            padding: 2px 6px;
+            margin-right: 5px;
+            margin-top: 10px;
+        }
+
+        /* --- SKILLS (HEX DUMP STYLE) --- */
+        .hex-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .skill-tag {
+            background: #111;
+            color: var(--neon-green);
+            padding: 8px 15px;
+            border: 1px solid var(--neon-green);
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .skill-tag:hover {
+            background: var(--neon-green);
+            color: black;
+            font-weight: bold;
+        }
+
+        /* --- BOOT LOADER --- */
+        #boot-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: black;
+            z-index: 10000;
+            padding: 40px;
+            font-family: var(--font-main);
+            color: var(--neon-green);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        /* --- CONTACT --- */
+        .terminal-input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--neon-green);
+            color: #fff;
+            font-family: var(--font-main);
+            font-size: 1.2rem;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        .terminal-input:focus { outline: none; border-bottom-color: var(--cyber-cyan); }
+
+        /* --- UTILS --- */
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        /* --- CERTIFICATES --- */
+        .cert-link {
+            display: block;
+            border: 1px solid #333;
+            padding: 10px;
+            margin-bottom: 10px;
+            color: #aaa;
+        }
+        .cert-link:hover { border-color: var(--warn-yellow); color: var(--warn-yellow); }
+
+        .lang-bar {
+            height: 4px;
+            background: #333;
+            margin-top: 5px;
+            position: relative;
+        }
+        .lang-progress {
+            height: 100%;
+            background: var(--cyber-cyan);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="scanlines"></div>
+
+    <!-- BOOT SEQUENCE ANIMATION -->
+    <div id="boot-screen">
+        <div id="boot-text"></div>
+    </div>
+
+    <div class="wrapper">
+        <!-- SIDEBAR / WAYBAR -->
+        <aside class="sidebar">
+            <div>
+                <div class="profile-pic-container">
+                    <!-- USING PROVIDED IMAGE -->
+                    <img src="photo2.jpg" alt="Abeer Gupta" class="profile-pic" onerror="this.src='https://ui-avatars.com/api/?name=Abeer+Gupta&background=000&color=00ff41&size=256'">
+                </div>
+                
+                <h1 class="glitch-text" data-text="ABEER GUPTA">ABEER GUPTA</h1>
+                <p class="highlight" style="margin-bottom: 20px;">> Full-Stack Developer<br>> Linux Enthusiast<br>> CyberSec Analyst</p>
+
+                <ul class="nav-links">
+                    <li><a href="#bio">./bio</a></li>
+                    <li><a href="#experience">./experience.log</a></li>
+                    <li><a href="#projects">./projects.sh</a></li>
+                    <li><a href="#skills">./skills.bin</a></li>
+                    <li><a href="#contact">./contact_me</a></li>
+                </ul>
+            </div>
+
+            <div class="socials">
+                <a href="https://github.com/abeer555/" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/abeer-gupta/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:abeergupta555@gmail.com"><i class="fas fa-envelope"></i></a>
             </div>
             
-            <div class="timeline" data-aos-delay="200">
-              <div class="timeline-item">
-              <div class="timeline-icon">
-                <i class="fas fa-user-shield"></i>
-              </div>
-              <div class="timeline-content">
-                <div class="timeline-header">
-                  <h3>Cybersecurity Intern</h3>
-                  <span class="timeline-company">C9Labs, Indore</span>
-                </div>
-                <div class="timeline-date">
-                  <i class="far fa-calendar-alt"></i> May 2025 – August 2025
-                </div>
-                <ul class="timeline-details">
-                  <li>
-                    Completed 88+ hands-on modules on Linux, Windows, networking, cryptography, and security tools (Wireshark, Nmap).
-                    Achieved Top 6% performer status on TryHackMe.
-                  </li>
-                  <li>
-                    Developed skills in vulnerability assessment and defensive strategies through real-world scenarios.
-                  </li>
-                  <li>
-                    Built foundational cybersecurity knowledge via TryHackMe and curated courses.
-                  </li>
-                </ul>
-              </div>
+            <div style="margin-top: 20px; font-size: 0.7rem; color: #555;">
+                STATUS: ONLINE<br>
+                KERNEL: 6.8.9-arch1-1<br>
+                UPTIME: 20 YEARS
             </div>
-            <div class="timeline-item">
-              <div class="timeline-icon">
-                <i class="fab fa-linux"></i>
-              </div>
-              <div class="timeline-content">
-                <div class="timeline-header">
-                  <h3>Technical Member</h3>
-                  <span class="timeline-company">Linux Club, VIT Chennai</span>
-                </div>
-                <div class="timeline-date">
-                  <i class="far fa-calendar-alt"></i> Sep 2024 – Present
-                </div>
-                <ul class="timeline-details">
-                  <li>
-                    Configured and optimized 20+ Linux desktops for resiliency and security.
-                  </li>
-                  <li>
-                    Designed and competed in 10+ CTF events, mentoring 5+ peers in Linux system operations and security best practices.
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-icon">
-                <i class="fas fa-code"></i>
-              </div>
-              <div class="timeline-content">
-                <div class="timeline-header">
-                  <h3>Competitive Programming Member</h3>
-                  <span class="timeline-company">CodeChef College Chapter, VIT Chennai</span>
-                </div>
-                <div class="timeline-date">
-                  <i class="far fa-calendar-alt"></i> Aug 2024 – Present
-                </div>
-                <ul class="timeline-details">
-                  <li>
-                    Mentored 15+ students in advanced algorithms, data structures, and competitive programming strategies.
-                  </li>
-                  <li>
-                    Managed coordination for 100+ participants, increasing engagement.
-                  </li>
-                  <li>
-                    Achieved top 10% rankings in 3 international coding contests.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Floating Bubble Effects -->
-        <div class="bubble-container">
-          <div class="chaos-bubble bubble-1"></div>
-          <div class="chaos-bubble bubble-2"></div>
-          <div class="chaos-bubble bubble-3"></div>
-          <div class="chaos-bubble bubble-4"></div>
-          <div class="chaos-bubble bubble-5"></div>
-          <div class="chaos-bubble bubble-6"></div>
-          <div class="explode-circle explode-1"></div>
-          <div class="explode-circle explode-2"></div>
-          <div class="explode-circle explode-3"></div>
-        </div>
-      </section>
+        </aside>
 
-      <!-- Projects Section -->
-      <section id="projects" class="projects">
-        <div class="container">
-          <h2 class="section-title">Projects</h2>
-          <div class="section-subtitle" data-aos-delay="100">My Recent Work</div>
-          
-          <div class="projects-container">
-            <!-- <div class="project-card" data-aos-delay="100">
-              <div class="project-image">
+        <!-- MAIN CONTENT -->
+        <main class="content-area">
+
+            <!-- HERO / BIO (NEOFETCH STYLE) -->
+            <section id="bio">
+                <h2 class="section-header" data-index="1">SYSTEM_INFO</h2>
+                <div class="neofetch-box">
+                    <!-- ASCII ART -->
+                    <div class="ascii-logo">
+      /\\
+     /  \\
+    /    \\
+   /      \\    ABEER_OS
+  /   ,,   \\   --------
+ /   |  |   \\
+/_-''    ''-_\\
+                    </div>
+                    <div class="sys-info">
+                        <div><span class="sys-key">User:</span> AbeerGupta@vit-chennai</div>
+                        <div><span class="sys-key">Education:</span> VIT Chennai (CSE) + IIT Madras (Data Science)</div>
+                        <div><span class="sys-key">CGPA:</span> 8.84 (VIT)</div>
+                        <div><span class="sys-key">OS:</span> Arch Linux (Hyprland)</div>
+                        <div><span class="sys-key">Languages:</span> English (Fluent), Hindi (Fluent), Japanese (N5)</div>
+                        <br>
+                        <!-- <br> -->
+                        <div><span class="sys-key">Description:</span>
+                        <span style="color: #ccc;">
+                        Passionate programmer specializing in Linux systems, Docker, and competitive programming. 
+                        Thriving at the intersection of System Engineering, Cybersecurity, and Full-Stack Development.
+                        I don't just use software; I configure, break, and rebuild it.
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EXPERIENCE (SYSTEM LOGS) -->
+            <section id="experience">
+                <h2 class="section-header" data-index="2">/VAR/LOG/EXPERIENCE</h2>
                 
-                <div class="project-overlay">
-                  <div class="project-links">
-                    <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">
-                      <i class="fas fa-external-link-alt"></i>
-                    </a>
-                  </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">[May 2025 - Aug 2025]</span>
+                    <h3 class="log-title">Cybersecurity Intern</h3>
+                    <div class="log-company">C9Labs, Indore</div>
+                    <ul class="log-details">
+                        <li>Completed 88+ hands-on modules: Linux, Cryptography, Wireshark, Nmap.</li>
+                        <li>Achieved Top 6% performer status on TryHackMe.</li>
+                        <li>Executed vulnerability assessments and defensive strategies.</li>
+                    </ul>
                 </div>
-              </div>
-              <div class="project-content">
-                <h3></h3>
-                <p>
-                  
-                </p>
-                <div class="project-tech">
-                  
-                </div>
-              </div>
-            </div> -->
-            <div class="project-card" data-aos-delay="200">
-              <div class="project-image">
-                <img src="Hackrx.png" alt="Bajaj HackRx" />
-                <div class="project-overlay">
-                  <div class="project-links">
-                    <a href="https://github.com/vansh-9878/RAG" class="project-link" target="_blank" rel="noopener noreferrer">
-                      <i class="fab fa-github"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="project-content">
-                <h3>RAG Document Query System — Bajaj HackRx</h3>
-                <p>
-                  Placed 55 / 1000+ teams at Bajaj HackRx. An end-to-end Retrieval-Augmented Generation system that converts dense PDFs/DOCs into multilingual, natural-language Q&A with context-aware answer generation.
-                </p>
-                <div class="project-tech">
-                  <span>RAG</span>
-                  <span>LLM</span>
-                  <span>OCR</span>
-                  <span>Vector Embeddings</span>
-                </div>
-              </div>
-            </div>
-            <div class="project-card" data-aos-delay="200">
-              <div class="project-image">
-                <img src="hyprland_image.png" alt="Hyprland-Dots" />
-                <div class="project-overlay">
-                  <div class="project-links">
-                    <a href="https://github.com/abeer555/Hyprland-Dots" class="project-link" target="_blank" rel="noopener noreferrer">
-                      <i class="fab fa-github"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="project-content">
-                <h3>Hyprland-Dots: Custom Hyprland Desktop Environment</h3>
-                <p>
-                  Configured Arch Linux with Hyprland for 3+ personal systems, optimizing performance and user experience (25% faster). Designed a minimalist, cohesive UI for Linux, enhancing usability and aesthetics.
-                </p>
-                <div class="project-tech">
-                  <span>Arch Linux</span>
-                  <span>Hyprland</span>
-                  <span>Shell</span>
-                </div>
-              </div>
-            </div>
-            <div class="project-card" data-aos-delay="300">
-              <div class="project-image">
-                <img src="server.png" alt="Secure File Server" />
-                <div class="project-overlay">
-                  <div class="project-links">
-                    <a href="https://github.com/abeer555/Secure-File-Server.git" class="project-link" target="_blank" rel="noopener noreferrer">
-                      <i class="fab fa-github"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="project-content">
-                <h3>Secure File Server</h3>
-                <p>
-                  Developed a multi-threaded HTTP server with OpenSSL AES-256-CBC encryption for secure file storage and transfer. Reduced processing times by 25% for files exceeding 10GB with streaming and transparent encryption.
-                </p>
-                <div class="project-tech">
-                  <span>OpenSSL</span>
-                  <span>Multi-threading</span>
-                  <span>Encryption</span>
-                </div>
-              </div>
-            </div>
-            <div class="project-card" data-aos-delay="400">
-              <div class="project-image">
-                <img src="pentest.png" alt="Web Penetration Testing Toolkit" />
-                <div class="project-overlay">
-                  <div class="project-links">
-                    <a href="https://github.com/abeer555/Web-Pentest-Toolkit.git" class="project-link" target="_blank" rel="noopener noreferrer">
-                      <i class="fab fa-github"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="project-content">
-                <h3>Web Penetration Testing Toolkit</h3>
-                <p>
-                  A comprehensive collection of penetration testing tools, scripts, and configurations developed during my cybersecurity learning journey.
-                </p>
-                <div class="project-tech">
-                  <span>Python</span>
-                  <span>Bash</span>
-                  <span>Linux</span>
-                  <span>Security</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- Certifications Section -->
-      <section id="certifications" class="certifications">
-        <div class="container">
-          <h2 class="section-title">Certifications</h2>
-          <div class="section-subtitle" data-aos-delay="100">Professional Development</div>
-          
-          <div class="certifications-grid" data-aos-delay="200">
-            <div class="certification-card">
-              <div class="certification-icon"><i class="fas fa-shield-alt"></i></div>
-              <div class="certification-content">
-                <h3>Pre-Security</h3>
-                <p>TryHackMe</p>
-                <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-YDK3OUKCDC.pdf" target="_blank" rel="noopener noreferrer" class="btn-view-cert">View Certificate</a>
-              </div>
-            </div>
-            <div class="certification-card">
-              <div class="certification-icon"><i class="fas fa-user-secret"></i></div>
-              <div class="certification-content">
-                <h3>Cyber Security 101</h3>
-                <p>TryHackMe</p>
-                <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-GYTHCWS1S0.pdf" target="_blank" rel="noopener noreferrer" class="btn-view-cert">View Certificate</a>
-              </div>
-            </div>
-            <div class="certification-card">
-              <div class="certification-icon"><i class="fas fa-globe"></i></div>
-              <div class="certification-content">
-                <h3>Web Fundamentals</h3>
-                <p>TryHackMe</p>
-                <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-6P63BKBYWA.pdf" target="_blank" rel="noopener noreferrer" class="btn-view-cert">View Certificate</a>
-              </div>
-            </div>
-            <div class="certification-card">
-              <div class="certification-icon"><i class="fab fa-aws"></i></div>
-              <div class="certification-content">
-                <h3>AWS Educate Introduction to Cloud 101</h3>
-                <p>AWS</p>
-                <a href="https://www.credly.com/badges/aac01b04-c768-442b-a321-ab1d17e61dbe" target="_blank" rel="noopener noreferrer" class="btn-view-cert">View Badge</a>
-              </div>
-            </div>
-          </div>
-        </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">[Sep 2024 - PRESENT]</span>
+                    <h3 class="log-title">Linux Club Tech Member</h3>
+                    <div class="log-company">VIT Chennai</div>
+                    <ul class="log-details">
+                        <li>Configured/Optimized 20+ Linux desktops for resiliency.</li>
+                        <li>Designed 10+ CTF events; mentored peers in system security.</li>
+                    </ul>
+                </div>
+
+                <div class="log-entry">
+                    <span class="log-timestamp">[Aug 2024 - PRESENT]</span>
+                    <h3 class="log-title">Competitive Programmer</h3>
+                    <div class="log-company">CodeChef College Chapter</div>
+                    <ul class="log-details">
+                        <li>Mentored 15+ students in DSA and Algorithms.</li>
+                        <li>Managed 100+ participants in coding events.</li>
+                        <li>Top 10% rankings in 3 international contests.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- PROJECTS (TILED WINDOWS) -->
+            <section id="projects">
+                <h2 class="section-header" data-index="3">~/PROJECTS/EXECUTABLES</h2>
+                <div class="grid-container">
+                    
+                    <!-- RAG SYSTEM -->
+                    <div class="window-card">
+                        <div class="window-header">
+                            <span>rag_system.py</span>
+                            <div class="window-buttons"><span class="btn-min"></span><span class="btn-max"></span><span class="btn-close"></span></div>
+                        </div>
+                        <div class="window-content">
+                            <h3 style="color: var(--neon-green)">Bajaj HackRx RAG System</h3>
+                            <p class="dim" style="font-size: 0.9rem; margin: 10px 0;">Ranked 55/1000+ Teams. An end-to-end Retrieval-Augmented Generation system. Converts dense PDFs/DOCs into multilingual natural-language Q&A.</p>
+                            <div class="project-tags">
+                                <span>LLM</span><span>OCR</span><span>Vector Embeddings</span>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="https://github.com/vansh-9878/RAG" target="_blank">[ SOURCE CODE ]</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HYPRLAND DOTS -->
+                    <div class="window-card">
+                        <div class="window-header">
+                            <span>hyprland.conf</span>
+                            <div class="window-buttons"><span class="btn-min"></span><span class="btn-max"></span><span class="btn-close"></span></div>
+                        </div>
+                        <div class="window-content">
+                            <h3 style="color: var(--cyber-cyan)">Hyprland-Dots</h3>
+                            <p class="dim" style="font-size: 0.9rem; margin: 10px 0;">Custom Arch Linux configuration. Optimized performance (25% faster) for 3+ personal systems. Minimalist, keyboard-driven UI.</p>
+                            <div class="project-tags">
+                                <span>Arch</span><span>Bash</span><span>Lua</span>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="https://github.com/abeer555/Hyprland-Dots" target="_blank">[ SOURCE CODE ]</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECURE FILE SERVER -->
+                    <div class="window-card">
+                        <div class="window-header">
+                            <span>server.c</span>
+                            <div class="window-buttons"><span class="btn-min"></span><span class="btn-max"></span><span class="btn-close"></span></div>
+                        </div>
+                        <div class="window-content">
+                            <h3 style="color: var(--alert-red)">Secure File Server</h3>
+                            <p class="dim" style="font-size: 0.9rem; margin: 10px 0;">Multi-threaded HTTP server with OpenSSL AES-256-CBC encryption. Reduced processing times by 25% for 10GB+ files.</p>
+                            <div class="project-tags">
+                                <span>C++</span><span>OpenSSL</span><span>Multi-threading</span>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="https://github.com/abeer555/Secure-File-Server.git" target="_blank">[ SOURCE CODE ]</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PENTEST TOOLKIT -->
+                    <div class="window-card">
+                        <div class="window-header">
+                            <span>exploit.sh</span>
+                            <div class="window-buttons"><span class="btn-min"></span><span class="btn-max"></span><span class="btn-close"></span></div>
+                        </div>
+                        <div class="window-content">
+                            <h3 style="color: var(--warn-yellow)">Web Pentest Toolkit</h3>
+                            <p class="dim" style="font-size: 0.9rem; margin: 10px 0;">Comprehensive collection of scripts and configurations for vulnerability assessment and penetration testing.</p>
+                            <div class="project-tags">
+                                <span>Python</span><span>Bash</span><span>Security</span>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="https://github.com/abeer555/Web-Pentest-Toolkit.git" target="_blank">[ SOURCE CODE ]</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SKILLS & CERTS -->
+            <section id="skills">
+                <h2 class="section-header" data-index="4">BINARY_SKILLS_DUMP</h2>
+                
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--dim-gray); margin-bottom: 10px;">> LANGUAGES & CORE</h4>
+                    <div class="hex-grid">
+                        <div class="skill-tag">Python</div>
+                        <div class="skill-tag">C/C++</div>
+                        <div class="skill-tag">Java</div>
+                        <div class="skill-tag">Linux/Bash</div>
+                        <div class="skill-tag">SQL</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--dim-gray); margin-bottom: 10px;">> WEB & DEVOPS</h4>
+                    <div class="hex-grid">
+                        <div class="skill-tag">React.js</div>
+                        <div class="skill-tag">Node.js</div>
+                        <div class="skill-tag">Docker</div>
+                        <div class="skill-tag">AWS</div>
+                        <div class="skill-tag">PostgreSQL</div>
+                        <div class="skill-tag">MongoDB</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--dim-gray); margin-bottom: 10px;">> SECURITY & AI</h4>
+                    <div class="hex-grid">
+                        <div class="skill-tag">Penetration Testing</div>
+                        <div class="skill-tag">Vulnerability Assessment</div>
+                        <div class="skill-tag">PyTorch</div>
+                        <div class="skill-tag">Pandas</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; border: 1px dashed var(--dim-gray); padding: 20px;">
+                    <h3 style="margin-bottom: 15px;">CERTIFICATES.tar.gz</h3>
+                    <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-YDK3OUKCDC.pdf" class="cert-link" target="_blank">TryHackMe: Pre-Security</a>
+                    <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-GYTHCWS1S0.pdf" class="cert-link" target="_blank">TryHackMe: Cyber Security 101</a>
+                    <a href="https://www.credly.com/badges/aac01b04-c768-442b-a321-ab1d17e61dbe" class="cert-link" target="_blank">AWS Educate: Cloud 101</a>
+                </div>
+            </section>
+
+             <!-- ACTIVITIES -->
+             <section id="activities">
+                <h2 class="section-header" data-index="5">CTF_LOGS</h2>
+                <div class="grid-container">
+                    <div style="border-left: 3px solid var(--neon-green); padding-left: 15px;">
+                        <h4>Password x CTF</h4>
+                        <p class="dim">Feb 2024</p>
+                        <p>Evaluated system vulnerabilities and executed pentesting challenges.</p>
+                    </div>
+                    <div style="border-left: 3px solid var(--cyber-cyan); padding-left: 15px;">
+                        <h4>Cyber-0-day-3.0</h4>
+                        <p class="dim">Nov 2024</p>
+                        <p>Mentored 400+ peers in CTF/Cybersec events.</p>
+                    </div>
+                    <div style="border-left: 3px solid var(--alert-red); padding-left: 15px;">
+                        <h4>Hack-n-Droid Finalist</h4>
+                        <p class="dim">Feb 2025</p>
+                        <p>35th/300+ Teams. Full-stack AI Solution.</p>
+                    </div>
+                </div>
+             </section>
+
+            <!-- CONTACT -->
+            <section id="contact">
+                <h2 class="section-header" data-index="6">INITIATE_HANDSHAKE</h2>
+                <div style="background: #111; padding: 20px; border: 1px solid var(--neon-green);">
+                    <p style="color: var(--neon-green); margin-bottom: 10px;">root@abeer-portfolio:~/mail# ./send_message.sh</p>
+                    
+                    <form action="https://formspree.io/f/mzzykapj" method="POST">
+                        <label style="color: #888;">ENTER_NAME:</label>
+                        <input type="text" name="name" class="terminal-input" placeholder="_" required autocomplete="off">
+                        
+                        <label style="color: #888; display: block; margin-top: 20px;">ENTER_EMAIL:</label>
+                        <input type="email" name="email" class="terminal-input" placeholder="_" required autocomplete="off">
+                        
+                        <label style="color: #888; display: block; margin-top: 20px;">MESSAGE_PAYLOAD:</label>
+                        <textarea name="message" class="terminal-input" rows="3" placeholder="_" required></textarea>
+                        
+                        <button type="submit" style="margin-top: 30px; background: var(--neon-green); color: black; border: none; padding: 15px 30px; font-family: var(--font-display); font-weight: bold; text-transform: uppercase;">
+                            EXECUTE_SEND <span class="blink">_</span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+            
+            <footer style="margin-top: 50px; border-top: 1px solid #333; padding-top: 20px; color: #555; text-align: center; font-size: 0.8rem;">
+                <p>DESIGNED_BY_CHAOS // BUILT_WITH_RAGE</p>
+                <p>&copy; 2025 Abeer Gupta. All systems operational.</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <script>
+        // BOOT SEQUENCE SCRIPT
+        const bootText = document.getElementById('boot-text');
+        const bootScreen = document.getElementById('boot-screen');
         
-        <!-- Floating Bubble Effects -->
-        <div class="bubble-container">
-          <div class="chaos-bubble bubble-1"></div>
-          <div class="chaos-bubble bubble-2"></div>
-          <div class="chaos-bubble bubble-3"></div>
-          <div class="chaos-bubble bubble-4"></div>
-          <div class="chaos-bubble bubble-5"></div>
-          <div class="chaos-bubble bubble-6"></div>
-          <div class="explode-circle explode-1"></div>
-          <div class="explode-circle explode-2"></div>
-          <div class="explode-circle explode-3"></div>
-        </div>
-      </section>
+        const logs = [
+            "Initializing kernel...",
+            "Loading modules: kvm, nvidia, bluetooth...",
+            "Mounting /dev/sda1 (Root) [OK]",
+            "Starting systemd-udevd...",
+            "Loading user profile: Abeer Gupta...",
+            "Fetching GitHub data... [OK]",
+            "Decryping secure projects... [OK]",
+            "Starting Hyprland Desktop Environment...",
+            "ACCESS GRANTED."
+        ];
 
-      <!-- Skills Section -->
-      <section id="skills" class="skills scroll-snap-item">
-        <div class="container">
-          <h2 class="section-title fade-in-up">Skills & Technologies</h2>
-          <div class="section-subtitle fade-in-up" data-aos-delay="100">What I Bring to the Table</div>
+        let i = 0;
+        function typeLog() {
+            if (i < logs.length) {
+                const p = document.createElement('p');
+                p.textContent = `> ${logs[i]}`;
+                p.style.marginBottom = "5px";
+                if(i === logs.length - 1) p.style.color = "var(--neon-green)";
+                else p.style.color = "#888";
+                
+                bootText.appendChild(p);
+                i++;
+                setTimeout(typeLog, Math.random() * 200 + 50);
+            } else {
+                setTimeout(() => {
+                    bootScreen.style.opacity = "0";
+                    bootScreen.style.pointerEvents = "none";
+                }, 800);
+            }
+        }
 
-          <div class="skills-wrapper">
-            <div class="skills-category" data-aos-delay="200">
-              <h3>Cybersecurity</h3>
-              <div class="skills-grid">
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-shield-alt"></i></div>
-                  <span>Vulnerability Assessment</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-user-secret"></i></div>
-                  <span>Penetration Testing</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-lock"></i></div>
-                  <span>Security Analysis</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-eye"></i></div>
-                  <span>Threat Detection</span>
-                </div>
-              </div>
-            </div>
+        window.onload = () => {
+            typeLog();
+        };
 
-            <div class="skills-category" data-aos-delay="300">
-              <h3>Programming Languages</h3>
-              <div class="skills-grid">
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fab fa-python"></i></div>
-                  <span>Python</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-code"></i></div>
-                  <span>C</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-code"></i></div>
-                  <span>C++</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fab fa-java"></i></div>
-                  <span>Java</span>
-                </div>
-              </div>
-            </div>
+        // Subtle parallax/mouse follow for the sidebar title
+        document.addEventListener('mousemove', (e) => {
+            const title = document.querySelector('.glitch-text');
+            const x = (window.innerWidth - e.pageX) / 50;
+            const y = (window.innerHeight - e.pageY) / 50;
+            title.style.transform = `translateX(${x}px) translateY(${y}px)`;
+        });
 
-            <div class="skills-category" data-aos-delay="350">
-              <h3>DevOps & Cloud</h3>
-              <div class="skills-grid">
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-terminal"></i></div>
-                  <span>System Administration</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fab fa-docker"></i></div>
-                  <span>Docker</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fab fa-aws"></i></div>
-                  <span>AWS</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fab fa-microsoft"></i></div>
-                  <span>Azure</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fab fa-github"></i></div>
-                  <span>GitHub Actions</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-laptop-code"></i></div>
-                  <span>Customization & Optimization</span>
-                </div>
-              </div>
-            </div>
+        // Add active class to nav links on scroll
+        const sections = document.querySelectorAll('section');
+        const navLi = document.querySelectorAll('.nav-links li a');
 
-            <div class="skills-category" data-aos-delay="400">
-              <h3>Web Technologies</h3>
-              <div class="skills-grid">
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fab fa-js"></i></div>
-                  <span>TypeScript</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fab fa-react"></i></div>
-                  <span>React.js</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-layer-group"></i></div>
-                  <span>Next.js</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fab fa-node-js"></i></div>
-                  <span>Node.js</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fab fa-css3"></i></div>
-                  <span>TailwindCSS</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-database"></i></div>
-                  <span>REST APIs</span>
-                </div>
-              </div>
-            </div>
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
 
-            <div class="skills-category" data-aos-delay="450">
-              <h3>AI & Data Science</h3>
-              <div class="skills-grid">
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-brain"></i></div>
-                  <span>PyTorch</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-chart-line"></i></div>
-                  <span>Pandas</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-rocket"></i></div>
-                  <span>FastAPI</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-robot"></i></div>
-                  <span>Machine Learning</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-chart-bar"></i></div>
-                  <span>Data Analysis</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="skills-category" data-aos-delay="500">
-              <h3>Databases</h3>
-              <div class="skills-grid">
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-database"></i></div>
-                  <span>PostgreSQL</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-leaf"></i></div>
-                  <span>MongoDB</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-database"></i></div>
-                  <span>SQL</span>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-icon"><i class="fas fa-server"></i></div>
-                  <span>Database Design</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="languages-section" data-aos-delay="550">
-            <h3>Languages</h3>
-            <div class="language-skills">
-              <div class="language">
-                <div class="language-flag">EN</div>
-                <span class="language-name">English</span>
-                <span class="language-level">Fluent</span>
-                <div class="language-bar">
-                  <div class="language-progress" style="width: 100%"></div>
-                </div>
-              </div>
-              <div class="language">
-                <div class="language-flag">HI</div>
-                <span class="language-name">Hindi</span>
-                <span class="language-level">Fluent</span>
-                <div class="language-bar">
-                  <div class="language-progress" style="width: 100%"></div>
-                </div>
-              </div>
-              <div class="language">
-                <div class="language-flag">JA</div>
-                <span class="language-name">Japanese</span>
-                <span class="language-level">N5 – Beginner</span>
-                <div class="language-bar">
-                  <div class="language-progress" style="width: 30%"></div>
-                </div>
-              </div>
-              <!-- <div class="language">
-                <div class="language-flag">BN</div>
-                <span class="language-name">Bengali</span>
-                <span class="language-level">Conversational</span>
-                <div class="language-bar">
-                  <div class="language-progress" style="width: 70%"></div> -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Leadership & Activities -->
-      <section id="activities" class="activities">
-        <div class="container">
-          <h2 class="section-title">Leadership & Activities</h2>
-          <div class="section-subtitle" data-aos-delay="100">Extra-Curricular Involvement</div>
-          
-          <div class="activities-grid" data-aos-delay="200">
-            <div class="activity-card">
-              <div class="activity-icon"><i class="fas fa-shield-alt"></i></div>
-              <h3>Password x CTF Hackathon</h3>
-              <div class="activity-date"><i class="far fa-calendar-alt"></i> February 2024</div>
-              <p>
-                Evaluated system vulnerabilities and executed penetration
-                testing for cybersecurity challenges. Explored Linux security,
-                ethical hacking, and secure coding practices.
-              </p>
-            </div>
-            <div class="activity-card">
-              <div class="activity-icon"><i class="fas fa-laptop-code"></i></div>
-              <h3>Cyber-0-day-3.0</h3>
-              <div class="activity-date"><i class="far fa-calendar-alt"></i> November 2024</div>
-              <p>
-                Participated in 5+ campus hackathons, mentoring and organizing
-                for 400+ peers in CTF and cybersecurity events.
-              </p>
-            </div>
-            <div class="activity-card">
-              <div class="activity-icon"><i class="fas fa-code"></i></div>
-              <h3>VITISH Internal Hackathon for SIH 2024</h3>
-              <div class="activity-date"><i class="far fa-calendar-alt"></i> September 2024</div>
-              <p>
-                Engineered an ML-based healthcare project, ranking in the top
-                126 out of 600+ teams.
-              </p>
-            </div>
-            <div class="activity-card">
-              <div class="activity-icon"><i class="fas fa-mobile-alt"></i></div>
-              <h3>Hack-n-Droid Hackathon 2025 – Finalist</h3>
-              <div class="activity-date"><i class="far fa-calendar-alt"></i> February 2025</div>
-              <p>
-                Developed a full-stack AI solution, securing 35th place among
-                300+ teams.
-              </p>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Floating Bubble Effects -->
-        <div class="bubble-container">
-          <div class="chaos-bubble bubble-1"></div>
-          <div class="chaos-bubble bubble-2"></div>
-          <div class="chaos-bubble bubble-3"></div>
-          <div class="chaos-bubble bubble-4"></div>
-          <div class="chaos-bubble bubble-5"></div>
-          <div class="chaos-bubble bubble-6"></div>
-          <div class="explode-circle explode-1"></div>
-          <div class="explode-circle explode-2"></div>
-          <div class="explode-circle explode-3"></div>
-        </div>
-      </section>
-
-      <!-- Contact Section -->
-      <section id="contact" class="contact">
-        <div class="container">
-          <h2 class="section-title">Get In Touch</h2>
-          <div class="section-subtitle" data-aos-delay="100">Let's Connect</div>
-          
-          <div class="contact-content" data-aos-delay="200">
-            <div class="contact-info">
-              <div class="contact-item">
-                <div class="contact-icon">
-                  <i class="fas fa-envelope"></i>
-                </div>
-                <div class="contact-text">
-                  <h3>Email</h3>
-                  <a href="mailto:abeergupta555@gmail.com">abeergupta555@gmail.com</a>
-                </div>
-              </div>
-              <div class="contact-item">
-                <div class="contact-icon">
-                  <i class="fab fa-github"></i>
-                </div>
-                <div class="contact-text">
-                  <h3>GitHub</h3>
-                  <a href="https://github.com/abeer555/" target="_blank" rel="noopener noreferrer">github.com/abeer555</a>
-                </div>
-              </div>
-              <div class="contact-item">
-                <div class="contact-icon">
-                  <i class="fab fa-linkedin"></i>
-                </div>
-                <div class="contact-text">
-                  <h3>LinkedIn</h3>
-                  <a href="https://www.linkedin.com/in/abeer-gupta/" target="_blank" rel="noopener noreferrer">linkedin.com/in/abeer-gupta</a>
-                </div>
-              </div>
-            </div>
-            <div class="contact-form">
-              <form action="https://formspree.io/f/mzzykapj" method="POST">
-                <div class="form-group">
-                  <label for="name">Your Name</label>
-                  <input type="text" id="name" name="name" required />
-                </div>
-                <div class="form-group">
-                  <label for="email">Your Email</label>
-                  <input type="email" id="email" name="email" required />
-                </div>
-                <div class="form-group">
-                  <label for="message">Your Message</label>
-                  <textarea id="message" name="message" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn primary-btn">Send Message <i class="fas fa-paper-plane"></i></button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Back to top button -->
-    <button id="back-to-top" aria-label="Back to top">
-      <i class="fas fa-arrow-up"></i>
-    </button>
-    <!-- DORKSENSE CHAOS SCRIPTS -->
-    <script src="script.js"></script>
-  </body>
+            navLi.forEach(a => {
+                a.style.color = 'var(--cyber-cyan)';
+                if (a.getAttribute('href').includes(current)) {
+                    a.style.color = 'var(--neon-green)';
+                }
+            });
+        });
+    </script>
+</body>
 </html>
