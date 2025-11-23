@@ -129,6 +129,8 @@
             border: 2px solid var(--neon-green);
             margin-bottom: 20px;
             position: relative;
+            border-radius: 50%; /* Make container round */
+            box-shadow: 0 0 15px var(--neon-green);
         }
 
         .profile-pic {
@@ -137,10 +139,17 @@
             object-fit: cover;
             filter: grayscale(100%) contrast(120%);
             transition: 0.3s;
+            border-radius: 50%; /* Ensure image is round */
+            animation: spin 20s linear infinite; /* Rotate clockwise */
         }
 
         .profile-pic-container:hover .profile-pic {
             filter: grayscale(0%) contrast(100%);
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .glitch-text {
@@ -323,12 +332,15 @@
             border: 1px solid var(--dim-gray);
             transition: 0.3s;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .window-card:hover {
             border-color: var(--neon-green);
             transform: translateY(-5px);
             box-shadow: 5px 5px 0px var(--dim-gray);
+            z-index: 10;
         }
 
         .window-header {
@@ -340,6 +352,22 @@
             align-items: center;
             font-size: 0.8rem;
             color: var(--dim-gray);
+            flex-shrink: 0;
+        }
+
+        .project-preview {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--dim-gray);
+            filter: grayscale(100%) sepia(20%) hue-rotate(90deg); /* Matrix greenish tint */
+            transition: 0.4s;
+            opacity: 0.8;
+        }
+
+        .window-card:hover .project-preview {
+            filter: none;
+            opacity: 1;
         }
 
         .window-buttons span {
@@ -454,7 +482,7 @@
             <div>
                 <div class="profile-pic-container">
                     <!-- USING PROVIDED IMAGE -->
-                    <img src="photo2.jpg" alt="Abeer Gupta" class="profile-pic" onerror="this.src='https://ui-avatars.com/api/?name=Abeer+Gupta&background=000&color=00ff41&size=256'">
+                    <img src="abeerface-round.png" alt="Abeer Gupta" class="profile-pic">
                 </div>
                 
                 <h1 class="glitch-text" data-text="ABEER GUPTA">ABEER GUPTA</h1>
@@ -500,14 +528,13 @@
 /_-''    ''-_\\
                     </div>
                     <div class="sys-info">
-                        <div><span class="sys-key">User:</span> AbeerGupta@vit-chennai</div>
+                        <div><span class="sys-key">User:</span> abeerg@vit-chennai</div>
                         <div><span class="sys-key">Education:</span> VIT Chennai (CSE) + IIT Madras (Data Science)</div>
                         <div><span class="sys-key">CGPA:</span> 8.84 (VIT)</div>
                         <div><span class="sys-key">OS:</span> Arch Linux (Hyprland)</div>
                         <div><span class="sys-key">Languages:</span> English (Fluent), Hindi (Fluent), Japanese (N5)</div>
                         <br>
-                        <!-- <br> -->
-                        <div><span class="sys-key">Description:</span>
+                        <div><span class="sys-key">Description:</span><br>
                         <span style="color: #ccc;">
                         Passionate programmer specializing in Linux systems, Docker, and competitive programming. 
                         Thriving at the intersection of System Engineering, Cybersecurity, and Full-Stack Development.
@@ -566,6 +593,7 @@
                             <span>rag_system.py</span>
                             <div class="window-buttons"><span class="btn-min"></span><span class="btn-max"></span><span class="btn-close"></span></div>
                         </div>
+                        <img src="Hackrx-project.png" alt="RAG System" class="project-preview">
                         <div class="window-content">
                             <h3 style="color: var(--neon-green)">Bajaj HackRx RAG System</h3>
                             <p class="dim" style="font-size: 0.9rem; margin: 10px 0;">Ranked 55/1000+ Teams. An end-to-end Retrieval-Augmented Generation system. Converts dense PDFs/DOCs into multilingual natural-language Q&A.</p>
@@ -584,6 +612,7 @@
                             <span>hyprland.conf</span>
                             <div class="window-buttons"><span class="btn-min"></span><span class="btn-max"></span><span class="btn-close"></span></div>
                         </div>
+                        <img src="hyprland_image.png" alt="Hyprland Config" class="project-preview">
                         <div class="window-content">
                             <h3 style="color: var(--cyber-cyan)">Hyprland-Dots</h3>
                             <p class="dim" style="font-size: 0.9rem; margin: 10px 0;">Custom Arch Linux configuration. Optimized performance (25% faster) for 3+ personal systems. Minimalist, keyboard-driven UI.</p>
@@ -602,6 +631,7 @@
                             <span>server.c</span>
                             <div class="window-buttons"><span class="btn-min"></span><span class="btn-max"></span><span class="btn-close"></span></div>
                         </div>
+                        <img src="server.png" alt="Secure File Server" class="project-preview">
                         <div class="window-content">
                             <h3 style="color: var(--alert-red)">Secure File Server</h3>
                             <p class="dim" style="font-size: 0.9rem; margin: 10px 0;">Multi-threaded HTTP server with OpenSSL AES-256-CBC encryption. Reduced processing times by 25% for 10GB+ files.</p>
@@ -620,6 +650,7 @@
                             <span>exploit.sh</span>
                             <div class="window-buttons"><span class="btn-min"></span><span class="btn-max"></span><span class="btn-close"></span></div>
                         </div>
+                        <img src="pentest-project.png" alt="Pentest Toolkit" class="project-preview">
                         <div class="window-content">
                             <h3 style="color: var(--warn-yellow)">Web Pentest Toolkit</h3>
                             <p class="dim" style="font-size: 0.9rem; margin: 10px 0;">Comprehensive collection of scripts and configurations for vulnerability assessment and penetration testing.</p>
