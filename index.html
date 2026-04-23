@@ -459,6 +459,64 @@
             font-size: 0.8rem;
         }
 
+        /* --- PROJECT ACCENT BORDERS --- */
+        .window.accent-cyan   { border-top: 2px solid var(--neon-cyan); }
+        .window.accent-pink   { border-top: 2px solid var(--neon-pink); }
+        .window.accent-yellow { border-top: 2px solid var(--neon-yellow); }
+        .window.accent-green  { border-top: 2px solid var(--neon-green); }
+
+        /* --- LIVE STATUS DOT --- */
+        .live-dot {
+            display: inline-block;
+            width: 7px; height: 7px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            box-shadow: 0 0 6px var(--neon-green);
+            margin-right: 6px;
+            animation: livepulse 1.8s ease-in-out infinite;
+            vertical-align: middle;
+        }
+        @keyframes livepulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--neon-green); }
+            50%       { opacity: 0.3; box-shadow: none; }
+        }
+
+        /* --- TERMINAL BLOCK (skills subsections) --- */
+        .t-block { background: #080808; border: 1px solid var(--border-color); margin-top: 20px; overflow: hidden; }
+        .t-block-header {
+            background: #0f0f0f;
+            border-bottom: 1px solid var(--border-color);
+            padding: 7px 14px;
+            font-size: 0.75rem;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+        }
+        .t-block-header span { color: var(--neon-green); }
+        .t-block-body { padding: 15px; }
+
+        /* --- HEX DUMP CATEGORY COLORS --- */
+        .hex-data.lang   { color: var(--neon-green); }
+        .hex-data.web    { color: var(--neon-cyan); }
+        .hex-data.ai     { color: var(--neon-pink); }
+        .hex-data.cloud  { color: var(--neon-yellow); }
+        .hex-data.devops { color: #aaa; }
+        .hex-data.sec    { color: var(--neon-pink); }
+        .hex-data.misc   { color: #666; }
+
+        /* --- CERT / CTF ITEMS --- */
+        .t-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #1a1a1a;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .t-item:last-child { border-bottom: none; }
+        .t-item-prefix { color: var(--neon-green); flex-shrink: 0; }
+
     </style>
 </head>
 <body>
@@ -482,9 +540,9 @@
                     </div>
                     <h1 class="glitch-header">ABEER GUPTA</h1>
                     <div class="roles">
-                        // CYBERSECURITY<br>
-                        // LINUX_ENTHUSIAST<br>
-                        // FULL_STACK_DEV
+                        // AI_ENGINEER<br>
+                        // CLOUD_NATIVE_DEV<br>
+                        // LINUX_NERD
                     </div>
                 </div>
 
@@ -499,12 +557,14 @@
 
             <div class="bottom-section">
                 <div style="font-size: 0.7rem; color: #444; text-align: center; margin-bottom: 10px;">
-                    UPTIME: 21Y 4M 12D<br>
-                    KERNEL: 6.8.9-arch1-1
+                    UPTIME: 21Y 4M 23D<br>
+                    KERNEL: 6.19.12-arch1-1
                 </div>
                 <div class="social-bar">
                     <a href="https://github.com/abeer555" target="_blank"><i class="fab fa-github"></i></a>
                     <a href="https://linkedin.com/in/abeer-gupta" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://tryhackme.com/p/hakenkreuz0" target="_blank"><i class="fas fa-skull-crossbones"></i></a>
+                    <a href="https://abeer.is-a.dev" target="_blank"><i class="fas fa-globe"></i></a>
                     <a href="mailto:abeergupta555@gmail.com"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
@@ -528,17 +588,18 @@
                     </div>
                     <div class="sys-info">
                         <div><span class="sys-key">User:</span><span class="sys-val">abeer@vit-chennai</span></div>
-                        <div><span class="sys-key">Uptime:</span><span class="sys-val">24/7 Cybersecurity Grinding</span></div>
-                        <div><span class="sys-key">Packages:</span><span class="sys-val">1337 (pacman), 42 (flatpak)</span></div>
-                        <div><span class="sys-key">Education:</span><span class="sys-val">VIT Chennai (CSE - 8.84 CGPA) + IIT Madras (Data Science)</span></div>
-                        <div><span class="sys-key">Shell:</span><span class="sys-val">zsh 5.9</span></div>
+                        <div><span class="sys-key">OS:</span><span class="sys-val">Arch Linux x86_64 (btw)</span></div>
+                        <div><span class="sys-key">Kernel:</span><span class="sys-val">6.19.12-arch1-1</span></div>
+                        <div><span class="sys-key">Shell:</span><span class="sys-val">fish</span></div>
+                        <div><span class="sys-key">Education:</span><span class="sys-val">VIT Chennai (CSE) + IIT Madras (BS Data Science)</span></div>
+                        <div><span class="sys-key">Location:</span><span class="sys-val">Greater Noida, Uttar Pradesh</span></div>
                         <div><span class="sys-key">Languages:</span><span class="sys-val">English, Hindi, Japanese (N5)</span></div>
                         <br>
                         <div style="color: #bbb; line-height: 1.6;">
                             <span class="sys-key">Bio:</span>
-                            Passionate programmer specializing in Linux systems, Docker, and competitive programming. 
-                            Thriving at the intersection of System Engineering, Cybersecurity, and Full-Stack Development.
-                            I don't just use software; I configure, break, and rebuild it.
+                            CS undergrad building real software — AI pipelines, cloud backends, production sites for actual clients.
+                            Also the kind of person who has spent way too many hours tuning a Linux desktop config.
+                            I like things that run clean and ship to prod.
                         </div>
                     </div>
                 </div>
@@ -556,34 +617,21 @@
                             <h4>@ C9Labs, Indore</h4>
                         </div>
                         <ul class="log-content">
-                            <li>Executed vulnerability assessments and defensive strategies.</li>
-                            <li>Completed 88+ hands-on modules: Linux, Cryptography, Wireshark, Nmap.</li>
-                            <li>Achieved Top 6% performer status on TryHackMe.</li>
+                            <li>Wrote Python and Bash scripts to automate security testing. Fixes went into CI/CD pipelines and Docker builds, not just a report that sits in someone's Drive.</li>
+                            <li>Went through a serious training program — Linux and Windows hardening, network security, offensive fundamentals. Also built incident response simulations to make drills feel real.</li>
                         </ul>
                     </div>
 
                     <div class="log-entry">
-                        <div class="log-time">Sep 2024 - PRESENT</div>
+                        <div class="log-time"><span class="live-dot"></span>Sep 2024 - PRESENT</div>
                         <div class="log-header">
-                            <h3>Linux Club Tech Member</h3>
-                            <h4>@ VIT Chennai</h4>
+                            <h3>Technical Team Member</h3>
+                            <h4>@ Linux Club, VIT Chennai</h4>
                         </div>
                         <ul class="log-content">
-                            <li>Configured/Optimized 20+ Linux desktops for resiliency.</li>
-                            <li>Designed 10+ CTF events; mentored peers in system security.</li>
-                        </ul>
-                    </div>
-
-                    <div class="log-entry">
-                        <div class="log-time">Aug 2024 - PRESENT</div>
-                        <div class="log-header">
-                            <h3>Competitive Programmer</h3>
-                            <h4>@ CodeChef College Chapter</h4>
-                        </div>
-                        <ul class="log-content">
-                            <li>Mentored 15+ students in DSA and Algorithms.</li>
-                            <li>Managed 100+ participants in coding events.</li>
-                            <li>Top 10% rankings in 3 international contests.</li>
+                            <li>Keep the club's Linux desktops running. Wrote setup scripts so it's not a manual process every time someone needs a new machine.</li>
+                            <li>Run CTF workshops on pentesting, cryptography, and scripting. Some of the people I showed the ropes to now compete at other colleges.</li>
+                            <li>Help plan semester events with the rest of the tech team — mostly logistics and making sure things actually happen on time.</li>
                         </ul>
                     </div>
 
@@ -595,8 +643,116 @@
                 <h2 class="section-title">EXECUTABLES <span>ls -la ~/projects/</span></h2>
                 <div class="project-grid">
 
-                    <!-- RAG -->
-                    <div class="window">
+                    <!-- LUXURY TAJ TOUR -->
+                    <div class="window accent-cyan">
+                        <div class="title-bar">
+                            <span>luxury_taj_tour/</span>
+                            <div class="controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                        </div>
+                        <div class="window-body">
+                            <img src="luxurytajtour.png" class="project-img" alt="Luxury Taj Tour">
+                            <div class="project-details">
+                                <div class="project-title">Luxury Taj Tour</div>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Next.js</span>
+                                    <span class="tech-badge">React</span>
+                                    <span class="tech-badge">GSAP</span>
+                                    <span class="tech-badge">PWA</span>
+                                    <span class="tech-badge">Vercel</span>
+                                </div>
+                                <div class="project-desc">
+                                    Built for a real client. Travel platform with smooth scroll animations, offline support as a PWA, and fast load times. Learned the difference between building for yourself and building for someone who's paying.
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://luxurytajtour.com" target="_blank">./live_demo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EDUMORPH AI -->
+                    <div class="window accent-pink">
+                        <div class="title-bar">
+                            <span>edumorph_ai.py</span>
+                            <div class="controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                        </div>
+                        <div class="window-body">
+                            <img src="edumorph.png" class="project-img" alt="EduMorph AI">
+                            <div class="project-details">
+                                <div class="project-title">EduMorph AI</div>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">FastAPI</span>
+                                    <span class="tech-badge">AWS Textract</span>
+                                    <span class="tech-badge">Gemini 2.5</span>
+                                    <span class="tech-badge">ChromaDB</span>
+                                    <span class="tech-badge">RAG</span>
+                                </div>
+                                <div class="project-desc">
+                                    Hackathon project. Takes a PDF and turns it into something you can actually learn from — extracts the text, generates audio, lets you ask questions through a RAG pipeline. Got to AWSImpact Finalist at IIT Bombay.
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" target="_blank">./view_source</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PRIVATE CHAT APP -->
+                    <div class="window accent-green">
+                        <div class="title-bar">
+                            <span>chat_server.js</span>
+                            <div class="controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                        </div>
+                        <div class="window-body">
+                            <img src="chat.png" class="project-img" alt="Private Chat App">
+                            <div class="project-details">
+                                <div class="project-title">Private Chat App</div>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Node.js</span>
+                                    <span class="tech-badge">HTTP/3</span>
+                                    <span class="tech-badge">AWS S3</span>
+                                    <span class="tech-badge">Cloudflare CDN</span>
+                                    <span class="tech-badge">Render</span>
+                                </div>
+                                <div class="project-desc">
+                                    Real-time chat over HTTP/3. Set up the whole stack myself — Cloudflare, S3, DNS, deployment. Wanted to understand what production infrastructure actually looks like from scratch.
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://abeer.codes" target="_blank">./live_demo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI EMAIL PIPELINE -->
+                    <div class="window accent-yellow">
+                        <div class="title-bar">
+                            <span>email_pipeline.sh</span>
+                            <div class="controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                        </div>
+                        <div class="window-body">
+                            <img src="ai-email.png" class="project-img" alt="Email Pipeline">
+                            <div class="project-details">
+                                <div class="project-title">AI Email Automation Pipeline</div>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">n8n</span>
+                                    <span class="tech-badge">Docker</span>
+                                    <span class="tech-badge">AWS EC2</span>
+                                    <span class="tech-badge">Gmail API</span>
+                                    <span class="tech-badge">Telegram API</span>
+                                </div>
+                                <div class="project-desc">
+                                    Got tired of checking email manually. Built a pipeline on EC2 that reads Gmail, classifies everything with an LLM, and sends me a Telegram summary. No subscriptions, no SaaS, just a Docker container doing its thing.
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" target="_blank">./view_source</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RAG SYSTEM -->
+                    <div class="window accent-pink">
                         <div class="title-bar">
                             <span>rag_system.py</span>
                             <div class="controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
@@ -604,14 +760,16 @@
                         <div class="window-body">
                             <img src="Hackrx-project.png" class="project-img" alt="RAG">
                             <div class="project-details">
-                                <div class="project-title">Bajaj HackRx RAG System</div>
+                                <div class="project-title">RAG Document Intelligence</div>
                                 <div class="tech-stack">
                                     <span class="tech-badge">Python</span>
-                                    <span class="tech-badge">LLM</span>
+                                    <span class="tech-badge">FastAPI</span>
+                                    <span class="tech-badge">Vector DB</span>
+                                    <span class="tech-badge">Docker</span>
                                     <span class="tech-badge">OCR</span>
                                 </div>
                                 <div class="project-desc">
-                                    Ranked 55/1000+ Teams. An end-to-end Retrieval-Augmented Generation system. Converts dense PDFs/DOCs into multilingual natural-language Q&A.
+                                    Document Q&A system — upload a PDF, ask questions, get answers with the relevant context pulled from the doc. Built it for a hackathon, ended up placing well at Bajaj Finserv.
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/vansh-9878/RAG" target="_blank">./view_source</a>
@@ -621,7 +779,7 @@
                     </div>
 
                     <!-- HYPRLAND -->
-                    <div class="window">
+                    <div class="window accent-green">
                         <div class="title-bar">
                             <span>hyprland.conf</span>
                             <div class="controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
@@ -629,67 +787,19 @@
                         <div class="window-body">
                             <img src="hyprland_image.png" class="project-img" alt="Hyprland">
                             <div class="project-details">
-                                <div class="project-title">Hyprland Dots</div>
+                                <div class="project-title">Hyprland Dotfiles</div>
                                 <div class="tech-stack">
-                                    <span class="tech-badge">Arch</span>
-                                    <span class="tech-badge">Lua</span>
                                     <span class="tech-badge">Bash</span>
+                                    <span class="tech-badge">GLSL</span>
+                                    <span class="tech-badge">C</span>
+                                    <span class="tech-badge">Hyprland</span>
+                                    <span class="tech-badge">Wayland</span>
                                 </div>
                                 <div class="project-desc">
-                                    Custom Arch Linux configuration. Optimized performance (25% faster) for 3+ personal systems. Minimalist, keyboard-driven UI.
+                                    My Linux setup, version controlled. GLSL shaders, automated workspace startup, clipboard sharing across contexts. Scripted the install so replicating it on a new machine doesn't take an afternoon.
                                 </div>
                                 <div class="project-links">
                                     <a href="https://github.com/abeer555/Hyprland-Dots" target="_blank">./view_source</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SECURE SERVER -->
-                    <div class="window">
-                        <div class="title-bar">
-                            <span>server.cpp</span>
-                            <div class="controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
-                        </div>
-                        <div class="window-body">
-                            <img src="server.png" class="project-img" alt="Server">
-                            <div class="project-details">
-                                <div class="project-title">Secure File Server</div>
-                                <div class="tech-stack">
-                                    <span class="tech-badge">C++</span>
-                                    <span class="tech-badge">OpenSSL</span>
-                                    <span class="tech-badge">AES-256</span>
-                                </div>
-                                <div class="project-desc">
-                                    Multi-threaded HTTP server with OpenSSL AES-256-CBC encryption. Reduced processing times by 25% for 10GB+ files.
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/abeer555/Secure-File-Server.git" target="_blank">./view_source</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PENTEST TOOLKIT -->
-                    <div class="window">
-                        <div class="title-bar">
-                            <span>exploit.sh</span>
-                            <div class="controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
-                        </div>
-                        <div class="window-body">
-                            <img src="pentest-project.png" class="project-img" alt="Pentest">
-                            <div class="project-details">
-                                <div class="project-title">Web Pentest Toolkit</div>
-                                <div class="tech-stack">
-                                    <span class="tech-badge">Python</span>
-                                    <span class="tech-badge">Bash</span>
-                                    <span class="tech-badge">Security</span>
-                                </div>
-                                <div class="project-desc">
-                                    Comprehensive collection of scripts and configurations for vulnerability assessment and penetration testing.
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/abeer555/Web-Pentest-Toolkit.git" target="_blank">./view_source</a>
                                 </div>
                             </div>
                         </div>
@@ -702,34 +812,74 @@
             <section id="skills">
                 <h2 class="section-title">MEMORY_DUMP <span>hexdump -C /bin/skills</span></h2>
                 <div class="hex-dump">
-                    <div class="hex-row"><span class="hex-addr">00000000</span> <span class="hex-data">Python C++ Java Linux Bash SQL</span></div>
-                    <div class="hex-row"><span class="hex-addr">00000010</span> <span class="hex-data">React Node Docker AWS PostgreSQL</span></div>
-                    <div class="hex-row"><span class="hex-addr">00000020</span> <span class="hex-data">PenTest VulnAssess PyTorch MongoDB</span></div>
-                    <div class="hex-row"><span class="hex-addr">00000030</span> <span class="hex-data">Wireshark Nmap BurpSuite Git</span></div>
+                    <div class="hex-row"><span class="hex-addr">00000000</span> <span class="hex-data lang">Python  JS  Node.js  Bash  SQL  C/C++</span></div>
+                    <div class="hex-row"><span class="hex-addr">00000010</span> <span class="hex-data web">FastAPI  Next.js  React  Tailwind  Docker</span></div>
+                    <div class="hex-row"><span class="hex-addr">00000020</span> <span class="hex-data ai">LLMs  RAG  ChromaDB  Embeddings  Gemini  OpenAI</span></div>
+                    <div class="hex-row"><span class="hex-addr">00000030</span> <span class="hex-data cloud">AWS  Azure  Vercel  Cloudflare  Render</span></div>
+                    <div class="hex-row"><span class="hex-addr">00000040</span> <span class="hex-data devops">GitHub Actions  CI/CD  Ansible  Grafana  Prometheus</span></div>
+                    <div class="hex-row"><span class="hex-addr">00000050</span> <span class="hex-data sec">Nmap  Burp Suite  Wireshark  Pentest  CTF</span></div>
+                    <div class="hex-row"><span class="hex-addr">00000060</span> <span class="hex-data misc">MySQL  PostgreSQL  MongoDB  n8n  Postman  Git</span></div>
                 </div>
 
-                <div style="margin-top: 30px;">
-                    <h3 style="color: var(--neon-yellow); margin-bottom: 15px; font-family: var(--font-display);">>> CERTIFICATES</h3>
-                    <div style="display: grid; gap: 10px;">
-                        <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-YDK3OUKCDC.pdf" class="nav-link" style="border: 1px solid #333;">[PDF] TryHackMe: Pre-Security</a>
-                        <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-GYTHCWS1S0.pdf" class="nav-link" style="border: 1px solid #333;">[PDF] TryHackMe: Cyber Security 101</a>
-                        <a href="https://www.credly.com/badges/aac01b04-c768-442b-a321-ab1d17e61dbe" class="nav-link" style="border: 1px solid #333;">[LINK] AWS Educate: Cloud 101</a>
+                <div class="t-block">
+                    <div class="t-block-header">root@abeer:~# <span>cat certs.log</span></div>
+                    <div class="t-block-body">
+                        <div class="t-item">
+                            <span class="t-item-prefix">[PDF]</span>
+                            <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-YDK3OUKCDC.pdf" target="_blank" style="color: var(--neon-cyan); text-decoration: none;">TryHackMe: Pre-Security</a>
+                        </div>
+                        <div class="t-item">
+                            <span class="t-item-prefix">[PDF]</span>
+                            <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-GYTHCWS1S0.pdf" target="_blank" style="color: var(--neon-cyan); text-decoration: none;">TryHackMe: Cyber Security 101</a>
+                        </div>
+                        <div class="t-item">
+                            <span class="t-item-prefix">[LINK]</span>
+                            <a href="https://www.credly.com/badges/aac01b04-c768-442b-a321-ab1d17e61dbe" target="_blank" style="color: var(--neon-cyan); text-decoration: none;">AWS Educate: Cloud 101</a>
+                        </div>
                     </div>
                 </div>
 
-                <div style="margin-top: 30px;">
-                     <h3 style="color: var(--neon-pink); margin-bottom: 15px; font-family: var(--font-display);">>> CTF_ACHIEVEMENTS</h3>
-                     <ul style="list-style: none; color: #aaa;">
-                        <li style="margin-bottom: 10px;"><span style="color: var(--neon-pink);">[FEB 2025]</span> Hack-n-Droid Finalist (35th/300+ Teams)</li>
-                        <li style="margin-bottom: 10px;"><span style="color: var(--neon-pink);">[NOV 2024]</span> Cyber-0-day-3.0 (Mentored 400+ Peers)</li>
-                        <li style="margin-bottom: 10px;"><span style="color: var(--neon-pink);">[FEB 2024]</span> Password x CTF (Evaluated Vulnerabilities)</li>
-                     </ul>
+                <div class="t-block">
+                    <div class="t-block-header">root@abeer:~# <span>cat ctf.log</span></div>
+                    <div class="t-block-body">
+                        <div class="t-item">
+                            <span class="t-item-prefix" style="color: var(--neon-pink);">FEB 2025</span>
+                            Hack-n-Droid — Finalist, 35th place
+                        </div>
+                        <div class="t-item">
+                            <span class="t-item-prefix" style="color: var(--neon-pink);">NOV 2024</span>
+                            Cyber-0-day-3.0 — ran workshops, mentored participants
+                        </div>
+                        <div class="t-item">
+                            <span class="t-item-prefix" style="color: var(--neon-pink);">FEB 2024</span>
+                            Password x CTF — vulnerability analysis track
+                        </div>
+                    </div>
+                </div>
+
+                <div class="t-block">
+                    <div class="t-block-header">root@abeer:~# <span>cat misc.log</span></div>
+                    <div class="t-block-body">
+                        <div class="t-item">
+                            <span class="t-item-prefix" style="color: var(--neon-cyan);">2025</span>
+                            Co-authored a chapter on CRM software in <em>Software Solutions in Business Management</em>
+                        </div>
+                        <div class="t-item">
+                            <span class="t-item-prefix" style="color: var(--neon-cyan);">2025</span>
+                            Patent filed — Autonomous AI-IoT fire safety system with real-time smoke and heat analysis
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- CONTACT -->
             <section id="contact">
                 <h2 class="section-title">ROOT_SHELL <span>sudo ./contact_me.sh</span></h2>
+                <div style="margin-bottom: 20px; color: var(--text-dim); font-size: 0.9rem; line-height: 2; background: #080808; border: 1px solid var(--border-color); padding: 15px;">
+                    <div><span class="sys-key">$</span> echo $PHONE &nbsp;&nbsp;&nbsp;&nbsp; <span style="color: var(--text-main);">(+91) 9874445779</span></div>
+                    <div><span class="sys-key">$</span> echo $EMAIL &nbsp;&nbsp;&nbsp;&nbsp; <span style="color: var(--text-main);">abeergupta555@gmail.com</span></div>
+                    <div><span class="sys-key">$</span> echo $LOCATION &nbsp; <span style="color: var(--text-main);">Greater Noida, Uttar Pradesh, India</span></div>
+                </div>
                 <div class="terminal-form">
                     <form action="https://formspree.io/f/mzzykapj" method="POST">
                         <div class="cmd-line">
@@ -751,7 +901,7 @@
 
             <footer>
                 <p>UID: 1000 | GID: 1000 | PERMISSIONS: 777</p>
-                <p>&copy; 2025 Abeer Gupta. Built with Arch Linux (btw).</p>
+                <p>&copy; 2026 Abeer Gupta. Built with Arch Linux (btw).</p>
             </footer>
 
         </main>
