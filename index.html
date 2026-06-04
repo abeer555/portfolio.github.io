@@ -54,7 +54,7 @@
 
         body {
             background-color: var(--bg);
-            /* flat terminal grid — pure CSS, zero runtime cost */
+            /* flat terminal grid  -  pure CSS, zero runtime cost */
             background-image:
                 linear-gradient(var(--ink) 1px, transparent 1px),
                 linear-gradient(90deg, var(--ink) 1px, transparent 1px);
@@ -102,7 +102,7 @@
             border-bottom: var(--bw) solid var(--ink);
         }
 
-        /* --- BOOT LOADER (pure CSS 3D, self-dismissing — works without JS) --- */
+        /* --- BOOT LOADER (pure CSS 3D, self-dismissing  -  works without JS) --- */
         #loader {
             position: fixed; inset: 0;
             z-index: 3000;
@@ -183,7 +183,7 @@
             z-index: -1;
             pointer-events: none;
         }
-        #bg-3d canvas { width: 100%; height: 100%; display: block; opacity: 0.55; }
+        #bg-3d canvas { width: 100%; height: 100%; display: block; opacity: 0.72; }
 
         /* --- CUSTOM CURSOR (enabled by main.js on fine pointers only) --- */
         #cursor, #cursor-dot {
@@ -586,7 +586,7 @@
         .track.h-scroll { display: flex; align-items: stretch; padding: 4px 4px 10px; }
         .track.h-scroll .p-card { width: min(1080px, 88vw); flex-shrink: 0; }
 
-        /* sticky-pin for the horizontal gallery (set up by scrollfx.js on desktop) —
+        /* sticky-pin for the horizontal gallery (set up by scrollfx.js on desktop)  - 
            position:sticky is stable across browsers/zoom where GSAP pin (fixed) jitters */
         #projects.is-pinned .proj-pin { position: sticky; top: 20px; }
 
@@ -756,7 +756,7 @@
 </head>
 <body>
 
-    <!-- BOOT LOADER — pure CSS 3D cube, self-dismisses at ~1.3s even without JS -->
+    <!-- BOOT LOADER  -  pure CSS 3D cube, self-dismisses at ~1.3s even without JS -->
     <div id="loader" aria-hidden="true">
         <div class="cube-scene">
             <div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -825,7 +825,7 @@
                         <h1 class="hero-title">ABEER<br><span class="on-green">GUPTA</span></h1>
                         <p class="hero-tag">// AI pipelines &nbsp;// cloud backends &nbsp;// things that ship to prod</p>
                         <p class="hero-pitch">
-                            CS undergrad building real software — AI pipelines, cloud backends,
+                            CS undergrad building real software  -  AI pipelines, cloud backends,
                             production sites for actual clients. Also the kind of person who has
                             spent way too many hours tuning a Linux desktop config.
                         </p>
@@ -849,7 +849,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                     <div class="t-win gl-win" aria-hidden="true">
                         <div class="t-bar">
                             <span class="t-dots"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
-                            <span>hero.gl — webgl</span>
+                            <span>hero.gl  -  webgl</span>
                         </div>
                         <div class="gl-stage" id="hero-3d">
                             <!-- static fallback: paints instantly, replaced when WebGL hydrates -->
@@ -911,7 +911,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                         <div><span class="sys-key">Education:</span><span class="sys-val">B.Tech CSE @ VIT Chennai · BS Data Science @ IIT Madras (online)</span></div>
                         <div class="sys-bio">
                             <span class="sys-key">Bio:</span>
-                            CS undergrad building real software — AI pipelines, cloud backends, production sites for actual clients.
+                            CS undergrad building real software  -  AI pipelines, cloud backends, production sites for actual clients.
                             I like things that run clean and ship to prod.
                         </div>
                     </div>
@@ -933,7 +933,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                         <h4>@ C9Labs, Indore</h4>
                         <ul>
                             <li>Wrote Python and Bash scripts to automate security testing. Fixes went into CI/CD pipelines and Docker builds, not just a report that sits in someone's Drive.</li>
-                            <li>Went through a serious training program — Linux and Windows hardening, network security, offensive fundamentals. Also built incident response simulations to make drills feel real.</li>
+                            <li>Went through a serious training program  -  Linux and Windows hardening, network security, offensive fundamentals. Also built incident response simulations to make drills feel real.</li>
                         </ul>
                     </article>
 
@@ -944,7 +944,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                         <ul>
                             <li>Keep the club's Linux desktops running. Wrote setup scripts so it's not a manual process every time someone needs a new machine.</li>
                             <li>Run CTF workshops on pentesting, cryptography, and scripting. Some of the people I showed the ropes to now compete at other colleges.</li>
-                            <li>Help plan semester events with the rest of the tech team — mostly logistics and making sure things actually happen on time.</li>
+                            <li>Help plan semester events with the rest of the tech team  -  mostly logistics and making sure things actually happen on time.</li>
                         </ul>
                     </article>
 
@@ -980,7 +980,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                                     <span class="tech-badge">Python</span>
                                 </div>
                                 <p class="project-desc">
-                                    Does quantum actually help RAG? Built a reproducible benchmark to find out — quantum feature maps (angle/amplitude/IQP) on PennyLane + Qiskit against a classical MiniLM + Qdrant + T5 baseline, over a 50+ source agricultural corpus scraped with Crawl4AI. The comparison harness runs the whole thing end to end.
+                                    Does quantum actually help RAG? Built a reproducible benchmark to find out  -  quantum feature maps (angle/amplitude/IQP) on PennyLane + Qiskit against a classical MiniLM + Qdrant + T5 baseline, over a 50+ source agricultural corpus scraped with Crawl4AI. The comparison harness runs the whole thing end to end.
                                 </p>
                                 <div class="project-links">
                                     <a href="https://github.com/abeer555/Quantum-Rag-Benchmark-agri" target="_blank" rel="noopener">./view_source</a>
@@ -1030,7 +1030,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                                     <span class="tech-badge">Render</span>
                                 </div>
                                 <p class="project-desc">
-                                    Real-time chat over HTTP/3. Set up the whole stack myself — Cloudflare, S3, DNS, deployment. Wanted to understand what production infrastructure actually looks like from scratch.
+                                    Real-time chat over HTTP/3. Set up the whole stack myself  -  Cloudflare, S3, DNS, deployment. Wanted to understand what production infrastructure actually looks like from scratch.
                                 </p>
                                 <div class="project-links">
                                     <a href="https://abeer.codes" target="_blank" rel="noopener">./live_demo</a>
@@ -1077,7 +1077,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                                     <span class="tech-badge">OCR</span>
                                 </div>
                                 <p class="project-desc">
-                                    Document Q&amp;A system — upload a PDF, ask questions, get answers with the relevant context pulled from the doc. Built it for a hackathon, ended up placing well at Bajaj Finserv.
+                                    Document Q&amp;A system  -  upload a PDF, ask questions, get answers with the relevant context pulled from the doc. Built it for a hackathon, ended up placing well at Bajaj Finserv.
                                 </p>
                                 <div class="project-links">
                                     <a href="https://github.com/vansh-9878/RAG" target="_blank" rel="noopener">./view_source</a>
@@ -1103,7 +1103,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                                     <span class="tech-badge">Tailwind</span>
                                 </div>
                                 <p class="project-desc">
-                                    Blockchain traceability for agriculture — farm-to-consumer records nobody can quietly edit, Chainlink oracles, virtual IoT monitoring, ML for quality and fraud detection. Team project; my part was the Next.js 14 + TypeScript frontend with role-based dashboards for farmers, distributors, retailers, and consumers, plus the integrations.
+                                    Blockchain traceability for agriculture  -  farm-to-consumer records nobody can quietly edit, Chainlink oracles, virtual IoT monitoring, ML for quality and fraud detection. Team project; my part was the Next.js 14 + TypeScript frontend with role-based dashboards for farmers, distributors, retailers, and consumers, plus the integrations.
                                 </p>
                                 <div class="project-links">
                                     <a href="https://vericrop-frontend-vercel.vercel.app" target="_blank" rel="noopener">./live_demo</a>
@@ -1129,7 +1129,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                                     <span class="tech-badge">RAG</span>
                                 </div>
                                 <p class="project-desc">
-                                    Hackathon project. Takes a PDF and turns it into something you can actually learn from — extracts the text, generates audio, lets you ask questions through a RAG pipeline. Got to AWSImpact Finalist at IIT Bombay.
+                                    Hackathon project. Takes a PDF and turns it into something you can actually learn from  -  extracts the text, generates audio, lets you ask questions through a RAG pipeline. Got to AWSImpact Finalist at IIT Bombay.
                                 </p>
                                 <div class="project-links">
                                     <a href="https://aws-impact.vercel.app/dashboard" target="_blank" rel="noopener">./live_demo</a>
@@ -1230,7 +1230,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                 <div class="t-win t-block reveal">
                     <div class="t-bar green">
                         <span class="t-dots" aria-hidden="true"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
-                        <span>root@abeer:~# cat certs.log — CERTIFICATIONS</span>
+                        <span>root@abeer:~# cat certs.log  -  CERTIFICATIONS</span>
                     </div>
                     <div class="t-body">
                         <div class="t-item">
@@ -1251,20 +1251,20 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                 <div class="t-win t-block reveal">
                     <div class="t-bar">
                         <span class="t-dots" aria-hidden="true"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
-                        <span>root@abeer:~# cat ctf.log — CTF &amp; EVENTS</span>
+                        <span>root@abeer:~# cat ctf.log  -  CTF &amp; EVENTS</span>
                     </div>
                     <div class="t-body">
                         <div class="t-item">
                             <span class="t-item-prefix amber">FEB 2025</span>
-                            Hack-n-Droid — Finalist, 35th place
+                            Hack-n-Droid  -  Finalist, 35th place
                         </div>
                         <div class="t-item">
                             <span class="t-item-prefix amber">NOV 2024</span>
-                            Cyber-0-day-3.0 — ran workshops, mentored participants
+                            Cyber-0-day-3.0  -  ran workshops, mentored participants
                         </div>
                         <div class="t-item">
                             <span class="t-item-prefix amber">FEB 2024</span>
-                            Password x CTF — vulnerability analysis track
+                            Password x CTF  -  vulnerability analysis track
                         </div>
                     </div>
                 </div>
@@ -1272,7 +1272,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                 <div class="t-win t-block reveal">
                     <div class="t-bar green">
                         <span class="t-dots" aria-hidden="true"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
-                        <span>root@abeer:~# cat misc.log — PUBLICATIONS &amp; PATENTS</span>
+                        <span>root@abeer:~# cat misc.log  -  PUBLICATIONS &amp; PATENTS</span>
                     </div>
                     <div class="t-body">
                         <div class="t-item">
@@ -1281,7 +1281,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                         </div>
                         <div class="t-item">
                             <span class="t-item-prefix">2025</span>
-                            Patent filed — Autonomous AI-IoT fire safety system with real-time smoke and heat analysis
+                            Patent filed  -  Autonomous AI-IoT fire safety system with real-time smoke and heat analysis
                         </div>
                     </div>
                 </div>
