@@ -641,6 +641,7 @@
             color: var(--amber);
         }
 
+        .project-links { display: flex; flex-wrap: wrap; gap: 10px; }
         .project-links a {
             font-size: 0.8rem;
             font-weight: 800;
@@ -961,37 +962,6 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                 <div class="gallery" id="gallery">
                     <div class="track" id="track">
 
-                        <!-- VERICROP -->
-                        <article class="p-card reveal">
-                            <div class="t-bar">
-                                <span>vericrop.ts</span>
-                                <span class="t-dots" aria-hidden="true"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
-                            </div>
-                            <pre class="project-art" aria-hidden="true">
- ┌──┐    ┌──┐    ┌──┐
- │██├───▶│██├───▶│██│
- └──┘    └──┘    └──┘
- FARM ─▶ CHAIN ─▶ SHELF
-   [oracle: chainlink]</pre>
-                            <div class="project-details">
-                                <h3 class="project-title">VeriCrop</h3>
-                                <div class="tech-stack">
-                                    <span class="tech-badge">Next.js 14</span>
-                                    <span class="tech-badge">TypeScript</span>
-                                    <span class="tech-badge">Chainlink</span>
-                                    <span class="tech-badge">Web3.js</span>
-                                    <span class="tech-badge">ML</span>
-                                    <span class="tech-badge">Tailwind</span>
-                                </div>
-                                <p class="project-desc">
-                                    Blockchain traceability for agriculture — farm-to-consumer records nobody can quietly edit, Chainlink oracles, virtual IoT monitoring, ML for quality and fraud detection. Team project; my part was the Next.js 14 + TypeScript frontend with role-based dashboards for farmers, distributors, retailers, and consumers, plus the integrations.
-                                </p>
-                                <div class="project-links">
-                                    <a href="https://github.com/abeer555/VeriCrop-Frontend" target="_blank" rel="noopener">./view_source</a>
-                                </div>
-                            </div>
-                        </article>
-
                         <!-- QUANTUM RAG -->
                         <article class="p-card reveal">
                             <div class="t-bar">
@@ -1046,28 +1016,6 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                                 <div class="project-links">
                                     <a href="https://luxurytajtour.com" target="_blank" rel="noopener">./live_demo</a>
                                 </div>
-                            </div>
-                        </article>
-
-                        <!-- EDUMORPH AI -->
-                        <article class="p-card reveal">
-                            <div class="t-bar">
-                                <span>edumorph_ai.py</span>
-                                <span class="t-dots" aria-hidden="true"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
-                            </div>
-                            <img src="edumorph-960.webp" class="project-img" alt="EduMorph AI app screenshot" loading="lazy" width="420" height="160">
-                            <div class="project-details">
-                                <h3 class="project-title">EduMorph AI</h3>
-                                <div class="tech-stack">
-                                    <span class="tech-badge">FastAPI</span>
-                                    <span class="tech-badge">AWS Textract</span>
-                                    <span class="tech-badge">Gemini 2.5</span>
-                                    <span class="tech-badge">ChromaDB</span>
-                                    <span class="tech-badge">RAG</span>
-                                </div>
-                                <p class="project-desc">
-                                    Hackathon project. Takes a PDF and turns it into something you can actually learn from — extracts the text, generates audio, lets you ask questions through a RAG pipeline. Got to AWSImpact Finalist at IIT Bombay.
-                                </p>
                             </div>
                         </article>
 
@@ -1139,6 +1087,58 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                                 </p>
                                 <div class="project-links">
                                     <a href="https://github.com/vansh-9878/RAG" target="_blank" rel="noopener">./view_source</a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- VERICROP -->
+                        <article class="p-card reveal">
+                            <div class="t-bar">
+                                <span>vericrop.ts</span>
+                                <span class="t-dots" aria-hidden="true"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
+                            </div>
+                            <img src="vericrop-960.webp" class="project-img" alt="VeriCrop dashboard screenshot" loading="lazy" width="420" height="160">
+                            <div class="project-details">
+                                <h3 class="project-title">VeriCrop</h3>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Next.js 14</span>
+                                    <span class="tech-badge">TypeScript</span>
+                                    <span class="tech-badge">Chainlink</span>
+                                    <span class="tech-badge">Web3.js</span>
+                                    <span class="tech-badge">ML</span>
+                                    <span class="tech-badge">Tailwind</span>
+                                </div>
+                                <p class="project-desc">
+                                    Blockchain traceability for agriculture — farm-to-consumer records nobody can quietly edit, Chainlink oracles, virtual IoT monitoring, ML for quality and fraud detection. Team project; my part was the Next.js 14 + TypeScript frontend with role-based dashboards for farmers, distributors, retailers, and consumers, plus the integrations.
+                                </p>
+                                <div class="project-links">
+                                    <a href="https://vericrop-frontend-vercel.vercel.app" target="_blank" rel="noopener">./live_demo</a>
+                                    <a href="https://github.com/abeer555/VeriCrop-Frontend" target="_blank" rel="noopener">./view_source</a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- EDUMORPH AI / AWS IMPACT -->
+                        <article class="p-card reveal">
+                            <div class="t-bar">
+                                <span>edumorph_ai.py</span>
+                                <span class="t-dots" aria-hidden="true"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
+                            </div>
+                            <img src="aws-960.webp" class="project-img" alt="EduMorph AI dashboard screenshot" loading="lazy" width="420" height="160">
+                            <div class="project-details">
+                                <h3 class="project-title">EduMorph AI</h3>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">FastAPI</span>
+                                    <span class="tech-badge">AWS Textract</span>
+                                    <span class="tech-badge">Gemini 2.5</span>
+                                    <span class="tech-badge">ChromaDB</span>
+                                    <span class="tech-badge">RAG</span>
+                                </div>
+                                <p class="project-desc">
+                                    Hackathon project. Takes a PDF and turns it into something you can actually learn from — extracts the text, generates audio, lets you ask questions through a RAG pipeline. Got to AWSImpact Finalist at IIT Bombay.
+                                </p>
+                                <div class="project-links">
+                                    <a href="https://aws-impact.vercel.app/dashboard" target="_blank" rel="noopener">./live_demo</a>
                                 </div>
                             </div>
                         </article>
