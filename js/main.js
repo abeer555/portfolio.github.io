@@ -5,6 +5,57 @@
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobile = window.matchMedia('(max-width: 968px)').matches;
+const finePointer = window.matchMedia('(pointer: fine)').matches;
+
+/* ---------- boot loader cleanup (CSS dismisses it; JS just removes the node) ---------- */
+const loader = document.getElementById('loader');
+if (loader) {
+    if (reduceMotion) loader.remove();
+    else setTimeout(() => loader.remove(), 1700); // CSS hides it at ~1.6s
+}
+
+/* ---------- custom cursor (fine pointers only) ---------- */
+if (finePointer && !reduceMotion) {
+    const box = document.getElementById('cursor');
+    const dot = document.getElementById('cursor-dot');
+    if (box && dot) {
+        document.body.classList.add('custom-cursor');
+        let x = innerWidth / 2;
+        let y = innerHeight / 2;
+        let bx = x;
+        let by = y;
+        let scale = 1;
+        let hot = false;
+        let down = false;
+
+        const HOT_SELECTOR = 'a, button, .p-card, input, textarea, label';
+
+        document.addEventListener('pointermove', (e) => {
+            x = e.clientX;
+            y = e.clientY;
+            dot.style.transform = `translate(${x}px, ${y}px)`;
+            const overField = e.target.closest?.('input, textarea');
+            box.classList.toggle('off', !!overField); // native I-beam wins on form fields
+            dot.classList.toggle('off', !!overField);
+            hot = !overField && !!e.target.closest?.(HOT_SELECTOR);
+            box.classList.toggle('hot', hot);
+        }, { passive: true });
+
+        document.addEventListener('pointerdown', () => { down = true; });
+        document.addEventListener('pointerup', () => { down = false; });
+        document.addEventListener('pointerleave', () => { box.classList.add('off'); dot.classList.add('off'); });
+        document.addEventListener('pointerenter', () => { box.classList.remove('off'); dot.classList.remove('off'); });
+
+        (function cursorLoop() {
+            requestAnimationFrame(cursorLoop);
+            bx += (x - bx) * 0.22; // square trails the dot slightly
+            by += (y - by) * 0.22;
+            const target = down ? 0.75 : (hot ? 1.5 : 1);
+            scale += (target - scale) * 0.25;
+            box.style.transform = `translate(${bx}px, ${by}px) scale(${scale.toFixed(3)})`;
+        })();
+    }
+}
 
 /* ---------- active nav highlight ---------- */
 const sections = document.querySelectorAll('main section[id]');
@@ -41,6 +92,15 @@ const state = { hero: null };
 function enhance() {
     // scroll-driven animations (GSAP) — code-split
     import('./scrollfx.js').then((m) => m.init()).catch(() => { /* static page still works */ });
+
+    // WebGL page background — desktop only, cheap particle drift
+    const bgMount = document.getElementById('bg-3d');
+    if (bgMount && !isMobile && window.WebGLRenderingContext) {
+        import('./bg3d.js').then((m) => {
+            const bg = m.createBackground(bgMount);
+            if (bg) bg.start();
+        }).catch(() => { /* CSS grid background stays */ });
+    }
 
     // WebGL hero — mount only when near viewport, pause when offscreen
     const stage = document.getElementById('hero-3d');

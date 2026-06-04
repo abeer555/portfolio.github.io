@@ -5,10 +5,11 @@ Personal portfolio of Abeer Gupta. Live at https://abeer.is-a.dev (GitHub Pages,
 ## Stack
 
 - **No framework, no build step.** Plain HTML + CSS + vanilla ES modules.
-- **3D:** Three.js (pinned version, ESM from jsdelivr CDN) — `js/hero3d.js`.
+- **3D:** Three.js (pinned version, ESM from jsdelivr CDN) — `js/hero3d.js` (hero centerpiece) + `js/bg3d.js` (page background particle field, **desktop only**).
 - **Animation:** GSAP + ScrollTrigger (pinned version, ESM from jsdelivr CDN) — `js/scrollfx.js`.
-- **Entry point:** `index.html` (all critical CSS inline) + `js/main.js` (deferred module).
-- `js/hero3d.js` and `js/scrollfx.js` are **dynamically imported** from `main.js` after first paint, and only when `prefers-reduced-motion` is not set. Never add render-blocking script/CSS for 3D or animation.
+- **Entry point:** `index.html` (all critical CSS inline) + `js/main.js` (deferred module; also owns the custom cursor — fine pointers only — and boot-loader cleanup).
+- **Boot loader:** pure CSS 3D cube overlay in `index.html`, self-dismissing at ~1.6s without JS; its headline is intentionally the LCP element. Hidden entirely under reduced motion.
+- `js/hero3d.js`, `js/bg3d.js` and `js/scrollfx.js` are **dynamically imported** from `main.js` after first paint, and only when `prefers-reduced-motion` is not set. Never add render-blocking script/CSS for 3D or animation.
 - Old design experiments (`style.css`, `script.js`, `*.backup`, `index_mouse.html`, `genericHackerBig.html`, `textAnimationsHacker.html`, `dorksensetouch.html`, `inspiration.html`, `DORKSENSE-README.md`) are intentionally kept but **unused** — don't wire them back in.
 
 ## Design system — neobrutalism × terminal
