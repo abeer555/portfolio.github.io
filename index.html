@@ -20,13 +20,31 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
 
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- FONTS: self-hosted, no CDN dependency -->
 
     <style>
+        @font-face {
+            font-family: 'JetBrains Mono';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url('fonts/JetBrainsMono-400-latin.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'JetBrains Mono';
+            font-style: normal;
+            font-weight: 700;
+            font-display: swap;
+            src: url('fonts/JetBrainsMono-700-latin.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'JetBrains Mono';
+            font-style: normal;
+            font-weight: 800;
+            font-display: swap;
+            src: url('fonts/JetBrainsMono-800-latin.woff2') format('woff2');
+        }
+
         :root {
             --bg: #1a1a1a;
             --panel: #111111;
@@ -41,23 +59,23 @@
             --bw: 2px;
             --shadow: 6px 6px 0 var(--ink);
             --shadow-sm: 4px 4px 0 var(--ink);
-            --gap: 18px;
+            --gap: 22px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        html { scroll-behavior: smooth; font-size: 120%; }
+        html { scroll-behavior: smooth; font-size: 150%; background-color: var(--bg); }
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
             *, *::before, *::after { animation: none !important; transition: none !important; }
         }
 
         body {
-            background-color: var(--bg);
-            /* flat terminal grid  -  pure CSS, zero runtime cost */
+            background-color: transparent;
+            /* subtle terminal grid over Vanta waves */
             background-image:
-                linear-gradient(var(--ink) 1px, transparent 1px),
-                linear-gradient(90deg, var(--ink) 1px, transparent 1px);
+                linear-gradient(rgba(0,0,0,0.35) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.35) 1px, transparent 1px);
             background-size: 44px 44px;
             color: var(--text);
             font-family: var(--font-mono);
@@ -177,13 +195,13 @@
             #loader { display: none; } /* global animation:none would strand the overlay */
         }
 
-        /* --- WEBGL PAGE BACKGROUND (desktop only, mounted by main.js) --- */
-        #bg-3d {
+        /* --- VANTA WAVES PAGE BACKGROUND --- */
+        #vanta-bg {
             position: fixed; inset: 0;
             z-index: -1;
             pointer-events: none;
         }
-        #bg-3d canvas { width: 100%; height: 100%; display: block; opacity: 0.72; }
+        #vanta-bg canvas { width: 100% !important; height: 100% !important; display: block; opacity: 0.85; }
 
         /* --- CUSTOM CURSOR (enabled by main.js on fine pointers only) --- */
         #cursor, #cursor-dot {
@@ -212,15 +230,15 @@
 
         /* --- LAYOUT --- */
         .wrapper {
-            max-width: 1640px;
+            max-width: 1920px;
             margin: 0 auto;
             padding: calc(var(--gap) + 8px) var(--gap) var(--gap);
             display: grid;
-            grid-template-columns: 340px 1fr;
+            grid-template-columns: 420px 1fr;
             gap: calc(var(--gap) + 10px);
             align-items: start;
         }
-        @media (max-width: 968px) {
+        @media (max-width: 1200px) {
             .wrapper { grid-template-columns: 1fr; }
         }
 
@@ -263,27 +281,86 @@
             flex-direction: column;
             gap: 22px;
         }
-        @media (max-width: 968px) {
+        @media (max-width: 1200px) {
             .sidebar { position: relative; top: 0; }
         }
 
-        .profile-img-box {
-            width: 170px; height: 170px;
+
+        /* --- ARC CARD (holographic profile photo) --- */
+        .arc-card {
+            --rx: 0deg;
+            --ry: 0deg;
+            --mx: 50%;
+            --my: 50%;
+            --shine-opacity: 0;
+            width: 180px;
             margin: 0 auto;
+            perspective: 600px;
+            cursor: pointer;
+        }
+        .arc-card-inner {
+            position: relative;
+            width: 180px; height: 180px;
             border: 3px solid var(--ink);
-            box-shadow: var(--shadow);
+            box-shadow: 6px 6px 0 var(--ink), 0 0 0 1px rgba(0,255,65,0.18);
             background: var(--green);
             padding: 5px;
+            transform: rotateX(var(--rx)) rotateY(var(--ry));
+            transform-style: preserve-3d;
+            transition: transform 0.08s ease, box-shadow 0.15s ease;
+            will-change: transform;
         }
-        .profile-img {
+        .arc-card:hover .arc-card-inner {
+            box-shadow: 10px 12px 30px rgba(0,0,0,0.6),
+                        0 0 20px rgba(0,255,65,0.25),
+                        0 0 40px rgba(0, 200, 255, 0.12);
+        }
+        .arc-card-inner .profile-img {
             width: 100%; height: 100%;
             object-fit: cover;
             display: block;
             border: var(--bw) solid var(--ink);
-            filter: grayscale(100%);
-            transition: filter 0.2s;
+            filter: grayscale(20%);
+            transition: filter 0.3s;
         }
-        .profile-img-box:hover .profile-img { filter: grayscale(0%); }
+        .arc-card:hover .profile-img { filter: grayscale(0%) brightness(1.08); }
+
+        /* holographic foil layer */
+        .arc-foil {
+            position: absolute; inset: 0;
+            pointer-events: none;
+            background:
+                repeating-linear-gradient(
+                    calc(var(--ry) * 3 + 130deg),
+                    rgba(255,0,128,0.18) 0%,
+                    rgba(255,200,0,0.18) 8%,
+                    rgba(0,255,128,0.18) 16%,
+                    rgba(0,200,255,0.18) 24%,
+                    rgba(160,0,255,0.18) 32%,
+                    rgba(255,0,128,0.18) 40%
+                );
+            background-size: 200% 200%;
+            background-position: var(--mx) var(--my);
+            mix-blend-mode: color-dodge;
+            opacity: var(--shine-opacity);
+            transition: opacity 0.3s ease;
+            border: var(--bw) solid var(--ink);
+        }
+        /* glare streak */
+        .arc-glare {
+            position: absolute; inset: 0;
+            pointer-events: none;
+            background: radial-gradient(
+                ellipse 60% 40% at var(--mx) var(--my),
+                rgba(255,255,255,0.28) 0%,
+                transparent 70%
+            );
+            mix-blend-mode: screen;
+            opacity: var(--shine-opacity);
+            transition: opacity 0.3s ease;
+            border: var(--bw) solid var(--ink);
+        }
+
 
         .side-name {
             text-align: center;
@@ -767,8 +844,8 @@
         <div class="loader-bar"><i></i></div>
     </div>
 
-    <!-- WebGL background mount (desktop only, hydrated after idle) -->
-    <div id="bg-3d" aria-hidden="true"></div>
+    <!-- Vanta Waves background mount -->
+    <div id="vanta-bg" aria-hidden="true"></div>
 
     <!-- custom cursor (fine pointers only) -->
     <div id="cursor" aria-hidden="true"></div>
@@ -780,8 +857,12 @@
     <div class="wrapper">
         <!-- SIDEBAR -->
         <aside class="sidebar" aria-label="Profile and navigation">
-            <div class="profile-img-box">
-                <img src="abeerface-340.webp" alt="Portrait of Abeer Gupta" class="profile-img" width="170" height="170" fetchpriority="high">
+            <div class="arc-card" id="arc-card" aria-label="Profile photo with holographic effect">
+                <div class="arc-card-inner">
+                    <img src="abeerface-340.webp" alt="Portrait of Abeer Gupta" class="profile-img" width="170" height="170" fetchpriority="high">
+                    <div class="arc-foil" aria-hidden="true"></div>
+                    <div class="arc-glare" aria-hidden="true"></div>
+                </div>
             </div>
             <div>
                 <p class="side-name">ABEER GUPTA</p>
@@ -811,7 +892,7 @@
                 <a href="https://linkedin.com/in/abeer-gupta" target="_blank" rel="noopener" aria-label="LinkedIn profile">IN</a>
                 <a href="https://tryhackme.com/p/0xab33r" target="_blank" rel="noopener" aria-label="TryHackMe profile">THM</a>
                 <a href="https://abeer.is-a.dev" aria-label="Website home">WWW</a>
-                <a href="mailto:abeergupta555@gmail.com" aria-label="Send email">@</a>
+                <a href="mailto:abeer@abeer.codes" aria-label="Send email">@</a>
             </div>
         </aside>
 
@@ -1280,22 +1361,6 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                     </div>
                 </div>
 
-                <div class="t-win t-block reveal">
-                    <div class="t-bar green">
-                        <span class="t-dots" aria-hidden="true"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
-                        <span>root@abeer:~# cat misc.log  -  PUBLICATIONS &amp; PATENTS</span>
-                    </div>
-                    <div class="t-body">
-                        <div class="t-item">
-                            <span class="t-item-prefix">2025</span>
-                            Co-authored a chapter on CRM software in <em>&nbsp;Software Solutions in Business Management</em>
-                        </div>
-                        <div class="t-item">
-                            <span class="t-item-prefix">2025</span>
-                            Patent filed  -  Autonomous AI-IoT fire safety system with real-time smoke and heat analysis
-                        </div>
-                    </div>
-                </div>
             </section>
 
             <div class="divider" aria-hidden="true"><div class="divider-track" data-divider>/// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT ///</div></div>
@@ -1306,7 +1371,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                     <h2><span class="sec-label">Contact</span> <span class="sec-cmd">$ sudo ./contact_me.sh</span></h2>
                 </header>
                 <div class="block contact-info reveal">
-                    <div><span class="sys-key">$</span> echo $EMAIL &nbsp;&nbsp;&nbsp;&nbsp; <span class="val">abeergupta555@gmail.com</span></div>
+                    <div><span class="sys-key">$</span> echo $EMAIL &nbsp;&nbsp;&nbsp;&nbsp; <span class="val">abeer@abeer.codes</span></div>
                 </div>
                 <div class="block terminal-form reveal">
                     <form action="https://formspree.io/f/mzzykapj" method="POST">
@@ -1335,6 +1400,28 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
         </main>
     </div>
 
+    <script src="three.r134.min.js"></script>
+    <script src="vanta.waves.min.js"></script>
+    <script>
+        (function () {
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!reduceMotion && window.VANTA) {
+                VANTA.WAVES({
+                    el: '#vanta-bg',
+                    mouseControls: true,
+                    touchControls: true,
+                    gyroControls: false,
+                    minHeight: 200.00,
+                    minWidth: 200.00,
+                    scale: 1.00,
+                    scaleMobile: 1.00,
+                    color: 0x30505,
+                    shininess: 96.00,
+                    waveHeight: 15.50
+                });
+            }
+        })();
+    </script>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>

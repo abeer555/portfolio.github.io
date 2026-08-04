@@ -86,21 +86,60 @@ if (bootLog && !reduceMotion) {
     setTimeout(typeLine, 250);
 }
 
+/* ---------- arc card: holographic tilt + foil ---------- */
+(function () {
+    const card = document.getElementById('arc-card');
+    if (!card || reduceMotion) return;
+
+    const inner = card.querySelector('.arc-card-inner');
+    const MAX_TILT = 15; // degrees
+
+    function update(x, y, rect) {
+        // normalise to [-1, 1]
+        const nx = ((x - rect.left) / rect.width  - 0.5) * 2;
+        const ny = ((y - rect.top)  / rect.height - 0.5) * 2;
+
+        const ry =  nx * MAX_TILT;  // yaw  (left/right)
+        const rx = -ny * MAX_TILT;  // pitch (up/down, inverted)
+
+        // foil/glare position in % (0-100)
+        const mx = ((nx + 1) / 2 * 100).toFixed(1) + '%';
+        const my = ((ny + 1) / 2 * 100).toFixed(1) + '%';
+
+        card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+        card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+        card.style.setProperty('--mx', mx);
+        card.style.setProperty('--my', my);
+        card.style.setProperty('--shine-opacity', '1');
+    }
+
+    card.addEventListener('pointermove', (e) => {
+        const rect = card.getBoundingClientRect();
+        update(e.clientX, e.clientY, rect);
+    }, { passive: true });
+
+    card.addEventListener('pointerleave', () => {
+        inner.style.transition = 'transform 0.5s cubic-bezier(.17,.67,.43,.98), box-shadow 0.15s ease';
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+        card.style.setProperty('--shine-opacity', '0');
+        setTimeout(() => { inner.style.transition = ''; }, 500);
+    });
+
+    // touch support
+    card.addEventListener('touchmove', (e) => {
+        const t = e.touches[0];
+        const rect = card.getBoundingClientRect();
+        update(t.clientX, t.clientY, rect);
+    }, { passive: true });
+})();
+
 /* ---------- deferred 3D + scroll FX ---------- */
 const state = { hero: null };
 
 function enhance() {
     // scroll-driven animations (GSAP) — code-split
     import('./scrollfx.js').then((m) => m.init()).catch(() => { /* static page still works */ });
-
-    // WebGL page background — desktop only, cheap particle drift
-    const bgMount = document.getElementById('bg-3d');
-    if (bgMount && !isMobile && window.WebGLRenderingContext) {
-        import('./bg3d.js').then((m) => {
-            const bg = m.createBackground(bgMount);
-            if (bg) bg.start();
-        }).catch(() => { /* CSS grid background stays */ });
-    }
 
     // WebGL hero — mount only when near viewport, pause when offscreen
     const stage = document.getElementById('hero-3d');

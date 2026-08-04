@@ -13,4 +13,4 @@ Personal portfolio site showcasing my work in AI engineering, cloud-native devel
 
 - [GitHub](https://github.com/abeer555/)
 - [LinkedIn](https://www.linkedin.com/in/abeer-gupta/)
-- abeergupta555@gmail.com
+- abeer@abeer.codes
