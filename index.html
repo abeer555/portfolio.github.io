@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABEER GUPTA | /home/abeer</title>
+    <title>ABEER GUPTA | /home/abeer — deep space terminal</title>
     <meta name="description" content="Abeer Gupta: AI engineer, cloud-native developer, Linux enthusiast. CS undergrad at VIT Chennai building AI pipelines, cloud backends and production sites.">
     <link rel="canonical" href="https://abeer.is-a.dev/">
 
     <!-- OG -->
-    <meta property="og:title" content="ABEER GUPTA | /home/abeer">
+    <meta property="og:title" content="ABEER GUPTA | /home/abeer — deep space terminal">
     <meta property="og:description" content="AI pipelines, cloud backends, production sites. Arch Linux, btw.">
     <meta property="og:url" content="https://abeer.is-a.dev/">
     <meta property="og:image" content="https://abeer.is-a.dev/abeerface-round.png">
@@ -46,15 +46,15 @@
         }
 
         :root {
-            --bg: #1a1a1a;
-            --panel: #111111;
-            --panel-2: #0b0b0b;
-            --ink: #000000;
-            --green: #00ff41;
-            --amber: #ffb000;
-            --red: #ff3b3b;
-            --text: #ededed;
-            --dim: #a3a3a3;
+            --bg: #06060e;
+            --panel: #0c0d1d;
+            --panel-2: #070812;
+            --ink: #01020a;
+            --green: #7cf5d3;
+            --amber: #ffc46b;
+            --red: #ff6b7a;
+            --text: #e8eaf6;
+            --dim: #8a93b2;
             --font-mono: 'JetBrains Mono', ui-monospace, monospace;
             --bw: 2px;
             --shadow: 6px 6px 0 var(--ink);
@@ -72,10 +72,10 @@
 
         body {
             background-color: transparent;
-            /* subtle terminal grid over Vanta waves */
+            /* faint terminal grid — barely-there scanlines without WebGL */
             background-image:
-                linear-gradient(rgba(0,0,0,0.35) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,0,0,0.35) 1px, transparent 1px);
+                linear-gradient(rgba(124,245,211,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(124,245,211,0.05) 1px, transparent 1px);
             background-size: 44px 44px;
             color: var(--text);
             font-family: var(--font-mono);
@@ -195,14 +195,6 @@
             #loader { display: none; } /* global animation:none would strand the overlay */
         }
 
-        /* --- VANTA WAVES PAGE BACKGROUND --- */
-        #vanta-bg {
-            position: fixed; inset: 0;
-            z-index: -1;
-            pointer-events: none;
-        }
-        #vanta-bg canvas { width: 100% !important; height: 100% !important; display: block; opacity: 0.85; }
-
         /* --- CUSTOM CURSOR (enabled by main.js on fine pointers only) --- */
         #cursor, #cursor-dot {
             position: fixed; top: 0; left: 0;
@@ -227,6 +219,44 @@
             transition: opacity 0.15s ease;
         }
         body.custom-cursor, body.custom-cursor *:not(input):not(textarea) { cursor: none !important; }
+
+        /* --- SYSTEM STATUS HUD (flies with the sidebar) --- */
+        .sys-hud { font-size: 0.7rem; color: var(--dim); }
+        .hud-head {
+            color: var(--green);
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            border-bottom: 1px dashed rgba(138,147,178,0.35);
+            padding-bottom: 6px;
+        }
+        .hud-row {
+            display: flex; justify-content: space-between; gap: 10px;
+            padding: 3px 0;
+        }
+        .hud-row span { color: #7f86a3; }
+        .hud-row b { color: var(--green); font-weight: 700; text-align: right; }
+        .hud-foot { margin-top: 8px; color: var(--dim); }
+
+        /* --- MISSION LOG FOOTER (3D asset credits) --- */
+        .credits { font-size: 0.72rem; color: var(--dim); }
+        .credits details { text-align: left; }
+        .credits summary {
+            cursor: pointer;
+            color: var(--green);
+            font-weight: 700;
+            text-align: center;
+            list-style: none;
+            user-select: none;
+        }
+        .credits summary:hover { color: var(--amber); }
+        .credits .ml-body {
+            padding: 12px 14px 4px;
+            line-height: 1.7;
+        }
+        .credits .ml-body p { margin-bottom: 8px; }
+        .credits a { color: var(--text); text-decoration: underline; text-decoration-color: var(--green); text-underline-offset: 3px; }
+        .credits a:hover { color: var(--green); }
 
         /* --- LAYOUT --- */
         .wrapper {
@@ -286,7 +316,7 @@
         }
 
 
-        /* --- ARC CARD (holographic profile photo) --- */
+        /* --- ARC CARD (profile photo, pointer-tilted holo) --- */
         .arc-card {
             --rx: 0deg;
             --ry: 0deg;
@@ -295,7 +325,6 @@
             --shine-opacity: 0;
             width: 180px;
             margin: 0 auto;
-            perspective: 600px;
             cursor: pointer;
         }
         .arc-card-inner {
@@ -305,10 +334,9 @@
             box-shadow: 6px 6px 0 var(--ink), 0 0 0 1px rgba(0,255,65,0.18);
             background: var(--green);
             padding: 5px;
-            transform: rotateX(var(--rx)) rotateY(var(--ry));
-            transform-style: preserve-3d;
-            transition: transform 0.08s ease, box-shadow 0.15s ease;
-            will-change: transform;
+            /* plain transform works with the sticky sidebar; perspective is on .arc-card */
+            transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry));
+            transition: box-shadow 0.15s ease;
         }
         .arc-card:hover .arc-card-inner {
             box-shadow: 10px 12px 30px rgba(0,0,0,0.6),
@@ -325,23 +353,21 @@
         }
         .arc-card:hover .profile-img { filter: grayscale(0%) brightness(1.08); }
 
-        /* holographic foil layer */
+        /* soft holographic sheen over the face (kept off mix-blend so the sticky
+           sidebar composite doesn't ghost when the page scrolls) */
         .arc-foil {
             position: absolute; inset: 0;
             pointer-events: none;
             background:
                 repeating-linear-gradient(
-                    calc(var(--ry) * 3 + 130deg),
-                    rgba(255,0,128,0.18) 0%,
-                    rgba(255,200,0,0.18) 8%,
-                    rgba(0,255,128,0.18) 16%,
-                    rgba(0,200,255,0.18) 24%,
-                    rgba(160,0,255,0.18) 32%,
-                    rgba(255,0,128,0.18) 40%
+                    130deg,
+                    rgba(255,0,128,0.14) 0%,
+                    rgba(255,200,0,0.14) 8%,
+                    rgba(0,255,128,0.14) 16%,
+                    rgba(0,200,255,0.14) 24%,
+                    rgba(160,0,255,0.14) 32%,
+                    rgba(255,0,128,0.14) 40%
                 );
-            background-size: 200% 200%;
-            background-position: var(--mx) var(--my);
-            mix-blend-mode: color-dodge;
             opacity: var(--shine-opacity);
             transition: opacity 0.3s ease;
             border: var(--bw) solid var(--ink);
@@ -352,10 +378,9 @@
             pointer-events: none;
             background: radial-gradient(
                 ellipse 60% 40% at var(--mx) var(--my),
-                rgba(255,255,255,0.28) 0%,
+                rgba(255,255,255,0.34) 0%,
                 transparent 70%
             );
-            mix-blend-mode: screen;
             opacity: var(--shine-opacity);
             transition: opacity 0.3s ease;
             border: var(--bw) solid var(--ink);
@@ -458,22 +483,23 @@
         .sec-cmd { color: var(--dim); font-size: 0.85rem; font-weight: 400; }
 
         /* --- HERO --- */
+        /* --- HERO: full-width row spanning lightly into the sidebar column --- */
         .hero-grid {
             display: grid;
-            grid-template-columns: 1.05fr 1fr;
-            gap: calc(var(--gap) + 10px);
-            align-items: stretch;
+            grid-template-columns: 1.6fr 1fr;
+            gap: calc(var(--gap) + 14px);
+            align-items: start;
         }
         @media (max-width: 1200px) { .hero-grid { grid-template-columns: 1fr; } }
 
-        .hero-copy { display: flex; flex-direction: column; gap: 20px; justify-content: center; min-width: 0; }
+        .hero-copy { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
         .hero-title {
-            font-size: clamp(2.6rem, 6vw, 4.6rem);
+            font-size: clamp(3.2rem, 6.5vw, 6.2rem);
             font-weight: 800;
             line-height: 1.05;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
             color: #fff;
-            text-shadow: 5px 5px 0 var(--ink);
+            text-shadow: 6px 6px 0 var(--ink);
             text-transform: uppercase;
         }
         .hero-title .on-green {
@@ -482,16 +508,25 @@
             color: #000;
             border: 3px solid var(--ink);
             box-shadow: 7px 7px 0 var(--ink);
-            padding: 0 14px;
+            padding: 0 18px;
             text-shadow: none;
         }
         .hero-tag {
             color: var(--amber);
             font-weight: 700;
-            font-size: clamp(0.8rem, 1.6vw, 1rem);
+            font-size: clamp(0.85rem, 1.7vw, 1.05rem);
         }
-        .hero-pitch { color: var(--dim); max-width: 56ch; }
+        .hero-pitch { color: var(--dim); max-width: 68ch; }
         .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+        /* +hero: simplest layout — name over the full row with the terminal
+           unique and optional, so nothing docked right that looks empty */
+        @media (min-width: 1200px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            /* keep the nav/feed riding beside the copy-only column so the
+               name breathes with the panel instead of sitting in a side rail */
+            .nav-feed { grid-column: 1; margin-top: 4px; }
+        }
 
         /* terminal window */
         .t-win {
@@ -529,29 +564,7 @@
         }
         .boot-win .t-body .dim { color: var(--dim); }
 
-        /* hero 3D panel */
-        .gl-win {
-            display: flex; flex-direction: column;
-            border-width: 3px;
-            min-height: 440px;
-        }
-        .gl-stage {
-            position: relative;
-            flex: 1;
-            min-height: 380px;
-            overflow: hidden;
-            background: var(--panel-2);
-        }
-        .gl-stage canvas { position: absolute; inset: 0; display: block; }
-        .gl-fallback {
-            position: absolute; inset: 0;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .gl-fallback svg { width: min(62%, 300px); height: auto; }
-        .gl-hint {
-            position: absolute; bottom: 8px; right: 10px;
-            font-size: 0.65rem; color: var(--dim);
-        }
+        /* hero 3D panel — retired; ship now lives on the pinned global layer */
 
         /* --- DIVIDERS --- */
         .divider {
@@ -840,12 +853,9 @@
             <div class="cube inner"><i></i><i></i><i></i><i></i><i></i><i></i></div>
         </div>
         <p class="loader-name">ABEER GUPTA</p>
-        <p class="loader-line">booting /home/abeer<span class="caret">_</span></p>
+        <p class="loader-line">acquiring telemetry… /home/abeer<span class="caret">_</span></p>
         <div class="loader-bar"><i></i></div>
     </div>
-
-    <!-- Vanta Waves background mount -->
-    <div id="vanta-bg" aria-hidden="true"></div>
 
     <!-- custom cursor (fine pointers only) -->
     <div id="cursor" aria-hidden="true"></div>
@@ -870,7 +880,6 @@
             <p class="roles">
                 // AI_ENGINEER<br>
                 // CLOUD_NATIVE_DEV<br>
-                // CTF_PLAYER
             </p>
 
             <nav class="nav-menu" aria-label="Section navigation">
@@ -886,6 +895,16 @@
                 UPTIME: 21Y 4M 23D<br>
                 KERNEL: 6.19.12-arch1-1
             </p>
+
+            <div class="sys-hud block" aria-hidden="true">
+                <p class="hud-head">SYSTEM STATUS</p>
+                <div class="hud-row"><span>ORBIT</span><b>LEO · Stable</b></div>
+                <div class="hud-row"><span>TLE</span><b>2026-221</b></div>
+                <div class="hud-row"><span>FUEL</span><b id="fuel-pct">87%</b></div>
+                <div class="hud-row"><span>RAD</span><b>Nominal</b></div>
+                <div class="hud-row"><span>ALERTS</span><b id="hud-alerts">0</b></div>
+                <p class="hud-foot">mission clock: <span id="mission-clock">00:00:00</span> utc</p>
+            </div>
 
             <div class="social-bar">
                 <a href="https://github.com/abeer555" target="_blank" rel="noopener" aria-label="GitHub profile">GH</a>
@@ -904,11 +923,11 @@
                 <div class="hero-grid">
                     <div class="hero-copy">
                         <h1 class="hero-title">ABEER<br><span class="on-green">GUPTA</span></h1>
-                        <p class="hero-tag">// AI pipelines &nbsp;// cloud backends &nbsp;// things that ship to prod</p>
+                        <p class="hero-tag"><span class="dim">MISSION:</span> AI pipelines &nbsp;//&nbsp; cloud backends &nbsp;//&nbsp; things that ship to prod</p>
                         <p class="hero-pitch">
                             CS undergrad building real software  -  AI pipelines, cloud backends,
-                            production sites for actual clients. Also the kind of person who has
-                            spent way too many hours tuning a Linux desktop config.
+                            production sites for actual clients. Ground control is a shell prompt;
+                            the desktop is Hyprland on Arch.
                         </p>
                         <div class="hero-ctas">
                             <a class="btn" href="#projects">./view_projects</a>
@@ -916,8 +935,8 @@
                         </div>
                         <div class="t-win boot-win">
                             <div class="t-bar green">
+                                <span>abeer@arch:~ — init_portfolio.sh</span>
                                 <span class="t-dots" aria-hidden="true"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
-                                <span>abeer@arch:~</span>
                             </div>
                             <pre class="t-body" id="boot-log">$ ./init_portfolio.sh
 [ OK ] kernel 6.19.12-arch1-1
@@ -927,37 +946,21 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                         </div>
                     </div>
 
-                    <div class="t-win gl-win" aria-hidden="true">
+                    <div class="t-win nav-feed" aria-hidden="true">
                         <div class="t-bar">
+                            <span>NAV/FEED</span>
                             <span class="t-dots"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
-                            <span>hero.gl  -  webgl</span>
                         </div>
-                        <div class="gl-stage" id="hero-3d">
-                            <!-- static fallback: paints instantly, replaced when WebGL hydrates -->
-                            <div class="gl-fallback" id="gl-fallback">
-                                <svg viewBox="0 0 200 200" role="img" aria-hidden="true">
-                                    <g fill="none" stroke="#00ff41" stroke-width="1.6">
-                                        <polygon points="100,10 178,55 178,145 100,190 22,145 22,55"/>
-                                        <polygon points="100,58 141,128 59,128"/>
-                                        <line x1="100" y1="10" x2="100" y2="58"/>
-                                        <line x1="178" y1="55" x2="141" y2="128"/>
-                                        <line x1="178" y1="145" x2="141" y2="128"/>
-                                        <line x1="100" y1="190" x2="100" y2="128"/>
-                                        <line x1="22" y1="145" x2="59" y2="128"/>
-                                        <line x1="22" y1="55" x2="59" y2="128"/>
-                                        <line x1="100" y1="58" x2="178" y2="145"/>
-                                        <line x1="100" y1="58" x2="22" y2="145"/>
-                                    </g>
-                                    <polygon points="100,58 141,128 59,128" fill="none" stroke="#ffb000" stroke-width="1.2"/>
-                                </svg>
-                            </div>
-                            <span class="gl-hint">drag cursor // scroll to mutate</span>
+                        <div class="t-body" style="font-size: 0.72rem; color: var(--dim); padding: 14px 16px;">
+                            <div><span style="color: var(--green); font-weight: 700;">status:</span> shipping clean, no GLBs in the bundle</div>
+                            <div><span style="color: var(--green); font-weight: 700;">voice :</span> scroll down for the launch</div>
+                            <div style="margin-top: 8px; color: var(--amber);">"keep it fast, keep it readable"</div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <div class="divider" aria-hidden="true"><div class="divider-track" data-divider>/// SYSTEM_INFO /// SYSTEM_INFO /// SYSTEM_INFO /// SYSTEM_INFO /// SYSTEM_INFO /// SYSTEM_INFO /// SYSTEM_INFO /// SYSTEM_INFO ///</div></div>
+            <div class="divider" aria-hidden="true"><div class="divider-track" data-divider>/// DOWNLINK /// DOWNLINK /// DOWNLINK /// DOWNLINK /// DOWNLINK /// DOWNLINK /// DOWNLINK /// DOWNLINK ///</div></div>
 
             <!-- BIO / NEOFETCH -->
             <section id="bio" aria-label="About">
@@ -999,12 +1002,12 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                 </div>
             </section>
 
-            <div class="divider" aria-hidden="true"><div class="divider-track" data-divider>&gt;&gt;&gt; EXPERIENCE &gt;&gt;&gt; EXPERIENCE &gt;&gt;&gt; EXPERIENCE &gt;&gt;&gt; EXPERIENCE &gt;&gt;&gt; EXPERIENCE &gt;&gt;&gt; EXPERIENCE &gt;&gt;&gt; EXPERIENCE &gt;&gt;&gt; EXPERIENCE &gt;&gt;&gt;</div></div>
+            <div class="divider" aria-hidden="true"><div class="divider-track" data-divider>&gt;&gt;&gt; TRAJECTORY &gt;&gt;&gt; TRAJECTORY &gt;&gt;&gt; TRAJECTORY &gt;&gt;&gt; TRAJECTORY &gt;&gt;&gt; TRAJECTORY &gt;&gt;&gt; TRAJECTORY &gt;&gt;&gt; TRAJECTORY &gt;&gt;&gt; TRAJECTORY &gt;&gt;&gt;</div></div>
 
             <!-- EXPERIENCE -->
             <section id="experience" aria-label="Experience">
                 <header class="sec-head reveal">
-                    <h2><span class="sec-label amber">Experience</span> <span class="sec-cmd">$ tail -f /var/log/career</span></h2>
+                    <h2><span class="sec-label">Experience</span> <span class="sec-cmd">$ tail -f /var/log/missions</span></h2>
                 </header>
                 <div class="log-list">
 
@@ -1043,7 +1046,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                 </div>
             </section>
 
-            <div class="divider amber" aria-hidden="true"><div class="divider-track" data-divider>/// PROJECTS /// PROJECTS /// PROJECTS /// PROJECTS /// PROJECTS /// PROJECTS /// PROJECTS /// PROJECTS /// PROJECTS /// PROJECTS ///</div></div>
+            <div class="divider amber" aria-hidden="true"><div class="divider-track" data-divider>/// PAYLOAD /// PAYLOAD /// PAYLOAD /// PAYLOAD /// PAYLOAD /// PAYLOAD /// PAYLOAD /// PAYLOAD /// PAYLOAD /// PAYLOAD ///</div></div>
 
             <!-- PROJECTS -->
             <section id="projects" aria-label="Projects">
@@ -1259,7 +1262,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                 </div><!-- /.proj-pin -->
             </section>
 
-            <div class="divider" aria-hidden="true"><div class="divider-track" data-divider>&gt;&gt;&gt; SKILLS &gt;&gt;&gt; SKILLS &gt;&gt;&gt; SKILLS &gt;&gt;&gt; SKILLS &gt;&gt;&gt; SKILLS &gt;&gt;&gt; SKILLS &gt;&gt;&gt; SKILLS &gt;&gt;&gt; SKILLS &gt;&gt;&gt; SKILLS &gt;&gt;&gt; SKILLS &gt;&gt;&gt; SKILLS &gt;&gt;&gt;</div></div>
+            <div class="divider" aria-hidden="true"><div class="divider-track" data-divider>&gt;&gt;&gt; SUBSYSTEMS &gt;&gt;&gt; SUBSYSTEMS &gt;&gt;&gt; SUBSYSTEMS &gt;&gt;&gt; SUBSYSTEMS &gt;&gt;&gt; SUBSYSTEMS &gt;&gt;&gt; SUBSYSTEMS &gt;&gt;&gt; SUBSYSTEMS &gt;&gt;&gt; SUBSYSTEMS &gt;&gt;&gt;</div></div>
 
             <!-- SKILLS -->
             <section id="skills" aria-label="Skills">
@@ -1322,7 +1325,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                 <div class="t-win t-block reveal">
                     <div class="t-bar green">
                         <span class="t-dots" aria-hidden="true"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
-                        <span>root@abeer:~# cat certs.log  -  CERTIFICATIONS</span>
+                        <span>root@abeer:~# cat certs.log — LICENSES TO FLY</span>
                     </div>
                     <div class="t-body">
                         <div class="t-item">
@@ -1343,7 +1346,7 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                 <div class="t-win t-block reveal">
                     <div class="t-bar">
                         <span class="t-dots" aria-hidden="true"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
-                        <span>root@abeer:~# cat ctf.log  -  CTF &amp; EVENTS</span>
+                        <span>root@abeer:~# cat ctf.log — CAPTURED FLAGS &amp; SORTIES</span>
                     </div>
                     <div class="t-body">
                         <div class="t-item">
@@ -1363,12 +1366,12 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
 
             </section>
 
-            <div class="divider" aria-hidden="true"><div class="divider-track" data-divider>/// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT /// CONTACT ///</div></div>
+            <div class="divider" aria-hidden="true"><div class="divider-track" data-divider>/// UPLINK /// UPLINK /// UPLINK /// UPLINK /// UPLINK /// UPLINK /// UPLINK /// UPLINK /// UPLINK /// UPLINK /// UPLINK ///</div></div>
 
             <!-- CONTACT -->
             <section id="contact" aria-label="Contact">
                 <header class="sec-head reveal">
-                    <h2><span class="sec-label">Contact</span> <span class="sec-cmd">$ sudo ./contact_me.sh</span></h2>
+                    <h2><span class="sec-label">Contact</span> <span class="sec-cmd">$ uplink --secure</span></h2>
                 </header>
                 <div class="block contact-info reveal">
                     <div><span class="sys-key">$</span> echo $EMAIL &nbsp;&nbsp;&nbsp;&nbsp; <span class="val">abeer@abeer.codes</span></div>
@@ -1376,52 +1379,47 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                 <div class="block terminal-form reveal">
                     <form action="https://formspree.io/f/mzzykapj" method="POST">
                         <div class="cmd-line">
-                            <label class="prompt" for="f-name">root@abeer:~/mail# input_name</label>
+                            <label class="prompt" for="f-name">root@abeer:~/uplink# input_callsign</label>
                             <input type="text" id="f-name" name="name" class="input-field" placeholder="_" required>
                         </div>
                         <div class="cmd-line">
-                            <label class="prompt" for="f-email">root@abeer:~/mail# input_email</label>
+                            <label class="prompt" for="f-email">root@abeer:~/uplink# input_freq</label>
                             <input type="email" id="f-email" name="email" class="input-field" placeholder="_" required>
                         </div>
                         <div class="cmd-line">
-                            <label class="prompt" for="f-msg">root@abeer:~/mail# input_message</label>
+                            <label class="prompt" for="f-msg">root@abeer:~/uplink# input_transmission</label>
                             <textarea id="f-msg" name="message" class="input-field" rows="4" placeholder="_" required></textarea>
                         </div>
-                        <button type="submit" class="submit-btn">EXECUTE SEND_PROTOCOL</button>
+                        <button type="submit" class="submit-btn">TRANSMIT_UPLINK</button>
                     </form>
                 </div>
             </section>
 
             <footer>
+                <div class="block credits reveal" style="margin-top: 22px;">
+                    <details>
+                        <summary>MISSION LOG · 3D ASSETS</summary>
+                        <div class="ml-body">
+                            <p><strong>Imperial Eagle Spaceship (imperfect)</strong> — courtesy of the
+                                <a href="https://sketchfab.com/3d-models/imperial-eagle-spaceship-imperfect-0899602a5a4349a8963e0d011a33a00d" target="_blank" rel="noopener">Sketchfab community</a>, shared under
+                                <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC-BY 4.0</a>.
+                                Trimmed to 536 KB with Draco + WebP and parked center stage.</p>
+                            <p><strong>Aeronomy of Ice</strong>, <strong>Agena Target Vehicle</strong>,
+                                <strong>Extravehicular Mobility Unit</strong> and <strong>THEMIS</strong> — public NASA
+                                <a href="https://nasa3d.arc.nasa.gov/models" target="_blank" rel="noopener">3D Resources</a> (public domain).
+                                Drifting slow and dim so the hero reads as the only craft that matters.</p>
+                            <p>The Star Wars <em>Tantive IV</em> we started with was dropped — 42 MB of geometry is
+                                no way to run a page. A smaller universe flies better.</p>
+                        </div>
+                    </details>
+                </div>
                 <p>UID: 1000 | GID: 1000 | PERMISSIONS: 777</p>
-                <p>&copy; 2026 Abeer Gupta. Built with Arch Linux.</p>
+                <p>&copy; 2026 Abeer Gupta. Built with Arch Linux, in low earth orbit.</p>
             </footer>
 
         </main>
     </div>
 
-    <script src="three.r134.min.js"></script>
-    <script src="vanta.waves.min.js"></script>
-    <script>
-        (function () {
-            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (!reduceMotion && window.VANTA) {
-                VANTA.WAVES({
-                    el: '#vanta-bg',
-                    mouseControls: true,
-                    touchControls: true,
-                    gyroControls: false,
-                    minHeight: 200.00,
-                    minWidth: 200.00,
-                    scale: 1.00,
-                    scaleMobile: 1.00,
-                    color: 0x30505,
-                    shininess: 96.00,
-                    waveHeight: 15.50
-                });
-            }
-        })();
-    </script>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
