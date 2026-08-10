@@ -1,17 +1,60 @@
 /*
- * main.js — tiny eager module. GSAP scroll FX are code-split behind idle;
- * no 3D anywhere. Everything heavy waits for first paint.
+ * main.js — tiny eager module. GSAP scroll FX code-splits behind idle.
  */
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(pointer: fine)').matches;
 
-/* ---------- boot loader cleanup (CSS dismisses it; JS just removes the node) ---------- */
+/* ---------- boot loader cleanup ---------- */
 const loader = document.getElementById('loader');
 if (loader) {
     if (reduceMotion) loader.remove();
-    else setTimeout(() => loader.remove(), 1700);
+    else setTimeout(() => loader.remove(), 1900);
 }
+
+/* ---------- CRT → full Win95 desktop ----------
+   The CRT is a prop. One tap on the glass or the power button boots the full
+   Windows 95 desktop overlay. That's it. No terminal hiding inside. */
+const crt = {
+    power: document.getElementById('crt-power'),
+    screen: document.getElementById('crt-screen'),
+    wrap: document.getElementById('crt-wrap'),
+    led: document.getElementById('crt-led'),
+    desktopOpen: false,
+};
+
+function openWin95() {
+    if (crt.desktopOpen) return;
+    crt.desktopOpen = true;
+    crt.power?.setAttribute('aria-pressed', 'true');
+    crt.led?.classList.add('on');
+    crt.wrap?.classList.add('is-on');
+    crt.screen?.classList.add('is-on');
+    import('./win95.js').then((m) => m.bootDesktop()).catch(() => {
+        crt.desktopOpen = false;
+        crtBootBtnSet(false);
+        crt.led?.classList.remove('on');
+        crt.wrap?.classList.remove('is-on');
+        crt.screen?.classList.remove('is-on');
+    });
+}
+
+function crtBootBtnSet(pressed) {
+    crt.power?.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+}
+
+if (crt.power) crt.power.addEventListener('click', openWin95);
+if (crt.screen) crt.screen.addEventListener('click', openWin95);
+
+// when the desktop overlay shuts down, the physical button + LED fall back
+// to standby so the CRT in the hero reads "off" again
+window.addEventListener('w95:shutdown', () => {
+    crt.desktopOpen = false;
+    crtBootBtnSet(false);
+    crt.led?.classList.remove('on');
+    crt.wrap?.classList.remove('is-on');
+    crt.screen?.classList.remove('is-on');
+});
 
 /* ---------- custom cursor (fine pointers only) ---------- */
 if (finePointer && !reduceMotion) {
@@ -47,7 +90,7 @@ if (finePointer && !reduceMotion) {
 
         (function cursorLoop() {
             requestAnimationFrame(cursorLoop);
-            bx += (x - bx) * 0.22; // square trails the dot slightly
+            bx += (x - bx) * 0.22;
             by += (y - by) * 0.22;
             const target = down ? 0.75 : (hot ? 1.5 : 1);
             scale += (target - scale) * 0.25;
@@ -85,54 +128,48 @@ if (bootLog && !reduceMotion) {
     setTimeout(typeLine, 250);
 }
 
-/* ---------- arc card: holographic tilt + foil ---------- */
+/* ---------- arc card: pointer tilt + hover shine (scroll-stable) ---------- */
 (function () {
     const card = document.getElementById('arc-card');
-    if (!card || reduceMotion) return;
+    if (!card) return;
 
-    const inner = card.querySelector('.arc-card-inner');
-    const MAX_TILT = 15;
+    const MAX_TILT = 14;
+    const setVars = (x, y, on) => {
+        card.style.setProperty('--rx', x.toFixed(2) + 'deg');
+        card.style.setProperty('--ry', y.toFixed(2) + 'deg');
+        card.style.setProperty('--mx', ((y / MAX_TILT * 0.5 + 0.5) * 100).toFixed(1) + '%');
+        card.style.setProperty('--my', ((-x / MAX_TILT * 0.5 + 0.5) * 100).toFixed(1) + '%');
+        card.style.setProperty('--shine-opacity', on ? '1' : '0');
+    };
 
-    function update(x, y, rect) {
-        const nx = ((x - rect.left) / rect.width  - 0.5) * 2;
-        const ny = ((y - rect.top)  / rect.height - 0.5) * 2;
+    if (reduceMotion) { setVars(0, 0, false); return; }
 
-        const ry =  nx * MAX_TILT;
-        const rx = -ny * MAX_TILT;
-
-        const mx = ((nx + 1) / 2 * 100).toFixed(1) + '%';
-        const my = ((ny + 1) / 2 * 100).toFixed(1) + '%';
-
-        card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
-        card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
-        card.style.setProperty('--mx', mx);
-        card.style.setProperty('--my', my);
-        card.style.setProperty('--shine-opacity', '1');
+    let raf = 0, cx = 0, cy = 0, tx = 0, ty = 0, hovering = false;
+    function loop() {
+        raf = requestAnimationFrame(loop);
+        cx += (tx - cx) * 0.2;
+        cy += (ty - cy) * 0.2;
+        setVars(cx, cy, hovering && (Math.abs(cx) > 0.05 || Math.abs(cy) > 0.05));
     }
 
+    card.addEventListener('pointerenter', () => { hovering = true; loop(); });
     card.addEventListener('pointermove', (e) => {
-        const rect = card.getBoundingClientRect();
-        update(e.clientX, e.clientY, rect);
+        const r = card.getBoundingClientRect();
+        tx = -((e.clientY - r.top) / r.height - 0.5) * 2 * MAX_TILT;
+        ty = ((e.clientX - r.left) / r.width - 0.5) * 2 * MAX_TILT;
     }, { passive: true });
+    card.addEventListener('pointerleave', () => { hovering = false; tx = 0; ty = 0; });
 
-    card.addEventListener('pointerleave', () => {
-        inner.style.transition = 'transform 0.5s cubic-bezier(.17,.67,.43,.98), box-shadow 0.15s ease';
-        card.style.setProperty('--rx', '0deg');
-        card.style.setProperty('--ry', '0deg');
-        card.style.setProperty('--shine-opacity', '0');
-        setTimeout(() => { inner.style.transition = ''; }, 500);
-    });
-
-    card.addEventListener('touchmove', (e) => {
-        const t = e.touches[0];
-        const rect = card.getBoundingClientRect();
-        update(t.clientX, t.clientY, rect);
-    }, { passive: true });
+    /*
+     * The transform itself is pure CSS so:
+     *  — the card never fights the layout loop
+     *  — scrolling causes no glitchy repaint (variables separate from compositor)
+     */
 })();
 
-/* ---------- deferred scroll FX ---------- */
+/* ---------- scroll FX ---------- */
 function enhance() {
-    import('./scrollfx.js').then((m) => m.init()).catch(() => { /* static page still works */ });
+    import('./scrollfx.js').then((m) => m.init()).catch(() => { /* static still works */ });
 }
 
 if (!reduceMotion) {

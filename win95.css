@@ -1,0 +1,421 @@
+/*
+ * win95.css — authentic Windows 95 skin for the desktop overlay.
+ * Self-contained: dynamic CSS var from body, all colors classic.
+ * Any -webkit-scrollbar corners: intentional. Outset shadows: 2-color hard
+ * split (topleft light, bottomright dark) — that's how real win95 cells read.
+ */
+
+:root {
+    --w95-face: #c0c0c0;
+    --w95-face-hi: #dfdfdf;
+    --w95-face-sh: #808080;
+    --w95-face-dk: #0a0a0a;
+    --w95-blue: #000080;
+    --w95-text: #000000;
+    --w95-desktop: #008080;
+    --w95-font: "Pixelated MS Sans Serif", "Microsoft Sans Serif", Tahoma, Geneva, sans-serif;
+    --w95-font-size: 11px;
+}
+
+/* --- overlay scaffolding --------------------------------------------------- */
+#w95-root {
+    position: fixed; inset: 0;
+    z-index: 9000;
+    display: block;
+    font-family: var(--w95-font);
+    font-size: var(--w95-font-size);
+    line-height: 1.4;
+    color: var(--w95-text);
+    -webkit-font-smoothing: none;
+    text-rendering: optimizeSpeed;
+    image-rendering: pixelated;
+}
+/* The [hidden] attribute must beat the display:block above — before the first
+   boot this overlay is inert and must never intercept clicks meant for the page. */
+#w95-root[hidden] { display: none; }
+#w95-root[test-pattern] {
+    /* init/load state: solid post-pms black, subtly flickering like a CRT boot */
+    background:
+        linear-gradient(0deg, rgba(20,20,28,0.88), rgba(20,20,28,0.88)),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 3px);
+    animation: w95-crt-on 0.45s ease-out;
+}
+
+/* classic button states shared by everything */
+.w95-btn {
+    font-family: inherit;
+    font-size: inherit;
+    background: var(--w95-face);
+    color: var(--w95-text);
+    border: 2px solid;
+    border-color: var(--w95-face-hi) var(--w95-face-sh) var(--w95-face-sh) var(--w95-face-hi);
+    box-shadow: inset 1px 1px #fff, inset -1px -1px var(--w95-face-dk);
+    padding: 4px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.w95-btn:active, .w95-btn.w95-active {
+    border-color: #fff #fff #fff #fff; /* inverted border on press */
+    border-color: var(--w95-face-dk) #fff #fff var(--w95-face-dk);
+    box-shadow: inset -1px -1px #fff, inset 1px 1px var(--w95-face-sh);
+    transform: translate(1px, 1px);
+}
+.w95-btn:focus-visible { outline: 1px dotted #000; outline-offset: 2px; }
+
+/* raised/etched wells */
+.w95-well { background: var(--w95-face); border: 2px solid;
+    border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh); }
+.w95-well-inset { background: #fff; border: 2px solid;
+    border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh); }
+
+/* --- DOS boot screen -------------------------------------------------------- */
+.w95-boot {
+    position: absolute; inset: 0;
+    background: #010108;
+    color: #c0c0c0;
+    padding: 36px 44px;
+    font-size: 12px;
+    line-height: 1.55;
+    white-space: pre;
+    overflow: hidden;
+    animation: none;
+}
+.w95-boot .blink { animation: w95-caret 0.9s steps(1) infinite; }
+@keyframes w95-caret { 50% { opacity: 0; } }
+
+/* --- desktop --------------------------------------------------------------- */
+.w95-desktop {
+    position: absolute; inset: 0;
+    background: var(--w95-desktop);
+    /* faint dither so the teal reads era-authentic rather than flat */
+    background-image:
+        radial-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+        radial-gradient(rgba(0,0,0,0.10) 1px, transparent 1px);
+    background-size: 4px 4px;
+    background-position: 0 0, 2px 2px;
+    overflow: hidden;
+}
+
+/* desktop icons */
+.w95-icons { position: absolute; top: 14px; left: 14px; display: flex; flex-direction: column; gap: 20px; }
+.w95-icon {
+    width: 88px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    background: none; border: none; cursor: pointer;
+    font-family: inherit; font-size: inherit;
+    color: #fff; text-shadow: 1px 1px #000;
+    padding: 6px 4px;
+    outline: none;
+}
+.w95-icon.engrave {
+    outline: 1px dotted #fff;
+    outline-offset: -1px;
+}
+.w95-icon .glyph {
+    font-size: 26px; line-height: 1;
+    width: 34px; height: 34px;
+    display: grid; place-items: center;
+    filter: drop-shadow(1px 1px 0 #000);
+}
+.w95-icon:focus-visible .glyph, .w95-icon:hover .glyph { filter: drop-shadow(0 0 4px #ffd47e) drop-shadow(1px 1px 0 #000); }
+
+/* --- windows ---------------------------------------------------------------- */
+.w95-window {
+    position: absolute;
+    background: var(--w95-face);
+    border: 2px solid;
+    border-color: var(--w95-face-hi) var(--w95-face-sh) var(--w95-face-sh) var(--w95-face-hi);
+    box-shadow: inset 1px 1px #fff, inset -1px -1px var(--w95-face-dk), 4px 4px 12px rgba(0,0,0,0.45);
+    padding: 3px;
+    display: flex; flex-direction: column;
+    min-width: 280px;
+    min-height: 180px;
+}
+.w95-window.w95-max { border: none; box-shadow: none; inset: 0; }
+.w95-titlebar {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--w95-face-sh); /* inactive */
+    color: #c0c0c0;
+    padding: 3px 4px;
+    font-weight: 700;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+}
+.w95-window.w95-active .w95-titlebar {
+    background: linear-gradient(90deg, var(--w95-blue), #1084d0);
+    color: #fff;
+    cursor: default;
+}
+.w95-titlebar .tb-ico { font-size: 13px; }
+.w95-titlebar .tb-text { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.w95-titlebar .tb-btns { display: flex; gap: 2px; }
+.w95-tbtn {
+    width: 16px; height: 14px;
+    display: grid; place-items: center;
+    background: var(--w95-face);
+    border: 1px solid; border-color: var(--w95-face-hi) var(--w95-face-sh) var(--w95-face-sh) var(--w95-face-hi);
+    font-size: 9px; font-weight: 900; line-height: 1;
+    cursor: pointer; color: #000;
+}
+.w95-tbtn:active { border-color: var(--w95-face-dk) #fff #fff var(--w95-face-dk); }
+
+.w95-body {
+    background: #fff;
+    flex: 1;
+    overflow: auto;
+    padding: 8px;
+    margin-top: 3px;
+    border: 1px solid; border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh);
+}
+.w95-body.w95-term {
+    background: #051005;
+    color: #7CFC94;
+    font-family: var(--font-mono, monospace);
+    font-size: 11px; line-height: 1.5;
+    padding: 10px;
+}
+.w95-statusbar {
+    background: var(--w95-face);
+    border-top: 1px solid #fff;
+    margin-top: 3px;
+    padding: 3px 6px;
+    font-size: 10px;
+    display: flex; gap: 10px;
+}
+.w95-statusbar .cell { border: 1px solid; border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh); padding: 0 6px; }
+
+/* explorer layout */
+.w95-expl { display: grid; grid-template-columns: 140px 1fr; flex: 1; min-height: 0; }
+.w95-expl .tree { padding: 6px; border-right: 1px solid #808080; overflow: auto; background: #fff; }
+.w95-expl .tree div.w95-sel { background: #cfe8cf; }
+.w95-expl .list { padding: 6px 10px; overflow: auto; background: #fff; }
+.w95-expl .frow {
+    display: flex; align-items: center; gap: 8px;
+    padding: 3px 4px; cursor: pointer;
+}
+.w95-expl .frow:hover { background: #cfe8cf; }
+.w95-expl .frow.w95-sel { background: var(--w95-blue); color: #fff; }
+/* explorer toolbar */
+.w95-expl-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 3px 4px;
+    background: var(--w95-face);
+    border-bottom: 2px solid;
+    border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh);
+}
+.w95-expl-bar .w95-btn { padding: 2px 8px; }
+.w95-expl-bar .fpath {
+    font-size: inherit; color: var(--w95-text);
+    background: #fff; border: 1px solid var(--w95-face-sh);
+    padding: 1px 6px; flex: 1;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* notepad: menu + editable page */
+.w95-nt-wrap { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.w95-menu {
+    background: var(--w95-face);
+    border-bottom: 2px solid;
+    border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh);
+    padding: 1px 2px;
+    display: flex; gap: 2px;
+}
+.w95-menu .menu-title {
+    position: relative;
+    padding: 3px 9px; cursor: default;
+    border: 1px solid transparent;
+}
+.w95-menu .menu-title:hover { background: #ddd; }
+.w95-menu .menu-title .menu-drop {
+    display: none;
+    position: absolute; left: 0; top: 100%;
+    min-width: 132px;
+    background: var(--w95-face);
+    border: 2px solid;
+    border-color: var(--w95-face-hi) var(--w95-face-sh) var(--w95-face-sh) var(--w95-face-hi);
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.45);
+    z-index: 5;
+    padding: 1px;
+}
+.w95-menu .menu-title .menu-drop.open { display: block; }
+.w95-menu .menu-item { padding: 4px 12px; cursor: default; white-space: nowrap; }
+.w95-menu .menu-item:hover { background: var(--w95-blue); color: #fff; }
+.w95-menu .menu-sep { height: 1px; background: var(--w95-face-sh); margin: 2px 6px; box-shadow: 0 1px #fff; }
+
+.w95-body textarea.w95-nt-main {
+    width: 100%; height: 100%;
+    box-sizing: border-box;
+    flex: 1;
+    border: none; outline: none; resize: none;
+    background: #fff; color: #000;
+    font-family: var(--w95-font); font-size: var(--w95-font-size);
+    line-height: 1.5;
+    padding: 3px 4px;
+}
+
+/* find dialog results */
+.w95-find .results {
+    background: #fff;
+    border: 2px solid;
+    border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh);
+    max-height: 128px; overflow: auto; padding: 2px;
+}
+.w95-find .hit { padding: 3px 6px; cursor: pointer; }
+.w95-find .hit:hover { background: #cfe8cf; }
+.w95-find .hit.w95-sel { background: var(--w95-blue); color: #fff; }
+
+/* generic well-backed form fields (Run / Find) */
+.w95-inp {
+    font-family: inherit; font-size: inherit;
+    background: #fff; color: var(--w95-text);
+    border: 2px solid; border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh);
+    padding: 3px 4px;
+}
+.w95-inp:focus { outline: none; }
+
+/* --- DOS shell ------------------------------------------------------------- */
+.w95-term {
+    display: flex; flex-direction: column;
+    height: 100%;
+    background: #000;
+    color: #c0c0c0;
+    font: inherit;
+}
+.w95-dos-log {
+    flex: 1; margin: 0; padding: 10px 12px 4px;
+    white-space: pre-wrap; overflow-y: auto;
+    font-size: 11px; line-height: 1.55;
+    background: #000; color: #c0c0c0;
+}
+.w95-dos-log .dim  { color: #7a7a7a; }
+.w95-dos-log .dir  { color: #ffff55; }
+.w95-dos-log .white { color: #fff; font-weight: 700; }
+.w95-dos-line {
+    display: flex; align-items: center;
+    padding: 0 12px 10px;
+}
+.w95-dos-prompt { color: #c0c0c0; white-space: pre; }
+.w95-dos-input {
+    flex: 1; background: transparent; border: none; outline: none;
+    color: #c0c0c0; font: inherit; caret-color: #c0c0c0;
+}
+.w95-dos-input::selection { background: #555; }
+
+/* control panel / applets */
+.w95-ctrl { display: flex; gap: 22px; padding: 12px; }
+.w95-cp-icon {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    width: 92px; padding: 10px 4px 8px;
+    background: none; border: none; cursor: pointer;
+    font-family: inherit; font-size: inherit; color: #000;
+}
+.w95-cp-icon .glyph { font-size: 26px; line-height: 1; }
+.w95-cp-icon:hover { background: #dfdfdf; }
+.w95-cp-icon:active { background: #c8c8c8; }
+.w95-prop { padding: 12px 14px; }
+.w95-prop .swatch {
+    width: 26px; height: 22px;
+    border: 2px solid; border-color: var(--w95-face-hi) var(--w95-face-sh) var(--w95-face-sh) var(--w95-face-hi);
+    cursor: pointer; padding: 0;
+}
+.w95-radio { display: flex; align-items: center; gap: 8px; padding: 3px 2px; cursor: default; }
+.w95-radio input { accent-color: var(--w95-blue); }
+.shut-row { margin: 2px 0; }
+
+/* desktop icons: selected state (single-click, like the real thing) */
+.w95-icon.w95-sel { outline: 1px dashed rgba(255,255,255,0.85); outline-offset: -1px; }
+
+/* start menu */
+.w95-taskbar {
+    position: absolute; right: 0; bottom: 0; left: 0;
+    height: 30px;
+    background: var(--w95-face);
+    border-top: 1px solid #fff;
+    display: flex; gap: 2px; align-items: center;
+    padding: 2px;
+    z-index: 500;
+}
+.w95-start {
+    display: flex; align-items: center; gap: 5px;
+    font-weight: 900;
+    padding: 3px 8px 2px 4px;
+}
+.w95-start .win-flag { font-size: 13px; }
+.w95-tasks { flex: 1; display: flex; gap: 2px; overflow: hidden; }
+.w95-task {
+    display: flex; align-items: center; gap: 4px;
+    max-width: 160px;
+    padding: 3px 6px;
+    border: 2px solid; border-color: var(--w95-face-hi) var(--w95-face-sh) var(--w95-face-sh) var(--w95-face-hi);
+    box-shadow: inset 1px 1px #fff, inset -1px -1px var(--w95-face-dk);
+    background: var(--w95-face);
+    cursor: pointer;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.w95-task.w95-active { border-color: var(--w95-face-dk) #fff #fff var(--w95-face-dk); background: var(--w95-face-hi); }
+.w95-tray {
+    display: flex; align-items: center; gap: 8px;
+    border-left: 2px solid; border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh);
+    padding: 2px 8px 2px 10px;
+}
+.w95-tray .clock { font-variant-numeric: tabular-nums; }
+
+.w95-startmenu {
+    position: absolute;
+    left: 2px; bottom: 30px;
+    width: 168px;
+    background: var(--w95-face);
+    border: 2px solid;
+    border-color: var(--w95-face-hi) var(--w95-face-sh) var(--w95-face-sh) var(--w95-face-hi);
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.45);
+    z-index: 600;
+    padding: 2px;
+    display: none;
+}
+.w95-root .w95-startmenu.open { display: block; }
+.w95-startmenu .sm-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+.w95-startmenu .sm-item:hover { background: var(--w95-blue); color: #fff; }
+.w95-startmenu .sm-sep { height: 1px; background: var(--w95-face-sh); margin: 2px 24px 2px 4px; box-shadow: 0 1px #fff; }
+
+/* CRT power-on flash */
+.w95-flash {
+    position: absolute; inset: 0; background: #dfffe9; opacity: 0;
+    animation: w95-flash 0.5s linear forwards;
+    pointer-events: none;
+}
+@keyframes w95-flash {
+    0% { opacity: 0; transform: scaleY(0.004); }
+    45% { opacity: 1; transform: scaleY(1); }
+    100% { opacity: 0; transform: scaleY(1); }
+}
+@keyframes w95-crt-on {
+    0% { transform: scaleY(0.002); opacity: 0; }
+    70% { transform: scaleY(1.03); opacity: 1; }
+    100% { transform: scaleY(1); opacity: 1; }
+}
+
+/* shutdown (safe-to-power-off) */
+.w95-safeoff {
+    position: absolute; inset: 0; background: #000;
+    display: grid; place-items: center;
+    color: #e56f0f;
+    font-weight: 700;
+    text-align: center;
+}
+.w95-safeoff .frame {
+    background: #000; color: #fff;
+    border: 2px solid #fff;
+    padding: 18px 26px;
+}
+.w95-safeoff .amber { color: #e56f0f; }
+
+/* responsive: small screens get fullscreen everything */
+@media (max-width: 760px) {
+    .w95-window { max-width: 92vw; max-height: 80vh; }
+}

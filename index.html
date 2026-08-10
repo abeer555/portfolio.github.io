@@ -176,8 +176,13 @@
             text-shadow: 4px 4px 0 var(--ink);
             text-transform: uppercase;
         }
-        .loader-line { color: var(--green); font-size: 0.85rem; font-weight: 700; }
-        .loader-line .caret { animation: caret-blink 0.6s steps(1) infinite; }
+            color: var(--green); font-size: 0.82rem; font-weight: 700;
+            line-height: 1.75; white-space: pre-wrap; text-align: left;
+            margin: 0;
+            min-height: 5.5em;
+            letter-spacing: 0.5px;
+        }
+        .loader-boot .caret { animation: caret-blink 0.6s steps(1) infinite; }
         @keyframes caret-blink { 50% { opacity: 0; } }
         .loader-bar {
             width: min(340px, 70vw);
@@ -195,11 +200,14 @@
             #loader { display: none; } /* global animation:none would strand the overlay */
         }
 
-        /* --- CUSTOM CURSOR (enabled by main.js on fine pointers only) --- */
+        /* --- CUSTOM CURSOR (enabled by main.js on fine pointers only) ---
+           z-index must beat the Win95 overlay (9000): when the CRT powers on the
+           desktop is a fixed full-screen layer ABOVE the page, and without this
+           the pointer would disappear exactly when the user needs it. */
         #cursor, #cursor-dot {
             position: fixed; top: 0; left: 0;
             pointer-events: none;
-            z-index: 4000;
+            z-index: 10001;
             opacity: 0;
         }
         body.custom-cursor #cursor, body.custom-cursor #cursor-dot { opacity: 1; }
@@ -219,6 +227,10 @@
             transition: opacity 0.15s ease;
         }
         body.custom-cursor, body.custom-cursor *:not(input):not(textarea) { cursor: none !important; }
+        /* while Windows 95 is running, the pointer is the classic OS arrow —
+           the cybernetic crosshair never crosses the machine's screen edge */
+        body.custom-cursor.w95-live, body.custom-cursor.w95-live * { cursor: auto !important; }
+        body.w95-live #cursor, body.w95-live #cursor-dot { opacity: 0 !important; }
 
         /* --- SYSTEM STATUS HUD (flies with the sidebar) --- */
         .sys-hud { font-size: 0.7rem; color: var(--dim); }
@@ -482,11 +494,10 @@
         .sec-label.amber { background: var(--amber); }
         .sec-cmd { color: var(--dim); font-size: 0.85rem; font-weight: 400; }
 
-        /* --- HERO --- */
-        /* --- HERO: full-width row spanning lightly into the sidebar column --- */
+        /* --- HERO: copy left, live terminal right (win95-flavored) --- */
         .hero-grid {
             display: grid;
-            grid-template-columns: 1.6fr 1fr;
+            grid-template-columns: minmax(0, 1.15fr) minmax(520px, 0.85fr);
             gap: calc(var(--gap) + 14px);
             align-items: start;
         }
@@ -518,15 +529,6 @@
         }
         .hero-pitch { color: var(--dim); max-width: 68ch; }
         .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
-
-        /* +hero: simplest layout — name over the full row with the terminal
-           unique and optional, so nothing docked right that looks empty */
-        @media (min-width: 1200px) {
-            .hero-grid { grid-template-columns: 1fr; }
-            /* keep the nav/feed riding beside the copy-only column so the
-               name breathes with the panel instead of sitting in a side rail */
-            .nav-feed { grid-column: 1; margin-top: 4px; }
-        }
 
         /* terminal window */
         .t-win {
@@ -563,6 +565,187 @@
             min-height: 7.5em;
         }
         .boot-win .t-body .dim { color: var(--dim); }
+
+        /* --- CRT STANDBY SCREEN (no terminal, no interaction, just a logo) --- */
+        .crt-standby {
+            background: #050510;
+            border-width: 3px;
+        }
+        .crt-standby-body {
+            display: grid;
+            place-items: center;
+            min-height: 460px;
+        }
+        .crt-standby-logo {
+            font-family: var(--font-mono);
+            color: rgba(0,255,65,0.35);
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 6px;
+            text-shadow: 0 0 12px rgba(0,255,65,0.4);
+            animation: standby-pulse 3s ease-in-out infinite;
+        }
+        @keyframes standby-pulse {
+            0%, 100% { opacity: 0.35; }
+            50% { opacity: 0.6; }
+        }
+        /* CRT scanlines + subtle roll band — cosmetic only */
+        .t-win95::before {
+            content: "";
+            position: absolute; inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0,0,0,0.28) 0px, rgba(0,0,0,0.28) 1px,
+                transparent 1px, transparent 3px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+        .t-win95::after {
+            content: "";
+            position: absolute; left: 0; right: 0; top: -30%;
+            height: 30%;
+            background: linear-gradient(
+                180deg,
+                rgba(0,255,65,0) 0%,
+                rgba(0,255,65,0.05) 45%,
+                rgba(255,255,255,0.07) 55%,
+                rgba(0,255,65,0) 100%
+            );
+            animation: crt-scroll 7.5s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .t-win95::after, .crt-standby-logo { animation: none; }
+        }
+        @keyframes crt-scroll {
+            from { transform: translateY(0); }
+            to   { transform: translateY(400%); }
+        }
+
+        /* --- 3D CRT SHELL ------------------------------------------------
+           The hero right column IS the monitor: chunky bezel, curved bulged
+           screen, chin with brand badge, LED and a real power button. The
+           terminal is only ever a picture inside the glass — when the CRT is
+           off nothing inside renders, so all you ever see is the CRT. */
+        .crt-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            perspective: 1200px;
+            margin-top: 6px;
+        }
+        .crt-body {
+            width: 100%;
+            background: linear-gradient(168deg, #d0cec4 0%, #b3b1a5 58%, #8f8d81 100%);
+            border: var(--bw) solid var(--ink);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 18px 18px 14px;
+            transform: none; /* JS/GSAP owns all movement now — pure hover tilt torn down */
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+        @media (max-width: 1400px) { .crt-body { transform: none; } }
+
+        /* curved glass: border-radius + slight bulge, fully clipped overlay stack */
+        .crt-screen {
+            position: relative;
+            border: 3px solid #3f3d35;
+            border-radius: 14px / 18px;
+            background: radial-gradient(130% 90% at 50% 42%, #171e17 0%, #0a0e0a 58%, #040604 100%);
+            box-shadow:
+                inset 0 0 2px rgba(0, 0, 0, 0.9),
+                inset 0 0 26px rgba(0, 0, 0, 0.85),
+                inset 0 2px 8px rgba(0, 0, 0, 0.75);
+            overflow: hidden;
+            cursor: pointer;
+        }
+        /* lit state toggled by main.js — screen itself fills with green phosphor glow */
+        .crt-screen.is-on {
+            background: radial-gradient(130% 90% at 50% 42%, #0c1a10 0%, #050b07 60%, #020402 100%);
+            box-shadow:
+                inset 0 0 2px rgba(0, 0, 0, 0.9),
+                inset 0 0 30px rgba(30, 255, 120, 0.16),
+                inset 0 2px 8px rgba(0, 0, 0, 0.75);
+        }
+        .crt-screen-inner { position: relative; z-index: 1; }
+        .crt-screen-inner .t-bar { border-bottom-width: 2px; }
+        /* while the CRT is off the terminal is invisible AND inert, so a stray
+           input or scanline never leaks through the dark glass */
+        .crt-wrap:not(.is-on) .crt-screen-inner {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+        /* phosphor vignette + curvature shading over whatever the screen shows */
+        .crt-glare {
+            position: absolute; inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            background:
+                radial-gradient(120% 100% at 50% 0%, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 26%, rgba(255, 255, 255, 0) 46%),
+                radial-gradient(140% 120% at 50% 55%, rgba(255, 255, 255, 0) 58%, rgba(0, 0, 0, 0.42) 100%);
+        }
+        .crt-wrap:not(.is-on) .crt-glare {
+            background:
+                radial-gradient(120% 100% at 50% 0%, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.015) 24%, rgba(255, 255, 255, 0) 42%),
+                radial-gradient(140% 120% at 50% 55%, rgba(255, 255, 255, 0) 55%, rgba(0, 0, 0, 0.55) 100%);
+        }
+
+        /* chin: brand badge, standby LED, satisfying clicky power button */
+        .crt-chin {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 13px;
+            padding: 9px 14px;
+            background: linear-gradient(180deg, #c8c6ba, #a5a397);
+            border: var(--bw) solid var(--ink);
+            border-radius: 9px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+        }
+        .crt-chin .brand {
+            font-weight: 800;
+            font-size: 0.7rem;
+            letter-spacing: 2.5px;
+            color: #4a483e;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+        .pwr-led {
+            width: 9px; height: 9px;
+            border-radius: 50%;
+            background: #2e2c26;
+            border: 1px solid #17160f;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.65);
+            margin-left: auto;
+        }
+        .pwr-led.on {
+            background: var(--green);
+            box-shadow: 0 0 7px rgba(0, 255, 65, 0.95), inset 0 0 2px rgba(0, 0, 0, 0.45);
+        }
+        .crt-power {
+            width: 34px; height: 30px;
+            border: 2px solid #55534b;
+            border-radius: 5px;
+            background: linear-gradient(180deg, #e9e7dd, #c3c1b6);
+            box-shadow: 0 2px 0 #55534b, inset 0 1px 0 rgba(255, 255, 255, 0.75);
+            color: #3a382f;
+            font-size: 15px;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .crt-power:hover { color: #000; }
+        .crt-power:active, .crt-power[aria-pressed="true"] {
+            transform: translateY(2px);
+            box-shadow: 0 0 0 #55534b, inset 0 1px 3px rgba(0, 0, 0, 0.32);
+        }
+        .crt-power:focus-visible { outline: 2px dotted #000; outline-offset: 2px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .crt-body, .crt-body { transition: none; }
+        }
 
         /* hero 3D panel — retired; ship now lives on the pinned global layer */
 
@@ -846,14 +1029,18 @@
 </head>
 <body>
 
-    <!-- BOOT LOADER  -  pure CSS 3D cube, self-dismisses at ~1.3s even without JS -->
+    <!-- BOOT LOADER  -  [ OK ]-style boot, self-dismisses via CSS even without JS -->
     <div id="loader" aria-hidden="true">
         <div class="cube-scene">
             <div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div>
             <div class="cube inner"><i></i><i></i><i></i><i></i><i></i><i></i></div>
         </div>
         <p class="loader-name">ABEER GUPTA</p>
-        <p class="loader-line">acquiring telemetry… /home/abeer<span class="caret">_</span></p>
+        <pre class="loader-boot" id="loader-boot"><span class="bl">[ OK ] cpu      — idle at 4.2GHz</span>
+<span class="bl d1">[ OK ] memory   — 16.0 GiB detected</span>
+<span class="bl d2">[ OK ] net      — tcp/ip up</span>
+<span class="bl d3">[ OK ] config   — /home/abeer mounted</span>
+<span class="bl d4">[ OK ] shell    — fish 4.x ready</span></pre>
         <div class="loader-bar"><i></i></div>
     </div>
 
@@ -946,15 +1133,26 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
                         </div>
                     </div>
 
-                    <div class="t-win nav-feed" aria-hidden="true">
-                        <div class="t-bar">
-                            <span>NAV/FEED</span>
-                            <span class="t-dots"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
-                        </div>
-                        <div class="t-body" style="font-size: 0.72rem; color: var(--dim); padding: 14px 16px;">
-                            <div><span style="color: var(--green); font-weight: 700;">status:</span> shipping clean, no GLBs in the bundle</div>
-                            <div><span style="color: var(--green); font-weight: 700;">voice :</span> scroll down for the launch</div>
-                            <div style="margin-top: 8px; color: var(--amber);">"keep it fast, keep it readable"</div>
+                    <!-- CRT prop: tap to open the Win95 desktop -->
+                    <div class="crt-wrap" id="crt-wrap">
+                        <div class="crt-body" id="crt-body">
+                            <div class="crt-screen" id="crt-screen" title="Tap to power on Windows 95">
+                                <div class="crt-standby crt-screen-inner" id="hero-term">
+                                    <div class="t-bar">
+                                        <span class="wt-title">ABEER·95 — standby</span>
+                                        <span class="t-dots"><i class="d-r"></i><i class="d-a"></i><i class="d-g"></i></span>
+                                    </div>
+                                    <div class="t-win95 crt-standby-body">
+                                        <pre class="t-body t-win95-log crt-standby-logo">ABEER·95</pre>
+                                    </div>
+                                </div>
+                                <div class="crt-glare" aria-hidden="true"></div>
+                            </div>
+                            <div class="crt-chin">
+                                <span class="brand">ABEER·95</span>
+                                <span class="pwr-led" id="crt-led" aria-hidden="true"></span>
+                                <button class="crt-power" id="crt-power" type="button" aria-pressed="false" aria-label="Power on / open Windows 95 desktop" title="Power on / open Windows 95 desktop">⏻</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1420,6 +1618,10 @@ $ whoami<span class="dim"> → builder. shipper. terminal dweller.</span></pre>
         </main>
     </div>
 
+    <!-- Win95 desktop overlay mounts here (created by js/win95.js on CRT power) -->
+    <div id="w95-root" hidden></div>
+
+    <link rel="stylesheet" href="win95.css">
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
