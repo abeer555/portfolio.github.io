@@ -1,5 +1,11 @@
 /*
  * main.js — tiny eager module. GSAP scroll FX code-splits behind idle.
+ *
+ * Anchor scroll is native (`html { scroll-behavior: smooth }`). GSAP used to
+ * intercept `#` clicks with ScrollToPlugin, but that double-smoothed against
+ * the browser's own smooth-scroll and the tween sometimes stalled — the CTA
+ * buttons looked dead. Now the browser drives the glide and scrollfx only
+ * owns reveal/pin/parallax.
  */
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

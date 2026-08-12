@@ -131,7 +131,11 @@
     min-width: 280px;
     min-height: 180px;
 }
-.w95-window.w95-max { border: none; box-shadow: none; inset: 0; }
+.w95-window.w95-max {
+    border: none; box-shadow: none;
+    top: 0 !important; left: 0 !important;
+    width: 100% !important; height: calc(100% - 32px) !important; /* clear the taskbar */
+}
 .w95-titlebar {
     display: flex; align-items: center; gap: 6px;
     background: var(--w95-face-sh); /* inactive */
@@ -373,7 +377,9 @@
     padding: 2px;
     display: none;
 }
-.w95-root .w95-startmenu.open { display: block; }
+/* the overlay element is #w95-root (id), not a class — the click handler in
+   win95.js toggles .open, this rule is what makes that visible at all */
+#w95-root .w95-startmenu.open { display: block; }
 .w95-startmenu .sm-item {
     display: flex; align-items: center; gap: 10px;
     padding: 6px 8px;
@@ -382,6 +388,24 @@
 }
 .w95-startmenu .sm-item:hover { background: var(--w95-blue); color: #fff; }
 .w95-startmenu .sm-sep { height: 1px; background: var(--w95-face-sh); margin: 2px 24px 2px 4px; box-shadow: 0 1px #fff; }
+
+/* cascading submenu (Programs ▸ Accessories ▸ …) */
+.w95-startmenu .sm-item { position: relative; }
+.w95-startmenu .sm-item .sm-arrow { margin-left: auto; color: inherit; }
+.w95-startmenu .sm-cascade {
+    display: none;
+    position: absolute; left: 100%; top: -2px;
+    min-width: 148px;
+    background: var(--w95-face);
+    border: 2px solid;
+    border-color: var(--w95-face-hi) var(--w95-face-sh) var(--w95-face-sh) var(--w95-face-hi);
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.45);
+    padding: 2px;
+    z-index: 601;
+}
+.w95-startmenu .sm-parent:hover > .sm-cascade,
+.w95-startmenu .sm-cascade.open { display: block; }
+.w95-startmenu .sm-cascade .sm-item { white-space: nowrap; }
 
 /* CRT power-on flash */
 .w95-flash {
@@ -419,3 +443,148 @@
 @media (max-width: 760px) {
     .w95-window { max-width: 92vw; max-height: 80vh; }
 }
+
+/* ============ NEW APPS ============ */
+
+/* calculator */
+.w95-calc { display: flex; flex-direction: column; gap: 6px; height: 100%; }
+.calc-display {
+    background: #fff;
+    border: 2px solid;
+    border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh);
+    padding: 6px 8px;
+    text-align: right;
+    font-size: 18px;
+    font-family: var(--w95-font);
+    height: 32px;
+    overflow: hidden;
+}
+.calc-pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; flex: 1; }
+.calc-key { padding: 0; font-size: 13px; font-weight: 700; }
+.calc-key:active { transform: translate(1px, 1px); }
+
+/* minesweeper */
+.w95-mines { display: flex; flex-direction: column; gap: 5px; height: 100%; }
+.mines-top {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--w95-face);
+    border: 2px solid; border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh);
+    padding: 3px 6px;
+}
+.mines-count, .mines-timer {
+    font-family: monospace; font-weight: 900; font-size: 14px; color: #f00;
+    background: #000; padding: 0 4px;
+}
+.mines-face { font-size: 18px; line-height: 1; padding: 1px 6px; background: var(--w95-face);
+    border: 2px solid; border-color: var(--w95-face-hi) var(--w95-face-sh) var(--w95-face-sh) var(--w95-face-hi); cursor: pointer; }
+.mines-face:active { border-color: var(--w95-face-dk) #fff #fff var(--w95-face-dk); }
+.mines-grid {
+    display: grid; grid-template-columns: repeat(9, 18px); grid-auto-rows: 18px;
+    gap: 0; margin: 0 auto; background: #808080;
+    border: 2px solid; border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh);
+}
+.mcell {
+    width: 18px; height: 18px;
+    font-size: 11px; font-weight: 900; line-height: 1; text-align: center;
+    background: var(--w95-face); border: 2px solid;
+    border-color: #fff var(--w95-face-sh) var(--w95-face-sh) #fff;
+    cursor: pointer; padding: 0;
+}
+.mcell.open { border: 1px solid var(--w95-face-sh); background: #c8c8c8; cursor: default; }
+.mcell.n1 { color: #0000ff; } .mcell.n2 { color: #008000; } .mcell.n3 { color: #ff0000; }
+.mcell.n4 { color: #000080; } .mcell.n5 { color: #800000; } .mcell.n6 { color: #008080; }
+.mcell.boom { background: #f00; }
+
+/* paint */
+.w95-paint { display: flex; flex-direction: column; gap: 5px; height: 100%; }
+.paint-bar { display: flex; flex-direction: column; gap: 4px; }
+.paint-swatches { display: flex; gap: 2px; flex-wrap: wrap; }
+.paint-swatches .swatch { width: 18px; height: 16px; border: 2px solid;
+    border-color: var(--w95-face-hi) var(--w95-face-sh) var(--w95-face-sh) var(--w95-face-hi); cursor: pointer; padding: 0; }
+.paint-swatches .swatch.sel { outline: 2px solid #000; outline-offset: -2px; }
+.paint-tools { display: flex; gap: 3px; }
+.paint-tools .w95-btn { padding: 2px 7px; }
+.paint-canvas {
+    flex: 1; width: 100%; background: #fff; cursor: crosshair;
+    border: 2px solid; border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh);
+    touch-action: none;
+}
+
+/* solitaire */
+.w95-sol { height: 100%; }
+.sol-felt {
+    background: #007a33; /* classic felt green */
+    padding: 8px;
+    height: 100%; box-sizing: border-box;
+    overflow: auto;
+}
+.sol-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+.sol-gap { flex: 0 0 56px; }
+.sol-tab { align-items: flex-start; }
+.sol-pile { display: flex; flex-direction: column; gap: 0; }
+.solcard {
+    width: 44px; height: 60px;
+    background: #fff; color: #000;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-size: 13px; font-weight: 900;
+    display: grid; place-items: center;
+    user-select: none;
+    box-sizing: border-box;
+    position: relative;
+}
+/* face-down cards fan out with a sliver showing; face-up stack a bit tighter */
+.sol-pile .solcard:not(.up) + .solcard { margin-top: -46px; }
+.sol-pile .solcard.up + .solcard.up { margin-top: -40px; }
+.sol-pile .solcard:first-child { margin-top: 0; }
+.solcard:not(.up) { background: repeating-linear-gradient(45deg, #000080, #000080 3px, #2828e0 3px, #2828e0 6px); color: transparent; }
+.solcard.red { color: #d00; }
+.solcard.slot {
+    background: rgba(0,0,0,0.18); color: rgba(255,255,255,0.5);
+    border: 1px dashed rgba(255,255,255,0.4);
+}
+.solcard.stock { cursor: pointer; }
+.solcard.stock:hover { filter: brightness(1.15); }
+.solcard.slot.waste, .solcard.slot.found { background: rgba(0,0,0,0.18); }
+
+/* character map */
+.w95-charmap { display: flex; flex-direction: column; gap: 6px; height: 100%; }
+.charmap-grid {
+    flex: 1; overflow: auto;
+    display: grid; grid-template-columns: repeat(auto-fill, 26px);
+    gap: 2px; padding: 2px;
+    background: #fff; border: 2px solid;
+    border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh);
+}
+.cmcell {
+    width: 26px; height: 24px;
+    font-size: 13px; line-height: 1;
+    background: #fff; color: #000;
+    border: 1px solid #c0c0c0;
+    cursor: pointer; padding: 0;
+}
+.cmcell:hover { background: #cfe8cf; }
+.cmcell:active { background: var(--w95-blue); color: #fff; }
+.charmap-preview {
+    font-size: 34px; text-align: center; height: 42px; line-height: 42px;
+    background: var(--w95-face);
+    border: 1px solid var(--w95-face-sh);
+}
+.charmap-foot { display: flex; gap: 4px; align-items: center; }
+
+/* internet explorer */
+.w95-ie { display: flex; flex-direction: column; height: 100%; }
+.ie-bar {
+    display: flex; align-items: center;
+    background: var(--w95-face);
+    border-bottom: 2px solid;
+    border-color: var(--w95-face-sh) #fff #fff var(--w95-face-sh);
+    padding: 3px 6px;
+    font-size: var(--w95-font-size);
+}
+.ie-view { flex: 1; background: #fff; overflow: auto; }
+.ie-progress { display: flex; gap: 3px; width: 120px; height: 16px; }
+.ie-block { flex: 1; background: #000080; opacity: 0; animation: ie-load 1.6s steps(1) infinite; }
+.ie-block:nth-child(2) { animation-delay: 0.2s; } .ie-block:nth-child(3) { animation-delay: 0.4s; }
+.ie-block:nth-child(4) { animation-delay: 0.6s; } .ie-block:nth-child(5) { animation-delay: 0.8s; }
+@keyframes ie-load { 0% { opacity: 1; } 50% { opacity: 0; } }

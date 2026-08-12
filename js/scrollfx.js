@@ -13,18 +13,17 @@
  *   7. parallax dividers            (alternating xPercent scrubs)
  *   8. projects                     (desktop: pinned horizontal gallery; mobile: snap reveals)
  *   9. HUD — alert meter            (ScrollTrigger.progress over the whole page)
- *  10. smooth nav + CTA scrolling   (ScrollToPlugin)
- *  11. the CRT is Draggable         (flick it, it springs home — pure delight)
+ *  10. in-page anchors              (native smooth scroll; GSAP stays out)
+ *  11. the CRT is Draggable          (flick it, it springs home — pure delight)
  */
 
 import { gsap } from 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/+esm';
 import { ScrollTrigger } from 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/ScrollTrigger.js/+esm';
-import { ScrollToPlugin } from 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/ScrollToPlugin.js/+esm';
 import { Draggable } from 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/Draggable.js/+esm';
 import { InertiaPlugin } from 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/InertiaPlugin.js/+esm';
 import { SplitText } from 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/SplitText.js/+esm';
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable, InertiaPlugin, SplitText);
+gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, SplitText);
 
 const SNAP = { duration: 0.45, ease: 'power4.out' }; // snappy, not soft
 
@@ -201,8 +200,13 @@ export function init() {
         });
     }
 
-    /* 10 ---------- smooth scrolling for in-page links ----------------------- */
-    initSmoothAnchors();
+    /* 10 ---------- in-page anchors: native ----------------------------------
+     * Anchor scroll is deliberately *not* intercepted here. The page sets
+     * `html { scroll-behavior: smooth }` and hashing stays native; GSAP only
+     * owns reveal/pin/parallax. A previous version piped every # link through
+     * ScrollToPlugin, but that fought the browser's own smooth-scroll (both
+     * sides ramped every frame) and the CTA buttons read as dead. Browser
+     * smooth-scroll is the single source of truth for anchors. */
 
     /* 11 ---------- grab the CRT by the bezel and flick it ------------------- */
     initCrtDrag();
@@ -212,7 +216,14 @@ export function init() {
 }
 
 /* ================================================================== details */
-
+/* Hero intro: come in, settle, hand the styles back.
+ * gsap.from() leaves inline transforms/opacity on the targets if the timeline
+ * gets paused, killed, or simply hasn't hit its last render tick yet — the
+ * page-load loader can do exactly that (waits 1900ms). Then hover re-runs
+ * transform on a half-settled element and the buttons "don't click" because
+ * every pointer move reschedules the layout. clearProps:'all' means: when
+ * each tween finishes, drop the inline styles so the browser owns the
+ * buttons again. */
 function heroIntroTimeline() {
     const parts = {
         title: document.querySelector('.hero-title'),
@@ -225,38 +236,31 @@ function heroIntroTimeline() {
 
     if (!parts.title) return;
 
-    const tl = gsap.timeline({ defaults: { duration: 0.6, ease: 'power3.out' } });
+    const tl = gsap.timeline({
+        defaults: { duration: 0.6, ease: 'power3.out' },
+        onComplete: () => {
+            /* safety net: even if a sub-tween was interrupted (e.g. by an
+               early click that navigated away mid-intro), clear every inline
+               style the timeline applied so the buttons stay clickable. */
+            gsap.set(
+                [parts.title, parts.tag, parts.pitch, parts.boot, parts.crt, ...(parts.ctas?.children || [])].filter(Boolean),
+                { clearProps: 'all' },
+            );
+        },
+    });
     tl.from(parts.title, { y: 46, autoAlpha: 0, duration: 0.75 })
-        .from(parts.tag, { y: 22, autoAlpha: 0 }, '-=0.42')
-        .from(parts.pitch, { y: 18, autoAlpha: 0 }, '-=0.38')
-        .from(parts.ctas?.children, { y: 14, autoAlpha: 0, stagger: 0.08 }, '-=0.34')
-        .from(parts.boot, { y: 22, autoAlpha: 0 }, '-=0.32');
+        .from(parts.tag, { y: 22, autoAlpha: 0, clearProps: 'all' }, '-=0.42')
+        .from(parts.pitch, { y: 18, autoAlpha: 0, clearProps: 'all' }, '-=0.38')
+        .from(parts.ctas?.children, { y: 14, autoAlpha: 0, stagger: 0.08, clearProps: 'all' }, '-=0.34')
+        .from(parts.boot, { y: 22, autoAlpha: 0, clearProps: 'all' }, '-=0.32');
 
     if (parts.crt) {
         tl.from(parts.crt, {
             x: 48,
             autoAlpha: 0, duration: 0.7, ease: 'power3.out',
+            clearProps: 'all',
         }, '-=0.5');
     }
-}
-
-/* nav + CTAs glide instead of jumping; respects native anchor as fallback */
-function initSmoothAnchors() {
-    gsap.utils.toArray('a[href^="#"]').forEach((a) => {
-        const href = a.getAttribute('href');
-        if (!href || href.length < 2) return;
-        const target = document.querySelector(href);
-        if (!target) return;
-        a.addEventListener('click', (e) => {
-            e.preventDefault();
-            gsap.to(window, {
-                duration: 1.05,
-                scrollTo: { y: target, offsetY: 22, autoKill: true },
-                ease: 'power3.inOut',
-                onComplete: () => history.replaceState(null, '', href),
-            });
-        });
-    });
 }
 
 /* The monitor is a toy too: drag it by the carry-handle of a bezel and fling
