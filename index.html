@@ -521,7 +521,16 @@
             gap: calc(var(--gap) + 14px);
             align-items: start;
         }
-        @media (max-width: 1200px) { .hero-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 1200px) { 
+            .hero-grid { 
+                grid-template-columns: 1fr;
+            }
+            .crt-wrap {
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
 
         .hero-copy { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
         .hero-title {
@@ -657,27 +666,35 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            perspective: 1200px;
+            /* perspective: 1200px; — removed for Firefox compatibility */
             margin-top: 6px;
         }
         .crt-body {
             width: 100%;
+            min-width: 520px;
+            background: #b3b1a5; /* fallback */
             background: linear-gradient(168deg, #d0cec4 0%, #b3b1a5 58%, #8f8d81 100%);
             border: var(--bw) solid var(--ink);
             border-radius: 16px;
             box-shadow: var(--shadow);
             padding: 18px 18px 14px;
             transform: none; /* JS/GSAP owns all movement now — pure hover tilt torn down */
-            transform-style: preserve-3d;
+            /* transform-style: preserve-3d; — removed for Firefox compatibility */
             transition: transform 0.3s ease;
         }
-        @media (max-width: 1400px) { .crt-body { transform: none; } }
+        @media (max-width: 1200px) { 
+            .crt-body { 
+                transform: none;
+                min-width: 0;
+            }
+        }
 
         /* curved glass: border-radius + slight bulge, fully clipped overlay stack */
         .crt-screen {
             position: relative;
             border: 3px solid #3f3d35;
             border-radius: 14px / 18px;
+            background: #0a0e0a; /* fallback */
             background: radial-gradient(130% 90% at 50% 42%, #171e17 0%, #0a0e0a 58%, #040604 100%);
             box-shadow:
                 inset 0 0 2px rgba(0, 0, 0, 0.9),
