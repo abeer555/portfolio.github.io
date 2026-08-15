@@ -115,8 +115,7 @@ const DIR_GLYPH = { dir: '📁', txt: '📄', sys: '🖥️', bin: '🗑️' };
 export function bootDesktop(fromPath) {
     const root = document.getElementById('w95-root');
     if (!root) return;
-    if (!root.hidden) { // already open: just make sure we're fullscreen
-        requestFs(root);
+    if (!root.hidden) { // already open
         return;
     }
 
@@ -143,13 +142,6 @@ function el(tag, cls, text) {
 }
 function btn(cls, text) { const b = document.createElement('button'); b.className = 'w95-btn ' + (cls || ''); b.type = 'button'; b.textContent = text; return b; }
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-
-/* Fullscreen is a user-gesture API — "click the desktop to go full screen"
- * is handled right on the desktop node so the first click counts. */
-function requestFs(el) {
-    if (document.fullscreenElement || !el.requestFullscreen) return;
-    el.requestFullscreen().catch(() => { /* fine — same chrome, keeps working */ });
-}
 
 /* ---------- boot ------------------------------------------------------------ */
 function doBootSequence(root, next) {
@@ -240,10 +232,9 @@ function showDesktop(root, openPath) {
     // every window makeWindow() spawns lives on this layer
     root._wm = { zTop: 100, TaskNote: tasksRow, windows: new Map(), desktop };
 
-    // click-outside closes start menu; clicking the desktop goes fullscreen
+    // click-outside closes start menu
     desktop.addEventListener('pointerdown', (e) => {
         if (!startMenu.contains(e.target) && !startBtn.contains(e.target)) toggleStartMenu(false);
-        requestFs(root);
     });
 
     // ESC shuts down (authentic "close windows first" energy)
@@ -1441,7 +1432,6 @@ function shutdown(root, clockTick) {
     const wm = wmOf();
     wm.windows.clear();
     root.innerHTML = '';
-    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
     document.body.classList.remove('w95-live');
     window.dispatchEvent(new CustomEvent('w95:shutdown'));
     const off = el('div', 'w95-safeoff');
