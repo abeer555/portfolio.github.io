@@ -122,7 +122,11 @@
 
         /* --- BOOT LOADER (pure CSS 3D, self-dismissing  -  works without JS) --- */
         #loader {
-            position: fixed; inset: 0;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             z-index: 3000;
             background: var(--panel-2);
             display: flex;
@@ -141,12 +145,20 @@
             position: relative;
         }
         .cube {
-            position: absolute; inset: 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             transform-style: preserve-3d;
             animation: cube-spin 1.7s linear infinite;
         }
         .cube i {
-            position: absolute; inset: 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             border: 3px solid var(--green);
             background: rgba(0, 255, 65, 0.05);
         }
@@ -368,7 +380,11 @@
         /* soft holographic sheen over the face (kept off mix-blend so the sticky
            sidebar composite doesn't ghost when the page scrolls) */
         .arc-foil {
-            position: absolute; inset: 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             pointer-events: none;
             background:
                 repeating-linear-gradient(
@@ -386,7 +402,11 @@
         }
         /* glare streak */
         .arc-glare {
-            position: absolute; inset: 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             pointer-events: none;
             background: radial-gradient(
                 ellipse 60% 40% at var(--mx) var(--my),
@@ -592,7 +612,11 @@
         /* CRT scanlines + subtle roll band — cosmetic only */
         .t-win95::before {
             content: "";
-            position: absolute; inset: 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             background: repeating-linear-gradient(
                 0deg,
                 rgba(0,0,0,0.28) 0px, rgba(0,0,0,0.28) 1px,
@@ -661,6 +685,8 @@
                 inset 0 2px 8px rgba(0, 0, 0, 0.75);
             overflow: hidden;
             cursor: pointer;
+            display: block;
+            min-height: 460px;
         }
         /* lit state toggled by main.js — screen itself fills with green phosphor glow */
         .crt-screen.is-on {
@@ -670,7 +696,7 @@
                 inset 0 0 30px rgba(30, 255, 120, 0.16),
                 inset 0 2px 8px rgba(0, 0, 0, 0.75);
         }
-        .crt-screen-inner { position: relative; z-index: 1; }
+        .crt-screen-inner { position: relative; z-index: 1; display: block; }
         .crt-screen-inner .t-bar { border-bottom-width: 2px; }
         /* while the CRT is off the terminal is invisible AND inert, so a stray
            input or scanline never leaks through the dark glass */
@@ -681,7 +707,11 @@
         }
         /* phosphor vignette + curvature shading over whatever the screen shows */
         .crt-glare {
-            position: absolute; inset: 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             z-index: 3;
             pointer-events: none;
             background:
