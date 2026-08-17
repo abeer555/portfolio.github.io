@@ -20,58 +20,69 @@ production sites for actual clients.
 
 Ground control is a shell prompt; the desktop is Hyprland on Arch.
 
-B.Tech CSE @ VIT Chennai
-BS Data Science @ IIT Madras (online)` },
+B.Tech CSE @ VIT Chennai` },
     '\\Desktop\\My Computer': { type: 'dir', kids: ['\\Desktop\\My Computer\\(C:)'] },
     '\\Desktop\\My Computer\\(C:)': { type: 'dir', kids: ['\\Desktop\\My Computer\\(C:)\\Projects', '\\Desktop\\My Computer\\(C:)\\Experience', '\\Desktop\\My Computer\\(C:)\\Skills'] },
     '\\Desktop\\My Computer\\(C:)\\Projects': { type: 'dir', kids: [
-        '\\Desktop\\My Computer\\(C:)\\Projects\\quantum_rag.py',
-        '\\Desktop\\My Computer\\(C:)\\Projects\\luxury_taj_tour',
-        '\\Desktop\\My Computer\\(C:)\\Projects\\chat_server.js',
-        '\\Desktop\\My Computer\\(C:)\\Projects\\vericrop.ts',
-        '\\Desktop\\My Computer\\(C:)\\Projects\\edumorph_ai.py',
+        '\\Desktop\\My Computer\\(C:)\\Projects\\luxury_taj_tours',
+        '\\Desktop\\My Computer\\(C:)\\Projects\\whisper_chat.js',
+        '\\Desktop\\My Computer\\(C:)\\Projects\\trend_radar',
+        '\\Desktop\\My Computer\\(C:)\\Projects\\newscast_ai',
+        '\\Desktop\\My Computer\\(C:)\\Projects\\goals_tracker',
+        '\\Desktop\\My Computer\\(C:)\\Projects\\todo_app',
     ]},
-    '\\Desktop\\My Computer\\(C:)\\Projects\\quantum_rag.py': { type: 'file', kind: 'note', body:
-`# Quantum RAG Benchmark
-# benchmarks quantum kernels vs classical MiniLM + Qdrant + T5
-
-from pennylane import *
-from qdrant_client import QdrantClient
-
-# "does quantum actually help RAG? — reproducible answer."
-# GH: github.com/abeer555/Quantum-Rag-Benchmark-agri` },
-    '\\Desktop\\My Computer\\(C:)\\Projects\\luxury_taj_tour': { type: 'file', kind: 'note', body:
-`Luxury Taj Tour — real client work
+    '\\Desktop\\My Computer\\(C:)\\Projects\\luxury_taj_tours': { type: 'file', kind: 'note', body:
+`Luxury Taj Tours — real client work
 ============================
 
-Next.js PWA + GSAP + Vercel.
-Smooth scroll animations, offline support.
+Next.js travel platform built for a real luxury travel agency.
 
 live → luxurytajtour.com` },
-    '\\Desktop\\My Computer\\(C:)\\Projects\\chat_server.js': { type: 'file', kind: 'note', body:
-`// Private Chat App
-// real-time chat over HTTP/3
+    '\\Desktop\\My Computer\\(C:)\\Projects\\whisper_chat.js': { type: 'file', kind: 'note', body:
+`// Whisper Chat
+// Anonymous messaging with voice and video calls
 
-// cloudflare + s3 + render
-// built from scratch so prod infra isn't a mystery
+// Chat application with anonymous messaging capabilities
+// Voice calls + video calls
 
-// live → abeer.codes` },
-    '\\Desktop\\My Computer\\(C:)\\Projects\\vericrop.ts': { type: 'file', kind: 'note', body:
-`// VeriCrop — blockchain traceability for agriculture
-// chainlink oracles, next.js 14, TS, ML fraud detection
+// live → chat.abeer.codes` },
+    '\\Desktop\\My Computer\\(C:)\\Projects\\trend_radar': { type: 'file', kind: 'note', body:
+`Trend Radar
+===========
 
-// farm-to-consumer records nobody can edit
-// live → vericrop-frontend-vercel.vercel.app` },
-    '\\Desktop\\My Computer\\(C:)\\Projects\\edumorph_ai.py': { type: 'file', kind: 'note', body:
-`# EduMorph AI — AWSImpact Finalist @ IIT Bombay
-# PDFs → structured learning (textract + gemini + chromadb)
+Real-time stock tracking application with predictive analytics.
 
-# turns a paper into something you can actually study from` },
+live → stocks.abeer.codes` },
+    '\\Desktop\\My Computer\\(C:)\\Projects\\newscast_ai': { type: 'file', kind: 'note', body:
+`Newscast AI
+===========
+
+AI-powered platform that turns live news into short-form
+reels, videos, and audio summaries automatically.
+
+live → newscast.t0r.tech` },
+    '\\Desktop\\My Computer\\(C:)\\Projects\\goals_tracker': { type: 'file', kind: 'note', body:
+`Goals Tracker
+=============
+
+Personal goals tracker that stores progress locally
+in the browser for quick, private planning.
+
+live → goals.abeer.codes` },
+    '\\Desktop\\My Computer\\(C:)\\Projects\\todo_app': { type: 'file', kind: 'note', body:
+`Todo App
+========
+
+Simple to-do manager for organizing daily tasks with
+a clean, focused workflow which stores data locally
+in the browser.
+
+live → todo.abeer.codes` },
     '\\Desktop\\My Computer\\(C:)\\Experience': { type: 'dir', kids: ['\\Desktop\\My Computer\\(C:)\\Experience\\Ericsson (now).txt','\\Desktop\\My Computer\\(C:)\\Experience\\C9Labs.txt','\\Desktop\\My Computer\\(C:)\\Experience\\Linux Club.txt'] },
     '\\Desktop\\My Computer\\(C:)\\Experience\\Ericsson (now).txt': { type: 'file', kind: 'note', body:
 `SDE Intern @ Ericsson  (jun 2026 — present)
 
-Cloud-native telecom software on enterprise stacks.
+Cloud-native software on enterprise stacks.
 Distributed systems, containerized apps, CI/CD.
 Grown-up engineering, filtered through a fish shell.` },
     '\\Desktop\\My Computer\\(C:)\\Experience\\C9Labs.txt': { type: 'file', kind: 'note', body:
@@ -81,7 +92,7 @@ Wrote Python/Bash automation for security testing.
 Wrote things that broke CI/CD not just reports.
 Went through a serious hardening / offensive program.` },
     '\\Desktop\\My Computer\\(C:)\\Experience\\Linux Club.txt': { type: 'file', kind: 'note', body:
-`Technical Team Member @ Linux Club VIT Chennai  (sep 2024 — present)
+`Technical Team Member @ Linux Club VIT Chennai  (sep 2024 — may 2026)
 
 Keeps the lab's linux fleet alive.
 Setup scripts so new machines Don't take an afternoon.
@@ -96,9 +107,13 @@ DevOps      github actions · ci/cd · ansible · grafana · prometheus
 Security    nmap · burp suite · wireshark · pentesting · ctf` },
     '\\Desktop\\Work': { type: 'dir', kids: ['\\Desktop\\Work\\fun things.txt'] },
     '\\Desktop\\Work\\fun things.txt': { type: 'file', kind: 'note', body:
-`hack-n-droid — finalist / 35th
-cyber-0-day 3.0 — workshops / mentor
-password x ctf — vuln analysis track` },
+`I play chess, which hasn't stopped me from making questionable moves in code.
+I swap debugging for badminton when I remember to touch grass.
+I use Linux by choice. The choice was questionable at times.
+I like knowing what happens behind the interface.
+I got into cybersecurity by breaking things and trying to figure out why they broke.
+I usually want to know why something works, even when it already works.
+I tweak my Linux setup until it works perfectly. Then I tweak it again.` },
     '\\Desktop\\Recycle Bin': { type: 'dir', kids: [], kind: 'bin' },
     '\\Desktop\\Contact': { type: 'file', kind: 'note', body:
 `echo $EMAIL   abeer@abeer.codes
